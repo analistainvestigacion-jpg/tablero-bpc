@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe Ejecutivo BPC · INVIMA</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b0f1a;--surface:#111827;--surface2:#1a2236;--border:#1e2d47;--accent:#00c3a5;--accent2:#3b82f6;--accent3:#f59e0b;--danger:#ef4444;--success:#10b981;--text:#e2e8f0;--text-muted:#64748b;--text-soft:#94a3b8;--radius:12px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;min-height:100vh}
+  header{background:linear-gradient(135deg,#0b1220,#0d1f3c);border-bottom:1px solid var(--border);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  .hdr-left{display:flex;align-items:center;gap:12px}
+  .logo{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:20px;font-weight:700;color:#000}
+  .hdr-title h1{font-family:'DM Serif Display',serif;font-size:19px}
+  .hdr-title p{font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.5px}
+  .sync-ind{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)}
+  .sync-dot{width:8px;height:8px;border-radius:50%;background:#22c55e}
+  .sync-dot.loading{background:var(--accent3);animation:pulse 1s infinite}
+  .sync-dot.error{background:var(--danger)}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  main{padding:26px 32px;max-width:1400px;margin:0 auto}
+  .tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content;flex-wrap:wrap}
+  .tab{padding:8px 22px;border-radius:7px;border:none;background:transparent;color:var(--text-muted);font-family:'Outfit',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+  .tab.on{background:var(--accent2);color:#fff;box-shadow:0 2px 8px rgba(59,130,246,.4)}
+  .tab:hover:not(.on){background:var(--surface2);color:var(--text)}
+  .panel{display:none}.panel.on{display:block}
+  /* MÉTRICAS */
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
+  .mcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;position:relative;overflow:hidden;text-align:center}
+  .mcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+  .mcard.c1::before{background:var(--accent2)}.mcard.c2::before{background:var(--success)}.mcard.c3::before{background:var(--accent3)}.mcard.c4::before{background:var(--danger)}.mcard.c5::before{background:var(--accent)}.mcard.c6::before{background:#a78bfa}
+  .mcard .ml{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);font-family:'DM Mono',monospace;margin-bottom:8px}
+  .mcard .mv{font-size:36px;font-weight:700;font-family:'DM Serif Display',serif;line-height:1}
+  .mcard.c1 .mv{color:var(--accent2)}.mcard.c2 .mv{color:var(--success)}.mcard.c3 .mv{color:var(--accent3)}.mcard.c4 .mv{color:var(--danger)}.mcard.c5 .mv{color:var(--accent)}.mcard.c6 .mv{color:#a78bfa}
+  /* PROGRESO GENERAL */
+  .prog-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 22px;margin-bottom:20px;display:flex;align-items:center;gap:16px}
+  .prog-label{font-size:12px;color:var(--text-muted);white-space:nowrap;font-family:'DM Mono',monospace}
+  .prog-bar{flex:1;height:10px;background:var(--surface2);border-radius:100px;overflow:hidden;border:1px solid var(--border)}
+  .prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .8s ease}
+  .prog-pct{font-size:22px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--accent);min-width:55px;text-align:right}
+  /* SECCIONES */
+  .section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+  .section h3{font-family:'DM Serif Display',serif;font-size:16px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+  .section h3 .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+  /* BARRAS DE PROGRESO POR GRUPO */
+  .prog-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid rgba(30,45,71,.4)}
+  .prog-row:last-child{border-bottom:none}
+  .prog-row-name{font-size:12px;color:var(--text-soft);min-width:180px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .prog-row-bar{flex:1;height:8px;background:var(--surface2);border-radius:100px;overflow:hidden}
+  .prog-row-fill{height:100%;border-radius:100px;transition:width .6s}
+  .prog-row-stats{display:flex;gap:8px;align-items:center;white-space:nowrap;font-family:'DM Mono',monospace;font-size:11px;min-width:140px;justify-content:flex-end}
+  .stat-total{color:var(--accent2)}.stat-done{color:var(--success)}.stat-pend{color:var(--accent3)}.stat-venc{color:var(--danger)}.stat-pct{color:var(--accent);font-weight:600;min-width:36px;text-align:right}
+  /* TABLA DE TAREAS */
+  .tbl-wrap{overflow:auto;border-radius:8px;border:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;min-width:600px}
+  thead tr{background:var(--surface2)}
+  th{padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);font-family:'DM Mono',monospace;white-space:nowrap}
+  td{padding:9px 12px;border-bottom:1px solid rgba(30,45,71,.4);font-size:12px;vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:rgba(59,130,246,.03)}
+  .chip{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;background:rgba(59,130,246,.1);color:var(--accent2);border:1px solid rgba(59,130,246,.2);white-space:nowrap}
+  .st{display:inline-block;padding:2px 9px;border-radius:100px;font-size:10px;font-weight:600;font-family:'DM Mono',monospace}
+  .st.done{background:rgba(16,185,129,.12);color:var(--success);border:1px solid rgba(16,185,129,.25)}
+  .st.curso{background:rgba(245,158,11,.12);color:var(--accent3);border:1px solid rgba(245,158,11,.25)}
+  .st.venc{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.25)}
+  .etapa-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+  .etapa-1{background:rgba(59,130,246,.15);color:var(--accent2)}
+  .etapa-2{background:rgba(167,139,250,.15);color:#a78bfa}
+  .etapa-3{background:rgba(0,195,165,.15);color:var(--accent)}
+  /* SELECTOR */
+  .selector-wrap{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+  .selector-wrap label{font-size:12px;color:var(--text-muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.8px}
+  .selector-wrap select{background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;padding:9px 16px;outline:none;min-width:260px;transition:border-color .2s}
+  .selector-wrap select:focus{border-color:var(--accent2)}
+  .selector-wrap select option{background:#111827}
+  /* ALERTA VENCIDAS */
+  .alert-section{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px}
+  .alert-section h4{color:var(--danger);font-size:13px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .alert-prox{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px}
+  .alert-prox h4{color:var(--accent3);font-size:13px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  /* GRID 2 COL */
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;margin-bottom:20px}
+  /* EMPTY */
+  .empty-msg{padding:24px;text-align:center;color:var(--text-muted);font-size:13px}
+  /* FOOTER */
+  .report-footer{text-align:center;padding:20px;color:var(--text-muted);font-size:11px;font-family:'DM Mono',monospace;border-top:1px solid var(--border);margin-top:10px}
+  /* SPINNER */
+  .spinner{display:inline-block;width:13px;height:13px;border:2px solid var(--border);border-top-color:var(--accent2);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:5px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media(max-width:680px){main{padding:16px}header{padding:14px 16px}.prog-row-name{min-width:120px;max-width:120px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr-left">
+    <div class="logo">B</div>
+    <div class="hdr-title">
+      <h1>Informe Ejecutivo BPC · INVIMA</h1>
+      <p>Certificación Buenas Prácticas — Solo lectura</p>
+    </div>
+  </div>
+  <div class="sync-ind">
+    <span class="sync-dot loading" id="syncDot"></span>
+    <span id="syncLabel">Conectando...</span>
+    <span id="currentDate" style="margin-left:10px;font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);background:rgba(0,195,165,.08);border:1px solid rgba(0,195,165,.2);padding:5px 10px;border-radius:6px"></span>
+  </div>
+</header>
+
+<main>
+  <div id="loadingMsg" style="text-align:center;padding:60px;color:var(--text-muted)">
+    <span class="spinner"></span> Cargando datos desde Google Sheets...
+  </div>
+
+  <div id="appContent" style="display:none">
+    <div class="tabs">
+      <button class="tab on" onclick="switchTab('gerencia',this)">🏢 Gerencia</button>
+      <button class="tab" onclick="switchTab('proceso',this)">📁 Por Proceso</button>
+      <button class="tab" onclick="switchTab('etapa',this)">📊 Por Etapa</button>
+    </div>
+
+    <!-- GERENCIA -->
+    <div class="panel on" id="pan-gerencia">
+      <div class="metrics" id="gMetrics"></div>
+      <div class="prog-wrap">
+        <span class="prog-label">Avance general certificación BPC</span>
+        <div class="prog-bar"><div class="prog-fill" id="gProgFill" style="width:0%"></div></div>
+        <span class="prog-pct" id="gProgPct">0%</span>
+      </div>
+      <div id="gAlertVenc"></div>
+      <div id="gAlertProx"></div>
+      <div class="grid2">
+        <div class="section">
+          <h3><span class="dot"></span> Avance por Etapa</h3>
+          <div id="gEtapas"></div>
+        </div>
+        <div class="section">
+          <h3><span class="dot"></span> Avance por Proceso</h3>
+          <div id="gProcesos"></div>
+        </div>
+      </div>
+      <div class="section">
+        <h3><span class="dot"></span> Responsables</h3>
+        <div id="gResponsables"></div>
+      </div>
+    </div>
+
+    <!-- POR PROCESO -->
+    <div class="panel" id="pan-proceso">
+      <div class="selector-wrap">
+        <label>Selecciona el proceso</label>
+        <select id="selProceso" onchange="renderProceso()">
+          <option value="">— Selecciona —</option>
+        </select>
+      </div>
+      <div id="procesoContent"><p class="empty-msg">Selecciona un proceso para ver su informe.</p></div>
+    </div>
+
+    <!-- POR ETAPA -->
+    <div class="panel" id="pan-etapa">
+      <div class="selector-wrap">
+        <label>Selecciona la etapa</label>
+        <select id="selEtapa" onchange="renderEtapa()">
+          <option value="">— Selecciona —</option>
+          <option value="Etapa 1">Etapa 1</option>
+          <option value="Etapa 2">Etapa 2</option>
+          <option value="Etapa 3">Etapa 3</option>
+        </select>
+      </div>
+      <div id="etapaContent"><p class="empty-msg">Selecciona una etapa para ver su informe.</p></div>
+    </div>
+  </div>
+</main>
+
+<div class="report-footer" id="reportFooter" style="display:none">
+  Informe generado automáticamente · Tablero BPC INVIMA · Datos en tiempo real desde Google Sheets
+</div>
+
+<script>
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbzsLuTiuL9_uROl6P2pFJQ60f9_8EiBQMcWfy-sfWclV625BQ7-aMqu2Grk6FIatQqk/exec';
+const DIAS_PROX=3;
+let tasks=[];
+
+const today=()=>new Date().toISOString().split('T')[0];
+const fmt=s=>{
+  if(!s||s==='')return'—';
+  const str=String(s).trim();
+  if(/^\d{4}-\d{2}-\d{2}/.test(str)){const p=str.split('T')[0].split('-');return`${p[2]}/${p[1]}/${p[0]}`;}
+  if(/^\d{2}\/\d{2}\/\d{4}/.test(str))return str.substring(0,10);
+  if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)){const p=str.split('/');return`${String(p[1]).padStart(2,'0')}/${String(p[0]).padStart(2,'0')}/${p[2]}`;}
+  return'—';
+};
+const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+function parseDate(s){
+  if(!s||s==='')return null;
+  const str=String(s).trim();
+  if(/^\d{4}-\d{2}-\d{2}/.test(str))return new Date(str.split('T')[0]);
+  if(/^\d{2}\/\d{2}\/\d{4}/.test(str)){const p=str.split('/');return new Date(`${p[2]}-${p[1]}-${p[0]}`);}
+  if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)){const p=str.split('/');return new Date(`${p[2]}-${String(p[1]).padStart(2,'0')}-${String(p[0]).padStart(2,'0')}`);}
+  return null;
+}
+function dateStr(s){
+  if(!s||s==='')return'';
+  const str=String(s).trim();
+  if(/^\d{4}-\d{2}-\d{2}/.test(str))return str.split('T')[0];
+  if(/^\d{2}\/\d{2}\/\d{4}/.test(str)){const p=str.split('/');return`${p[2]}-${p[1]}-${p[0]}`;}
+  if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)){const p=str.split('/');return`${p[2]}-${String(p[1]).padStart(2,'0')}-${String(p[0]).padStart(2,'0')}`;}
+  return'';
+}
+
+function getEstado(t){if(t.estado==='completada')return'completada';const fl=dateStr(t.fechaLimite);if(fl&&today()>fl)return'vencida';return'en_curso';}
+function calcDias(t){const s=parseDate(t.fechaAsignacion);if(!s)return 0;const e=(t.estado==='completada'&&t.fechaCompletada)?parseDate(t.fechaCompletada)||new Date():new Date();const d=Math.floor((e-s)/86400000);return isNaN(d)||d<0?0:d;}
+function calcDiasRest(t){const l=parseDate(t.fechaLimite);if(!l)return null;const d=Math.floor((l-new Date(today()))/86400000);return isNaN(d)?null:d;}
+function isProxVencer(t){if(getEstado(t)==='completada')return false;const dr=calcDiasRest(t);return dr!==null&&dr>=0&&dr<=DIAS_PROX;}
+
+function setSyncState(s){
+  const dot=document.getElementById('syncDot'),lbl=document.getElementById('syncLabel');
+  if(s==='loading'){dot.className='sync-dot loading';lbl.textContent='Sincronizando...';}
+  else if(s==='ok'){dot.className='sync-dot';lbl.textContent='Conectado · Google Sheets';}
+  else{dot.className='sync-dot error';lbl.textContent='Error de conexión';}
+}
+
+async function cargarDatos(){
+  setSyncState('loading');
+  try{
+    const res=await fetch(SCRIPT_URL+'?'+new URLSearchParams({action:'getTasks'}));
+    const data=await res.json();
+    if(data.success){
+      tasks=data.tasks||[];
+      setSyncState('ok');
+      document.getElementById('loadingMsg').style.display='none';
+      document.getElementById('appContent').style.display='block';
+      document.getElementById('reportFooter').style.display='block';
+      populateSelectors();
+      renderGerencia();
+    }
+  }catch(e){
+    setSyncState('error');
+    document.getElementById('loadingMsg').innerHTML='<span style="color:var(--danger)">Error al conectar con Google Sheets.</span>';
+  }
+}
+
+function populateSelectors(){
+  const procs=[...new Set(tasks.map(t=>t.proceso).filter(Boolean))].sort();
+  const sel=document.getElementById('selProceso');
+  sel.innerHTML='<option value="">— Selecciona —</option>'+procs.map(p=>`<option value="${esc(p)}">${esc(p)}</option>`).join('');
+}
+
+function switchTab(name,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('pan-'+name).classList.add('on');
+  btn.classList.add('on');
+}
+
+// ── GERENCIA ──────────────────────────────────────────────
+function renderGerencia(){
+  const tot=tasks.length;
+  const don=tasks.filter(t=>getEstado(t)==='completada').length;
+  const pen=tasks.filter(t=>getEstado(t)==='en_curso').length;
+  const ven=tasks.filter(t=>getEstado(t)==='vencida').length;
+  const prox=tasks.filter(t=>isProxVencer(t)).length;
+  const pct=tot>0?Math.round(don/tot*100):0;
+
+  document.getElementById('gMetrics').innerHTML=`
+    <div class="mcard c1"><div class="ml">Total tareas</div><div class="mv">${tot}</div></div>
+    <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
+    <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
+    <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
+    <div class="mcard c6"><div class="ml">Próx. a vencer</div><div class="mv">${prox}</div></div>
+    <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>`;
+  document.getElementById('gProgFill').style.width=pct+'%';
+  document.getElementById('gProgPct').textContent=pct+'%';
+
+  // Alertas vencidas
+  const vencidas=tasks.filter(t=>getEstado(t)==='vencida');
+  document.getElementById('gAlertVenc').innerHTML=vencidas.length?`
+    <div class="alert-section">
+      <h4>⚠ Tareas vencidas (${vencidas.length})</h4>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Tarea</th><th>Proceso</th><th>Etapa</th><th>Responsables</th><th>F. Límite</th><th>Días vencida</th></tr></thead>
+        <tbody>${vencidas.map(t=>`<tr>
+          <td style="font-weight:500">${esc(t.tarea)}</td>
+          <td><span class="chip">${esc(t.proceso)}</span></td>
+          <td><span class="etapa-badge etapa-${t.etapa?t.etapa.slice(-1):'1'}">${esc(t.etapa||'—')}</span></td>
+          <td style="color:var(--text-soft)">${esc(t.responsable)}</td>
+          <td style="color:var(--danger);font-family:'DM Mono',monospace;font-size:11px">${fmt(t.fechaLimite)}</td>
+          <td style="color:var(--danger);font-family:'DM Mono',monospace;font-size:11px">${Math.abs(calcDiasRest(t)||0)}d</td>
+        </tr>`).join('')}</tbody>
+      </table></div>
+    </div>`:'';
+
+  // Alertas próximas
+  const proximas=tasks.filter(t=>isProxVencer(t));
+  document.getElementById('gAlertProx').innerHTML=proximas.length?`
+    <div class="alert-prox">
+      <h4>📅 Próximas a vencer en ${DIAS_PROX} días (${proximas.length})</h4>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Tarea</th><th>Proceso</th><th>Etapa</th><th>Responsables</th><th>F. Límite</th><th>Días restantes</th></tr></thead>
+        <tbody>${proximas.map(t=>`<tr>
+          <td style="font-weight:500">${esc(t.tarea)}</td>
+          <td><span class="chip">${esc(t.proceso)}</span></td>
+          <td><span class="etapa-badge etapa-${t.etapa?t.etapa.slice(-1):'1'}">${esc(t.etapa||'—')}</span></td>
+          <td style="color:var(--text-soft)">${esc(t.responsable)}</td>
+          <td style="font-family:'DM Mono',monospace;font-size:11px">${fmt(t.fechaLimite)}</td>
+          <td style="color:var(--accent3);font-family:'DM Mono',monospace;font-size:11px">${calcDiasRest(t)}d</td>
+        </tr>`).join('')}</tbody>
+      </table></div>
+    </div>`:'';
+
+  // Por etapa
+  document.getElementById('gEtapas').innerHTML=renderProgRows(groupBy(tasks,'etapa'));
+  // Por proceso
+  document.getElementById('gProcesos').innerHTML=renderProgRows(groupBy(tasks,'proceso'));
+  // Por responsable
+  document.getElementById('gResponsables').innerHTML=renderProgRows(groupByResp(tasks));
+}
+
+// ── POR PROCESO ───────────────────────────────────────────
+function renderProceso(){
+  const proc=document.getElementById('selProceso').value;
+  if(!proc){document.getElementById('procesoContent').innerHTML='<p class="empty-msg">Selecciona un proceso para ver su informe.</p>';return;}
+  const filtered=tasks.filter(t=>t.proceso===proc);
+  if(!filtered.length){document.getElementById('procesoContent').innerHTML='<p class="empty-msg">No hay tareas para este proceso.</p>';return;}
+  const tot=filtered.length,don=filtered.filter(t=>getEstado(t)==='completada').length,pen=filtered.filter(t=>getEstado(t)==='en_curso').length,ven=filtered.filter(t=>getEstado(t)==='vencida').length,pct=tot>0?Math.round(don/tot*100):0;
+
+  document.getElementById('procesoContent').innerHTML=`
+    <div class="metrics">
+      <div class="mcard c1"><div class="ml">Total tareas</div><div class="mv">${tot}</div></div>
+      <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
+      <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
+      <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
+      <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>
+    </div>
+    <div class="prog-wrap">
+      <span class="prog-label">Avance del proceso</span>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <span class="prog-pct">${pct}%</span>
+    </div>
+    <div class="grid2">
+      <div class="section"><h3><span class="dot"></span> Avance por Subproceso</h3>${renderProgRows(groupBy(filtered,'subproceso'))}</div>
+      <div class="section"><h3><span class="dot"></span> Avance por Etapa</h3>${renderProgRows(groupBy(filtered,'etapa'))}</div>
+    </div>
+    <div class="section">
+      <h3><span class="dot"></span> Responsables del proceso</h3>
+      ${renderProgRows(groupByResp(filtered))}
+    </div>
+    <div class="section">
+      <h3><span class="dot"></span> Tareas del proceso</h3>
+      ${renderTablaTareas(filtered)}
+    </div>`;
+}
+
+// ── POR ETAPA ─────────────────────────────────────────────
+function renderEtapa(){
+  const etapa=document.getElementById('selEtapa').value;
+  if(!etapa){document.getElementById('etapaContent').innerHTML='<p class="empty-msg">Selecciona una etapa para ver su informe.</p>';return;}
+  const filtered=tasks.filter(t=>t.etapa===etapa);
+  if(!filtered.length){document.getElementById('etapaContent').innerHTML='<p class="empty-msg">No hay tareas para esta etapa.</p>';return;}
+  const tot=filtered.length,don=filtered.filter(t=>getEstado(t)==='completada').length,pen=filtered.filter(t=>getEstado(t)==='en_curso').length,ven=filtered.filter(t=>getEstado(t)==='vencida').length,pct=tot>0?Math.round(don/tot*100):0;
+  const eNum=etapa.slice(-1);
+
+  document.getElementById('etapaContent').innerHTML=`
+    <div class="metrics">
+      <div class="mcard c1"><div class="ml">Total tareas</div><div class="mv">${tot}</div></div>
+      <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
+      <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
+      <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
+      <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>
+    </div>
+    <div class="prog-wrap">
+      <span class="prog-label">Avance ${etapa}</span>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <span class="prog-pct">${pct}%</span>
+    </div>
+    <div class="grid2">
+      <div class="section"><h3><span class="dot"></span> Avance por Proceso</h3>${renderProgRows(groupBy(filtered,'proceso'))}</div>
+      <div class="section"><h3><span class="dot"></span> Responsables</h3>${renderProgRows(groupByResp(filtered))}</div>
+    </div>
+    <div class="section">
+      <h3><span class="dot"></span> Tareas de ${etapa}</h3>
+      ${renderTablaTareas(filtered)}
+    </div>`;
+}
+
+// ── HELPERS ───────────────────────────────────────────────
+function groupBy(arr,field){
+  const map={};
+  arr.forEach(t=>{
+    const k=t[field]||'Sin definir';
+    if(!map[k])map[k]={total:0,done:0,venc:0};
+    map[k].total++;
+    const est=getEstado(t);
+    if(est==='completada')map[k].done++;
+    if(est==='vencida')map[k].venc++;
+  });
+  return map;
+}
+function groupByResp(arr){
+  const map={};
+  arr.forEach(t=>{
+    const resps=(t.responsable||'Sin responsable').split(',').map(r=>r.trim()).filter(Boolean);
+    const est=getEstado(t);
+    resps.forEach(r=>{
+      if(!map[r])map[r]={total:0,done:0,venc:0};
+      map[r].total++;
+      if(est==='completada')map[r].done++;
+      if(est==='vencida')map[r].venc++;
+    });
+  });
+  return map;
+}
+
+function renderProgRows(data){
+  const keys=Object.keys(data).sort();
+  if(!keys.length)return'<p class="empty-msg">Sin datos.</p>';
+  return keys.map(k=>{
+    const{total,done,venc}=data[k];
+    const pend=total-done;
+    const pct=total>0?Math.round(done/total*100):0;
+    const barColor=pct===100?'var(--success)':pct>=50?'var(--accent2)':'var(--accent3)';
+    return`<div class="prog-row">
+      <span class="prog-row-name" title="${esc(k)}">${esc(k)}</span>
+      <div class="prog-row-bar"><div class="prog-row-fill" style="width:${pct}%;background:${barColor}"></div></div>
+      <div class="prog-row-stats">
+        <span class="stat-total">${total}</span>
+        <span class="stat-done">✓${done}</span>
+        <span class="stat-pend">⟳${pend}</span>
+        ${venc>0?`<span class="stat-venc">⚠${venc}</span>`:''}
+        <span class="stat-pct">${pct}%</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderTablaTareas(arr){
+  if(!arr.length)return'<p class="empty-msg">Sin tareas.</p>';
+  const sorted=[...arr].sort((a,b)=>{
+    const order={vencida:0,en_curso:1,completada:2};
+    return (order[getEstado(a)]||0)-(order[getEstado(b)]||0);
+  });
+  return`<div class="tbl-wrap"><table>
+    <thead><tr><th>Tarea</th><th>Etapa</th><th>Subproceso</th><th>Responsables</th><th>F. Asignación</th><th>F. Límite</th><th>Días</th><th>Estado</th></tr></thead>
+    <tbody>${sorted.map(t=>{
+      const est=getEstado(t);
+      const stH=est==='completada'?'<span class="st done">✓ Completada</span>':est==='vencida'?'<span class="st venc">⚠ Vencida</span>':'<span class="st curso">⟳ En curso</span>';
+      const eNum=t.etapa?t.etapa.slice(-1):'1';
+      return`<tr>
+        <td style="font-weight:500;max-width:200px">${esc(t.tarea)}</td>
+        <td><span class="etapa-badge etapa-${eNum}">${esc(t.etapa||'—')}</span></td>
+        <td style="color:var(--text-muted);font-size:11px">${esc(t.subproceso||'—')}</td>
+        <td style="color:var(--text-soft);font-size:11px;max-width:150px">${esc(t.responsable)}</td>
+        <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted)">${fmt(t.fechaAsignacion)}</td>
+        <td style="font-family:'DM Mono',monospace;font-size:11px;color:${est==='vencida'?'var(--danger)':'var(--text-muted)'}">${fmt(t.fechaLimite)}</td>
+        <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent3)">${calcDias(t)}d</td>
+        <td>${stH}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table></div>`;
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const d=new Date();
+  document.getElementById('currentDate').textContent=d.toLocaleDateString('es-CO',{weekday:'short',year:'numeric',month:'short',day:'numeric'}).toUpperCase();
+  cargarDatos();
+  setInterval(cargarDatos,30000);
+});
+</script>
+</body>
+</html>
