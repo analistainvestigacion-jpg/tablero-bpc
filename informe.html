@@ -17,43 +17,37 @@
   .sync-ind{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)}
   .sync-dot{width:8px;height:8px;border-radius:50%;background:#22c55e}
   .sync-dot.loading{background:var(--accent3);animation:pulse 1s infinite}
-  .sync-dot.error{background:var(--danger)}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
   main{padding:26px 32px;max-width:1400px;margin:0 auto}
   .tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content;flex-wrap:wrap}
-  .tab{padding:8px 22px;border-radius:7px;border:none;background:transparent;color:var(--text-muted);font-family:'Outfit',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+  .tab{padding:8px 20px;border-radius:7px;border:none;background:transparent;color:var(--text-muted);font-family:'Outfit',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
   .tab.on{background:var(--accent2);color:#fff;box-shadow:0 2px 8px rgba(59,130,246,.4)}
   .tab:hover:not(.on){background:var(--surface2);color:var(--text)}
   .panel{display:none}.panel.on{display:block}
-  /* MÉTRICAS */
-  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
-  .mcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;position:relative;overflow:hidden;text-align:center}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+  .mcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;position:relative;overflow:hidden;text-align:center}
   .mcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-  .mcard.c1::before{background:var(--accent2)}.mcard.c2::before{background:var(--success)}.mcard.c3::before{background:var(--accent3)}.mcard.c4::before{background:var(--danger)}.mcard.c5::before{background:var(--accent)}.mcard.c6::before{background:#a78bfa}
+  .mcard.c1::before{background:var(--accent2)}.mcard.c2::before{background:var(--success)}.mcard.c3::before{background:var(--accent3)}.mcard.c4::before{background:var(--danger)}.mcard.c5::before{background:var(--accent)}.mcard.c6::before{background:#a78bfa}.mcard.c7::before{background:#06b6d4}
   .mcard .ml{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);font-family:'DM Mono',monospace;margin-bottom:8px}
-  .mcard .mv{font-size:36px;font-weight:700;font-family:'DM Serif Display',serif;line-height:1}
-  .mcard.c1 .mv{color:var(--accent2)}.mcard.c2 .mv{color:var(--success)}.mcard.c3 .mv{color:var(--accent3)}.mcard.c4 .mv{color:var(--danger)}.mcard.c5 .mv{color:var(--accent)}.mcard.c6 .mv{color:#a78bfa}
-  /* PROGRESO GENERAL */
-  .prog-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 22px;margin-bottom:20px;display:flex;align-items:center;gap:16px}
+  .mcard .mv{font-size:32px;font-weight:700;font-family:'DM Serif Display',serif;line-height:1}
+  .mcard.c1 .mv{color:var(--accent2)}.mcard.c2 .mv{color:var(--success)}.mcard.c3 .mv{color:var(--accent3)}.mcard.c4 .mv{color:var(--danger)}.mcard.c5 .mv{color:var(--accent)}.mcard.c6 .mv{color:#a78bfa}.mcard.c7 .mv{color:#06b6d4}
+  .prog-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:16px}
   .prog-label{font-size:12px;color:var(--text-muted);white-space:nowrap;font-family:'DM Mono',monospace}
   .prog-bar{flex:1;height:10px;background:var(--surface2);border-radius:100px;overflow:hidden;border:1px solid var(--border)}
-  .prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .8s ease}
+  .prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .8s}
   .prog-pct{font-size:22px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--accent);min-width:55px;text-align:right}
-  /* SECCIONES */
   .section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px}
   .section h3{font-family:'DM Serif Display',serif;font-size:16px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
   .section h3 .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
-  /* BARRAS DE PROGRESO POR GRUPO */
   .prog-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid rgba(30,45,71,.4)}
   .prog-row:last-child{border-bottom:none}
-  .prog-row-name{font-size:12px;color:var(--text-soft);min-width:180px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .prog-row-bar{flex:1;height:8px;background:var(--surface2);border-radius:100px;overflow:hidden}
+  .prog-row-name{font-size:12px;color:var(--text-soft);min-width:160px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .prog-row-bar{flex:1;height:7px;background:var(--surface2);border-radius:100px;overflow:hidden}
   .prog-row-fill{height:100%;border-radius:100px;transition:width .6s}
-  .prog-row-stats{display:flex;gap:8px;align-items:center;white-space:nowrap;font-family:'DM Mono',monospace;font-size:11px;min-width:140px;justify-content:flex-end}
-  .stat-total{color:var(--accent2)}.stat-done{color:var(--success)}.stat-pend{color:var(--accent3)}.stat-venc{color:var(--danger)}.stat-pct{color:var(--accent);font-weight:600;min-width:36px;text-align:right}
-  /* TABLA DE TAREAS */
+  .prog-row-stats{display:flex;gap:6px;align-items:center;white-space:nowrap;font-family:'DM Mono',monospace;font-size:11px;min-width:150px;justify-content:flex-end}
+  .stat-total{color:var(--accent2)}.stat-done{color:var(--success)}.stat-pend{color:var(--accent3)}.stat-venc{color:var(--danger)}.stat-pct{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
   .tbl-wrap{overflow:auto;border-radius:8px;border:1px solid var(--border)}
-  table{width:100%;border-collapse:collapse;min-width:600px}
+  table{width:100%;border-collapse:collapse;min-width:500px}
   thead tr{background:var(--surface2)}
   th{padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);font-family:'DM Mono',monospace;white-space:nowrap}
   td{padding:9px 12px;border-bottom:1px solid rgba(30,45,71,.4);font-size:12px;vertical-align:middle}
@@ -65,30 +59,57 @@
   .st.curso{background:rgba(245,158,11,.12);color:var(--accent3);border:1px solid rgba(245,158,11,.25)}
   .st.venc{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.25)}
   .etapa-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
-  .etapa-1{background:rgba(59,130,246,.15);color:var(--accent2)}
-  .etapa-2{background:rgba(167,139,250,.15);color:#a78bfa}
-  .etapa-3{background:rgba(0,195,165,.15);color:var(--accent)}
-  /* SELECTOR */
+  .etapa-1{background:rgba(59,130,246,.15);color:var(--accent2)}.etapa-2{background:rgba(167,139,250,.15);color:#a78bfa}.etapa-3{background:rgba(0,195,165,.15);color:var(--accent)}
+  .seg-tipo{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;font-family:'DM Mono',monospace}
+  .tipo-reunion{background:rgba(59,130,246,.2);color:var(--accent2)}.tipo-correo{background:rgba(16,185,129,.2);color:var(--success)}.tipo-llamada{background:rgba(245,158,11,.2);color:var(--accent3)}.tipo-visita{background:rgba(167,139,250,.2);color:#a78bfa}
+  .seg-estado-badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:600;font-family:'DM Mono',monospace}
+  .estado-realizado{background:rgba(16,185,129,.12);color:var(--success);border:1px solid rgba(16,185,129,.25)}
+  .estado-cancelado{background:rgba(100,116,139,.12);color:var(--text-muted);border:1px solid rgba(100,116,139,.25)}
+  .estado-noasistio{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.25)}
+  .estado-pendiente{background:rgba(245,158,11,.12);color:var(--accent3);border:1px solid rgba(245,158,11,.25)}
+  .avance-badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600}
+  .avance-sin{background:rgba(239,68,68,.1);color:var(--danger)}.avance-min{background:rgba(245,158,11,.1);color:var(--accent3)}.avance-sig{background:rgba(16,185,129,.1);color:var(--success)}
   .selector-wrap{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
-  .selector-wrap label{font-size:12px;color:var(--text-muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.8px}
-  .selector-wrap select{background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;padding:9px 16px;outline:none;min-width:260px;transition:border-color .2s}
-  .selector-wrap select:focus{border-color:var(--accent2)}
+  .selector-wrap label{font-size:12px;color:var(--text-muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.8px;white-space:nowrap}
+  .selector-wrap select,.selector-wrap input[type=date]{background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;padding:9px 14px;outline:none;transition:border-color .2s}
+  .selector-wrap select{min-width:220px}
+  .selector-wrap select:focus,.selector-wrap input[type=date]:focus{border-color:var(--accent2)}
   .selector-wrap select option{background:#111827}
-  /* ALERTA VENCIDAS */
   .alert-section{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px}
-  .alert-section h4{color:var(--danger);font-size:13px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .alert-section h4{color:var(--danger);font-size:13px;font-weight:600;margin-bottom:10px}
   .alert-prox{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px}
-  .alert-prox h4{color:var(--accent3);font-size:13px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-  /* GRID 2 COL */
-  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;margin-bottom:20px}
-  /* EMPTY */
+  .alert-prox h4{color:var(--accent3);font-size:13px;font-weight:600;margin-bottom:10px}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:20px}
   .empty-msg{padding:24px;text-align:center;color:var(--text-muted);font-size:13px}
-  /* FOOTER */
-  .report-footer{text-align:center;padding:20px;color:var(--text-muted);font-size:11px;font-family:'DM Mono',monospace;border-top:1px solid var(--border);margin-top:10px}
-  /* SPINNER */
+  .btn{padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-muted);font-family:'Outfit',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s}
+  .btn:hover{background:var(--surface2);color:var(--text)}
+  .btn-pdf{background:linear-gradient(135deg,var(--danger),#dc2626);color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;box-shadow:0 2px 10px rgba(239,68,68,.3)}
+  .btn-pdf:hover{transform:translateY(-1px)}
+  .btn-apply{background:linear-gradient(135deg,var(--accent2),#6366f1);color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif}
   .spinner{display:inline-block;width:13px;height:13px;border:2px solid var(--border);border-top-color:var(--accent2);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:5px}
   @keyframes spin{to{transform:rotate(360deg)}}
-  @media(max-width:680px){main{padding:16px}header{padding:14px 16px}.prog-row-name{min-width:120px;max-width:120px}}
+  .report-footer{text-align:center;padding:20px;color:var(--text-muted);font-size:11px;font-family:'DM Mono',monospace;border-top:1px solid var(--border);margin-top:10px}
+  /* REUNION STATS */
+  .reunion-bar{display:flex;gap:6px;align-items:center;margin-bottom:6px}
+  .rbar-label{font-size:11px;color:var(--text-soft);min-width:120px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rbar-track{flex:1;height:6px;background:var(--surface2);border-radius:100px;overflow:hidden}
+  .rbar-fill{height:100%;border-radius:100px}
+  .rbar-nums{font-family:'DM Mono',monospace;font-size:10px;min-width:80px;text-align:right}
+  @media print{
+    header{display:none!important}
+    .tabs{display:none!important}
+    .btn-pdf{display:none!important}
+    .btn{display:none!important}
+    .selector-wrap button{display:none!important}
+    body{background:#fff;color:#000}
+    .section,.mcard,.prog-wrap,.alert-section,.alert-prox{background:#fff;border:1px solid #ddd;color:#000}
+    .mcard .ml,.prog-label,.section h3,.prog-row-name,.rbar-label{color:#444}
+    .mcard .mv{color:#111}
+    td,th{color:#000;border-color:#ddd}
+    thead tr{background:#f5f5f5}
+    .chip{background:#e8f0fe;color:#1a56db;border-color:#bfdbfe}
+    .report-footer{color:#666}
+  }
 </style>
 </head>
 <body>
@@ -100,364 +121,377 @@
       <p>Certificación Buenas Prácticas — Solo lectura</p>
     </div>
   </div>
-  <div class="sync-ind">
-    <span class="sync-dot loading" id="syncDot"></span>
-    <span id="syncLabel">Conectando...</span>
-    <span id="currentDate" style="margin-left:10px;font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);background:rgba(0,195,165,.08);border:1px solid rgba(0,195,165,.2);padding:5px 10px;border-radius:6px"></span>
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <div class="sync-ind">
+      <span class="sync-dot loading" id="syncDot"></span>
+      <span id="syncLabel">Conectando...</span>
+    </div>
+    <span id="currentDate" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);background:rgba(0,195,165,.08);border:1px solid rgba(0,195,165,.2);padding:5px 10px;border-radius:6px"></span>
   </div>
 </header>
 
 <main>
   <div id="loadingMsg" style="text-align:center;padding:60px;color:var(--text-muted)">
-    <span class="spinner"></span> Cargando datos desde Google Sheets...
+    <span class="spinner"></span> Cargando datos...
   </div>
-
   <div id="appContent" style="display:none">
     <div class="tabs">
       <button class="tab on" onclick="switchTab('gerencia',this)">🏢 Gerencia</button>
       <button class="tab" onclick="switchTab('proceso',this)">📁 Por Proceso</button>
       <button class="tab" onclick="switchTab('etapa',this)">📊 Por Etapa</button>
+      <button class="tab" onclick="switchTab('periodo',this)">📅 Por Período</button>
     </div>
 
     <!-- GERENCIA -->
     <div class="panel on" id="pan-gerencia">
-      <div class="metrics" id="gMetrics"></div>
-      <div class="prog-wrap">
-        <span class="prog-label">Avance general certificación BPC</span>
-        <div class="prog-bar"><div class="prog-fill" id="gProgFill" style="width:0%"></div></div>
-        <span class="prog-pct" id="gProgPct">0%</span>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+        <button class="btn-pdf" onclick="exportarPDF('gerencia')">🖨 Exportar PDF</button>
       </div>
-      <div id="gAlertVenc"></div>
-      <div id="gAlertProx"></div>
-      <div class="grid2">
-        <div class="section">
-          <h3><span class="dot"></span> Avance por Etapa</h3>
-          <div id="gEtapas"></div>
-        </div>
-        <div class="section">
-          <h3><span class="dot"></span> Avance por Proceso</h3>
-          <div id="gProcesos"></div>
-        </div>
-      </div>
-      <div class="section">
-        <h3><span class="dot"></span> Responsables</h3>
-        <div id="gResponsables"></div>
-      </div>
+      <div id="g-content"></div>
     </div>
 
     <!-- POR PROCESO -->
     <div class="panel" id="pan-proceso">
       <div class="selector-wrap">
-        <label>Selecciona el proceso</label>
-        <select id="selProceso" onchange="renderProceso()">
-          <option value="">— Selecciona —</option>
-        </select>
+        <label>Proceso</label>
+        <select id="selProceso" onchange="renderProceso()"><option value="">— Selecciona —</option></select>
+        <button class="btn-pdf" onclick="exportarPDF('proceso')">🖨 Exportar PDF</button>
       </div>
-      <div id="procesoContent"><p class="empty-msg">Selecciona un proceso para ver su informe.</p></div>
+      <div id="proc-content"><p class="empty-msg">Selecciona un proceso.</p></div>
     </div>
 
     <!-- POR ETAPA -->
     <div class="panel" id="pan-etapa">
       <div class="selector-wrap">
-        <label>Selecciona la etapa</label>
+        <label>Etapa</label>
         <select id="selEtapa" onchange="renderEtapa()">
           <option value="">— Selecciona —</option>
           <option value="Etapa 1">Etapa 1</option>
           <option value="Etapa 2">Etapa 2</option>
           <option value="Etapa 3">Etapa 3</option>
         </select>
+        <button class="btn-pdf" onclick="exportarPDF('etapa')">🖨 Exportar PDF</button>
       </div>
-      <div id="etapaContent"><p class="empty-msg">Selecciona una etapa para ver su informe.</p></div>
+      <div id="etapa-content"><p class="empty-msg">Selecciona una etapa.</p></div>
+    </div>
+
+    <!-- POR PERÍODO -->
+    <div class="panel" id="pan-periodo">
+      <div class="selector-wrap">
+        <label>Proceso</label>
+        <select id="perProceso"><option value="">Todos los procesos</option></select>
+        <label>Desde</label>
+        <input type="date" id="perDesde">
+        <label>Hasta</label>
+        <input type="date" id="perHasta">
+        <button class="btn-apply" onclick="renderPeriodo()">Aplicar</button>
+        <button class="btn-pdf" onclick="exportarPDF('periodo')">🖨 Exportar PDF</button>
+      </div>
+      <div id="per-content"><p class="empty-msg">Selecciona un período y haz clic en Aplicar.</p></div>
     </div>
   </div>
 </main>
-
 <div class="report-footer" id="reportFooter" style="display:none">
-  Informe generado automáticamente · Tablero BPC INVIMA · Datos en tiempo real desde Google Sheets
+  Informe ejecutivo BPC · INVIMA · Datos en tiempo real desde Google Sheets
 </div>
 
 <script>
-const SCRIPT_URL='https://script.google.com/macros/s/AKfycbzsLuTiuL9_uROl6P2pFJQ60f9_8EiBQMcWfy-sfWclV625BQ7-aMqu2Grk6FIatQqk/exec';
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbxGHGvmOaRtRUMAj0TWZt4nY8qNwzX99uBM3Bq8SIQFibSNWuC2BWNsr_3vlyHpZ_qn/exec';
 const DIAS_PROX=3;
-let tasks=[];
+let tasks=[],seguimientos=[];
 
 const today=()=>new Date().toISOString().split('T')[0];
-const fmt=s=>{
-  if(!s||s==='')return'—';
-  const str=String(s).trim();
-  if(/^\d{4}-\d{2}-\d{2}/.test(str)){const p=str.split('T')[0].split('-');return`${p[2]}/${p[1]}/${p[0]}`;}
-  if(/^\d{2}\/\d{2}\/\d{4}/.test(str))return str.substring(0,10);
-  if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)){const p=str.split('/');return`${String(p[1]).padStart(2,'0')}/${String(p[0]).padStart(2,'0')}/${p[2]}`;}
-  return'—';
-};
+const fmt=s=>{if(!s||s==='')return'—';const str=String(s).trim();if(/^\d{4}-\d{2}-\d{2}/.test(str)){const p=str.split('T')[0].split('-');return`${p[2]}/${p[1]}/${p[0]}`;}if(/^\d{2}\/\d{2}\/\d{4}/.test(str))return str.substring(0,10);if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)){const p=str.split('/');return`${String(p[1]).padStart(2,'0')}/${String(p[0]).padStart(2,'0')}/${p[2]}`;}return'—';};
 const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
-function parseDate(s){
-  if(!s||s==='')return null;
-  const str=String(s).trim();
-  if(/^\d{4}-\d{2}-\d{2}/.test(str))return new Date(str.split('T')[0]);
-  if(/^\d{2}\/\d{2}\/\d{4}/.test(str)){const p=str.split('/');return new Date(`${p[2]}-${p[1]}-${p[0]}`);}
-  if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)){const p=str.split('/');return new Date(`${p[2]}-${String(p[1]).padStart(2,'0')}-${String(p[0]).padStart(2,'0')}`);}
-  return null;
-}
-function dateStr(s){
-  if(!s||s==='')return'';
-  const str=String(s).trim();
-  if(/^\d{4}-\d{2}-\d{2}/.test(str))return str.split('T')[0];
-  if(/^\d{2}\/\d{2}\/\d{4}/.test(str)){const p=str.split('/');return`${p[2]}-${p[1]}-${p[0]}`;}
-  if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)){const p=str.split('/');return`${p[2]}-${String(p[1]).padStart(2,'0')}-${String(p[0]).padStart(2,'0')}`;}
-  return'';
-}
+function parseDate(s){if(!s||s==='')return null;const str=String(s).trim();if(/^\d{4}-\d{2}-\d{2}/.test(str))return new Date(str.split('T')[0]);if(/^\d{2}\/\d{2}\/\d{4}/.test(str)){const p=str.split('/');return new Date(`${p[2]}-${p[1]}-${p[0]}`);}if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)){const p=str.split('/');return new Date(`${p[2]}-${String(p[1]).padStart(2,'0')}-${String(p[0]).padStart(2,'0')}`);}return null;}
+function dateStr(s){if(!s||s==='')return'';const str=String(s).trim();if(/^\d{4}-\d{2}-\d{2}/.test(str))return str.split('T')[0];if(/^\d{2}\/\d{2}\/\d{4}/.test(str)){const p=str.split('/');return`${p[2]}-${p[1]}-${p[0]}`;}if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)){const p=str.split('/');return`${p[2]}-${String(p[1]).padStart(2,'0')}-${String(p[0]).padStart(2,'0')}`;}return'';}
 
 function getEstado(t){if(t.estado==='completada')return'completada';const fl=dateStr(t.fechaLimite);if(fl&&today()>fl)return'vencida';return'en_curso';}
 function calcDias(t){const s=parseDate(t.fechaAsignacion);if(!s)return 0;const e=(t.estado==='completada'&&t.fechaCompletada)?parseDate(t.fechaCompletada)||new Date():new Date();const d=Math.floor((e-s)/86400000);return isNaN(d)||d<0?0:d;}
 function calcDiasRest(t){const l=parseDate(t.fechaLimite);if(!l)return null;const d=Math.floor((l-new Date(today()))/86400000);return isNaN(d)?null:d;}
 function isProxVencer(t){if(getEstado(t)==='completada')return false;const dr=calcDiasRest(t);return dr!==null&&dr>=0&&dr<=DIAS_PROX;}
+function inRange(dateVal,desde,hasta){const d=dateStr(dateVal);if(!d)return false;return(!desde||d>=desde)&&(!hasta||d<=hasta);}
 
-function setSyncState(s){
-  const dot=document.getElementById('syncDot'),lbl=document.getElementById('syncLabel');
-  if(s==='loading'){dot.className='sync-dot loading';lbl.textContent='Sincronizando...';}
-  else if(s==='ok'){dot.className='sync-dot';lbl.textContent='Conectado · Google Sheets';}
-  else{dot.className='sync-dot error';lbl.textContent='Error de conexión';}
-}
+function setSyncState(s){const dot=document.getElementById('syncDot'),lbl=document.getElementById('syncLabel');if(s==='loading'){dot.className='sync-dot loading';lbl.textContent='Sincronizando...';}else if(s==='ok'){dot.className='sync-dot';lbl.textContent='Conectado · Google Sheets';}else{dot.className='sync-dot error';lbl.textContent='Error';}}
 
 async function cargarDatos(){
   setSyncState('loading');
   try{
-    const res=await fetch(SCRIPT_URL+'?'+new URLSearchParams({action:'getTasks'}));
-    const data=await res.json();
-    if(data.success){
-      tasks=data.tasks||[];
-      setSyncState('ok');
-      document.getElementById('loadingMsg').style.display='none';
-      document.getElementById('appContent').style.display='block';
-      document.getElementById('reportFooter').style.display='block';
-      populateSelectors();
-      renderGerencia();
-    }
-  }catch(e){
-    setSyncState('error');
-    document.getElementById('loadingMsg').innerHTML='<span style="color:var(--danger)">Error al conectar con Google Sheets.</span>';
-  }
+    const[rT,rS]=await Promise.all([
+      fetch(SCRIPT_URL+'?'+new URLSearchParams({action:'getTasks'})).then(r=>r.json()),
+      fetch(SCRIPT_URL+'?'+new URLSearchParams({action:'getSeguimientos'})).then(r=>r.json())
+    ]);
+    if(rT.success)tasks=rT.tasks||[];
+    if(rS.success)seguimientos=rS.seguimientos||[];
+    setSyncState('ok');
+    document.getElementById('loadingMsg').style.display='none';
+    document.getElementById('appContent').style.display='block';
+    document.getElementById('reportFooter').style.display='block';
+    populateSelectors();
+    renderGerencia();
+  }catch(e){setSyncState('error');document.getElementById('loadingMsg').innerHTML='<span style="color:var(--danger)">Error al conectar.</span>';}
 }
 
 function populateSelectors(){
   const procs=[...new Set(tasks.map(t=>t.proceso).filter(Boolean))].sort();
-  const sel=document.getElementById('selProceso');
-  sel.innerHTML='<option value="">— Selecciona —</option>'+procs.map(p=>`<option value="${esc(p)}">${esc(p)}</option>`).join('');
+  ['selProceso','perProceso'].forEach(id=>{
+    const sel=document.getElementById(id);
+    const firstOpt=id==='perProceso'?'<option value="">Todos los procesos</option>':'<option value="">— Selecciona —</option>';
+    sel.innerHTML=firstOpt+procs.map(p=>`<option value="${esc(p)}">${esc(p)}</option>`).join('');
+  });
 }
 
-function switchTab(name,btn){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
-  document.getElementById('pan-'+name).classList.add('on');
-  btn.classList.add('on');
-}
+function switchTab(name,btn){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));document.getElementById('pan-'+name).classList.add('on');btn.classList.add('on');}
 
 // ── GERENCIA ──────────────────────────────────────────────
 function renderGerencia(){
-  const tot=tasks.length;
-  const don=tasks.filter(t=>getEstado(t)==='completada').length;
-  const pen=tasks.filter(t=>getEstado(t)==='en_curso').length;
-  const ven=tasks.filter(t=>getEstado(t)==='vencida').length;
-  const prox=tasks.filter(t=>isProxVencer(t)).length;
-  const pct=tot>0?Math.round(don/tot*100):0;
+  const tot=tasks.length,don=tasks.filter(t=>getEstado(t)==='completada').length,pen=tasks.filter(t=>getEstado(t)==='en_curso').length,ven=tasks.filter(t=>getEstado(t)==='vencida').length,prox=tasks.filter(t=>isProxVencer(t)).length,pct=tot>0?Math.round(don/tot*100):0;
+  const totalSegs=seguimientos.length,totalReuniones=seguimientos.filter(s=>s.tipo==='Reunión').length,noAsistio=seguimientos.filter(s=>s.estado==='No asistió').length;
 
-  document.getElementById('gMetrics').innerHTML=`
-    <div class="mcard c1"><div class="ml">Total tareas</div><div class="mv">${tot}</div></div>
-    <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
-    <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
-    <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
-    <div class="mcard c6"><div class="ml">Próx. a vencer</div><div class="mv">${prox}</div></div>
-    <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>`;
-  document.getElementById('gProgFill').style.width=pct+'%';
-  document.getElementById('gProgPct').textContent=pct+'%';
-
-  // Alertas vencidas
-  const vencidas=tasks.filter(t=>getEstado(t)==='vencida');
-  document.getElementById('gAlertVenc').innerHTML=vencidas.length?`
-    <div class="alert-section">
-      <h4>⚠ Tareas vencidas (${vencidas.length})</h4>
-      <div class="tbl-wrap"><table>
-        <thead><tr><th>Tarea</th><th>Proceso</th><th>Etapa</th><th>Responsables</th><th>F. Límite</th><th>Días vencida</th></tr></thead>
-        <tbody>${vencidas.map(t=>`<tr>
-          <td style="font-weight:500">${esc(t.tarea)}</td>
-          <td><span class="chip">${esc(t.proceso)}</span></td>
-          <td><span class="etapa-badge etapa-${t.etapa?t.etapa.slice(-1):'1'}">${esc(t.etapa||'—')}</span></td>
-          <td style="color:var(--text-soft)">${esc(t.responsable)}</td>
-          <td style="color:var(--danger);font-family:'DM Mono',monospace;font-size:11px">${fmt(t.fechaLimite)}</td>
-          <td style="color:var(--danger);font-family:'DM Mono',monospace;font-size:11px">${Math.abs(calcDiasRest(t)||0)}d</td>
-        </tr>`).join('')}</tbody>
-      </table></div>
-    </div>`:'';
-
-  // Alertas próximas
-  const proximas=tasks.filter(t=>isProxVencer(t));
-  document.getElementById('gAlertProx').innerHTML=proximas.length?`
-    <div class="alert-prox">
-      <h4>📅 Próximas a vencer en ${DIAS_PROX} días (${proximas.length})</h4>
-      <div class="tbl-wrap"><table>
-        <thead><tr><th>Tarea</th><th>Proceso</th><th>Etapa</th><th>Responsables</th><th>F. Límite</th><th>Días restantes</th></tr></thead>
-        <tbody>${proximas.map(t=>`<tr>
-          <td style="font-weight:500">${esc(t.tarea)}</td>
-          <td><span class="chip">${esc(t.proceso)}</span></td>
-          <td><span class="etapa-badge etapa-${t.etapa?t.etapa.slice(-1):'1'}">${esc(t.etapa||'—')}</span></td>
-          <td style="color:var(--text-soft)">${esc(t.responsable)}</td>
-          <td style="font-family:'DM Mono',monospace;font-size:11px">${fmt(t.fechaLimite)}</td>
-          <td style="color:var(--accent3);font-family:'DM Mono',monospace;font-size:11px">${calcDiasRest(t)}d</td>
-        </tr>`).join('')}</tbody>
-      </table></div>
-    </div>`:'';
-
-  // Por etapa
-  document.getElementById('gEtapas').innerHTML=renderProgRows(groupBy(tasks,'etapa'));
-  // Por proceso
-  document.getElementById('gProcesos').innerHTML=renderProgRows(groupBy(tasks,'proceso'));
-  // Por responsable
-  document.getElementById('gResponsables').innerHTML=renderProgRows(groupByResp(tasks));
+  document.getElementById('g-content').innerHTML=`
+    <div class="metrics">
+      <div class="mcard c1"><div class="ml">Total tareas</div><div class="mv">${tot}</div></div>
+      <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
+      <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
+      <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
+      <div class="mcard c6"><div class="ml">Próx. a vencer</div><div class="mv">${prox}</div></div>
+      <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>
+      <div class="mcard c7"><div class="ml">Reuniones</div><div class="mv">${totalReuniones}</div></div>
+      <div class="mcard c4"><div class="ml">No asistió</div><div class="mv">${noAsistio}</div></div>
+    </div>
+    <div class="prog-wrap">
+      <span class="prog-label">Avance general certificación BPC</span>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <span class="prog-pct">${pct}%</span>
+    </div>
+    ${renderAlertVenc(tasks)}
+    ${renderAlertProx(tasks)}
+    <div class="grid2">
+      <div class="section"><h3><span class="dot"></span> Avance por Etapa</h3>${renderProgRows(groupBy(tasks,'etapa'))}</div>
+      <div class="section"><h3><span class="dot"></span> Avance por Proceso</h3>${renderProgRows(groupBy(tasks,'proceso'))}</div>
+    </div>
+    <div class="grid2">
+      <div class="section"><h3><span class="dot"></span> Reuniones por Proceso</h3>${renderReunionesPorGrupo('proceso')}</div>
+      <div class="section"><h3><span class="dot"></span> No asistió por Proceso</h3>${renderNoAsistio('proceso')}</div>
+    </div>
+    <div class="section"><h3><span class="dot"></span> Responsables</h3>${renderProgRows(groupByResp(tasks))}</div>`;
 }
 
 // ── POR PROCESO ───────────────────────────────────────────
 function renderProceso(){
   const proc=document.getElementById('selProceso').value;
-  if(!proc){document.getElementById('procesoContent').innerHTML='<p class="empty-msg">Selecciona un proceso para ver su informe.</p>';return;}
+  if(!proc){document.getElementById('proc-content').innerHTML='<p class="empty-msg">Selecciona un proceso.</p>';return;}
   const filtered=tasks.filter(t=>t.proceso===proc);
-  if(!filtered.length){document.getElementById('procesoContent').innerHTML='<p class="empty-msg">No hay tareas para este proceso.</p>';return;}
+  const segsProc=seguimientos.filter(s=>{const t=tasks.find(x=>String(x.id)===String(s.taskId));return t&&t.proceso===proc;});
+  if(!filtered.length){document.getElementById('proc-content').innerHTML='<p class="empty-msg">No hay tareas para este proceso.</p>';return;}
   const tot=filtered.length,don=filtered.filter(t=>getEstado(t)==='completada').length,pen=filtered.filter(t=>getEstado(t)==='en_curso').length,ven=filtered.filter(t=>getEstado(t)==='vencida').length,pct=tot>0?Math.round(don/tot*100):0;
+  const reuniones=segsProc.filter(s=>s.tipo==='Reunión').length,noAsistio=segsProc.filter(s=>s.estado==='No asistió').length;
 
-  document.getElementById('procesoContent').innerHTML=`
+  document.getElementById('proc-content').innerHTML=`
     <div class="metrics">
       <div class="mcard c1"><div class="ml">Total tareas</div><div class="mv">${tot}</div></div>
       <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
       <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
       <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
       <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>
+      <div class="mcard c7"><div class="ml">Reuniones</div><div class="mv">${reuniones}</div></div>
+      <div class="mcard c4"><div class="ml">No asistió</div><div class="mv">${noAsistio}</div></div>
     </div>
     <div class="prog-wrap">
       <span class="prog-label">Avance del proceso</span>
       <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
       <span class="prog-pct">${pct}%</span>
     </div>
+    ${renderAlertVenc(filtered)}
+    ${renderAlertProx(filtered)}
     <div class="grid2">
       <div class="section"><h3><span class="dot"></span> Avance por Subproceso</h3>${renderProgRows(groupBy(filtered,'subproceso'))}</div>
       <div class="section"><h3><span class="dot"></span> Avance por Etapa</h3>${renderProgRows(groupBy(filtered,'etapa'))}</div>
     </div>
-    <div class="section">
-      <h3><span class="dot"></span> Responsables del proceso</h3>
-      ${renderProgRows(groupByResp(filtered))}
-    </div>
-    <div class="section">
-      <h3><span class="dot"></span> Tareas del proceso</h3>
-      ${renderTablaTareas(filtered)}
-    </div>`;
+    <div class="section"><h3><span class="dot"></span> Responsables del proceso</h3>${renderProgRows(groupByResp(filtered))}</div>
+    <div class="section"><h3><span class="dot"></span> Tareas del proceso</h3>${renderTablaTareas(filtered)}</div>
+    <div class="section"><h3><span class="dot"></span> Seguimientos del proceso</h3>${renderTablaSegs(segsProc)}</div>`;
 }
 
 // ── POR ETAPA ─────────────────────────────────────────────
 function renderEtapa(){
   const etapa=document.getElementById('selEtapa').value;
-  if(!etapa){document.getElementById('etapaContent').innerHTML='<p class="empty-msg">Selecciona una etapa para ver su informe.</p>';return;}
+  if(!etapa){document.getElementById('etapa-content').innerHTML='<p class="empty-msg">Selecciona una etapa.</p>';return;}
   const filtered=tasks.filter(t=>t.etapa===etapa);
-  if(!filtered.length){document.getElementById('etapaContent').innerHTML='<p class="empty-msg">No hay tareas para esta etapa.</p>';return;}
+  const segsEtapa=seguimientos.filter(s=>{const t=tasks.find(x=>String(x.id)===String(s.taskId));return t&&t.etapa===etapa;});
+  if(!filtered.length){document.getElementById('etapa-content').innerHTML='<p class="empty-msg">No hay tareas para esta etapa.</p>';return;}
   const tot=filtered.length,don=filtered.filter(t=>getEstado(t)==='completada').length,pen=filtered.filter(t=>getEstado(t)==='en_curso').length,ven=filtered.filter(t=>getEstado(t)==='vencida').length,pct=tot>0?Math.round(don/tot*100):0;
-  const eNum=etapa.slice(-1);
+  const reuniones=segsEtapa.filter(s=>s.tipo==='Reunión').length,noAsistio=segsEtapa.filter(s=>s.estado==='No asistió').length;
 
-  document.getElementById('etapaContent').innerHTML=`
+  document.getElementById('etapa-content').innerHTML=`
     <div class="metrics">
       <div class="mcard c1"><div class="ml">Total tareas</div><div class="mv">${tot}</div></div>
       <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
       <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
       <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
       <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>
+      <div class="mcard c7"><div class="ml">Reuniones</div><div class="mv">${reuniones}</div></div>
+      <div class="mcard c4"><div class="ml">No asistió</div><div class="mv">${noAsistio}</div></div>
     </div>
     <div class="prog-wrap">
       <span class="prog-label">Avance ${etapa}</span>
       <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
       <span class="prog-pct">${pct}%</span>
     </div>
+    ${renderAlertVenc(filtered)}
+    ${renderAlertProx(filtered)}
     <div class="grid2">
       <div class="section"><h3><span class="dot"></span> Avance por Proceso</h3>${renderProgRows(groupBy(filtered,'proceso'))}</div>
       <div class="section"><h3><span class="dot"></span> Responsables</h3>${renderProgRows(groupByResp(filtered))}</div>
     </div>
-    <div class="section">
-      <h3><span class="dot"></span> Tareas de ${etapa}</h3>
-      ${renderTablaTareas(filtered)}
-    </div>`;
+    <div class="section"><h3><span class="dot"></span> Tareas de ${etapa}</h3>${renderTablaTareas(filtered)}</div>
+    <div class="section"><h3><span class="dot"></span> Seguimientos de ${etapa}</h3>${renderTablaSegs(segsEtapa)}</div>`;
+}
+
+// ── POR PERÍODO ───────────────────────────────────────────
+function renderPeriodo(){
+  const proc=document.getElementById('perProceso').value;
+  const desde=document.getElementById('perDesde').value;
+  const hasta=document.getElementById('perHasta').value;
+  if(!desde&&!hasta){document.getElementById('per-content').innerHTML='<p class="empty-msg">Selecciona al menos una fecha.</p>';return;}
+
+  const tareasFiltered=tasks.filter(t=>{
+    const matchProc=!proc||t.proceso===proc;
+    const matchFecha=inRange(t.fechaAsignacion,desde,hasta);
+    return matchProc&&matchFecha;
+  });
+
+  const segsFiltered=seguimientos.filter(s=>{
+    const t=tasks.find(x=>String(x.id)===String(s.taskId));
+    const matchProc=!proc||( t&&t.proceso===proc);
+    const matchFecha=inRange(s.fecha,desde,hasta);
+    return matchProc&&matchFecha;
+  });
+
+  const tot=tareasFiltered.length,don=tareasFiltered.filter(t=>getEstado(t)==='completada').length,pen=tareasFiltered.filter(t=>getEstado(t)==='en_curso').length,ven=tareasFiltered.filter(t=>getEstado(t)==='vencida').length,pct=tot>0?Math.round(don/tot*100):0;
+  const reuniones=segsFiltered.filter(s=>s.tipo==='Reunión').length,noAsistio=segsFiltered.filter(s=>s.estado==='No asistió').length,canceladas=segsFiltered.filter(s=>s.estado==='Cancelado').length;
+  const periodo=`${desde?fmt(desde):'inicio'} — ${hasta?fmt(hasta):'hoy'}`;
+
+  document.getElementById('per-content').innerHTML=`
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 16px;margin-bottom:16px;font-size:12px;color:var(--text-muted);font-family:'DM Mono',monospace">
+      📅 Período: <strong style="color:var(--accent)">${periodo}</strong>${proc?` · Proceso: <strong style="color:var(--accent2)">${esc(proc)}</strong>`:''}
+    </div>
+    <div class="metrics">
+      <div class="mcard c1"><div class="ml">Tareas asignadas</div><div class="mv">${tot}</div></div>
+      <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
+      <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
+      <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
+      <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>
+      <div class="mcard c7"><div class="ml">Seguimientos</div><div class="mv">${segsFiltered.length}</div></div>
+      <div class="mcard c7"><div class="ml">Reuniones</div><div class="mv">${reuniones}</div></div>
+      <div class="mcard c4"><div class="ml">No asistió</div><div class="mv">${noAsistio}</div></div>
+    </div>
+    <div class="grid2">
+      <div class="section"><h3><span class="dot"></span> Tareas asignadas en el período</h3>${tareasFiltered.length?renderTablaTareas(tareasFiltered):'<p class="empty-msg">Sin tareas en este período.</p>'}</div>
+      <div class="section"><h3><span class="dot"></span> Avance por proceso</h3>${renderProgRows(groupBy(tareasFiltered,'proceso'))}</div>
+    </div>
+    <div class="section"><h3><span class="dot"></span> Seguimientos realizados en el período</h3>${segsFiltered.length?renderTablaSegs(segsFiltered):'<p class="empty-msg">Sin seguimientos en este período.</p>'}</div>`;
 }
 
 // ── HELPERS ───────────────────────────────────────────────
 function groupBy(arr,field){
   const map={};
-  arr.forEach(t=>{
-    const k=t[field]||'Sin definir';
-    if(!map[k])map[k]={total:0,done:0,venc:0};
-    map[k].total++;
-    const est=getEstado(t);
-    if(est==='completada')map[k].done++;
-    if(est==='vencida')map[k].venc++;
-  });
+  arr.forEach(t=>{const k=t[field]||'Sin definir';if(!map[k])map[k]={total:0,done:0,venc:0};map[k].total++;const est=getEstado(t);if(est==='completada')map[k].done++;if(est==='vencida')map[k].venc++;});
   return map;
 }
 function groupByResp(arr){
   const map={};
-  arr.forEach(t=>{
-    const resps=(t.responsable||'Sin responsable').split(',').map(r=>r.trim()).filter(Boolean);
-    const est=getEstado(t);
-    resps.forEach(r=>{
-      if(!map[r])map[r]={total:0,done:0,venc:0};
-      map[r].total++;
-      if(est==='completada')map[r].done++;
-      if(est==='vencida')map[r].venc++;
-    });
-  });
+  arr.forEach(t=>{const resps=(t.responsable||'Sin responsable').split(',').map(r=>r.trim()).filter(Boolean);const est=getEstado(t);resps.forEach(r=>{if(!map[r])map[r]={total:0,done:0,venc:0};map[r].total++;if(est==='completada')map[r].done++;if(est==='vencida')map[r].venc++;});});
   return map;
 }
 
 function renderProgRows(data){
   const keys=Object.keys(data).sort();
   if(!keys.length)return'<p class="empty-msg">Sin datos.</p>';
-  return keys.map(k=>{
-    const{total,done,venc}=data[k];
-    const pend=total-done;
-    const pct=total>0?Math.round(done/total*100):0;
-    const barColor=pct===100?'var(--success)':pct>=50?'var(--accent2)':'var(--accent3)';
-    return`<div class="prog-row">
-      <span class="prog-row-name" title="${esc(k)}">${esc(k)}</span>
-      <div class="prog-row-bar"><div class="prog-row-fill" style="width:${pct}%;background:${barColor}"></div></div>
-      <div class="prog-row-stats">
-        <span class="stat-total">${total}</span>
-        <span class="stat-done">✓${done}</span>
-        <span class="stat-pend">⟳${pend}</span>
-        ${venc>0?`<span class="stat-venc">⚠${venc}</span>`:''}
-        <span class="stat-pct">${pct}%</span>
-      </div>
-    </div>`;
+  return keys.map(k=>{const{total,done,venc}=data[k];const pend=total-done;const pct=total>0?Math.round(done/total*100):0;const barColor=pct===100?'var(--success)':pct>=50?'var(--accent2)':'var(--accent3)';
+    return`<div class="prog-row"><span class="prog-row-name" title="${esc(k)}">${esc(k)}</span><div class="prog-row-bar"><div class="prog-row-fill" style="width:${pct}%;background:${barColor}"></div></div><div class="prog-row-stats"><span class="stat-total">${total}</span><span class="stat-done">✓${done}</span><span class="stat-pend">⟳${pend}</span>${venc>0?`<span class="stat-venc">⚠${venc}</span>`:''}<span class="stat-pct">${pct}%</span></div></div>`;
   }).join('');
+}
+
+function renderReunionesPorGrupo(field){
+  const map={};
+  seguimientos.filter(s=>s.tipo==='Reunión').forEach(s=>{
+    const t=tasks.find(x=>String(x.id)===String(s.taskId));
+    const k=t?t[field]||'Sin definir':'Sin definir';
+    if(!map[k])map[k]={total:0,noAsistio:0,cancelado:0,realizado:0};
+    map[k].total++;
+    if(s.estado==='No asistió')map[k].noAsistio++;
+    if(s.estado==='Cancelado')map[k].cancelado++;
+    if(s.estado==='Realizado')map[k].realizado++;
+  });
+  const keys=Object.keys(map).sort();
+  if(!keys.length)return'<p class="empty-msg">Sin reuniones registradas.</p>';
+  const maxTotal=Math.max(...keys.map(k=>map[k].total));
+  return keys.map(k=>{const{total,realizado,noAsistio,cancelado}=map[k];const pct=maxTotal>0?Math.round(total/maxTotal*100):0;
+    return`<div class="reunion-bar"><span class="rbar-label" title="${esc(k)}">${esc(k)}</span><div class="rbar-track"><div class="rbar-fill" style="width:${pct}%;background:var(--accent2)"></div></div><span class="rbar-nums" style="color:var(--accent2)">${total} <span style="color:var(--success)">✓${realizado}</span> <span style="color:var(--danger)">🚫${noAsistio}</span></span></div>`;
+  }).join('');
+}
+
+function renderNoAsistio(field){
+  const map={};
+  seguimientos.filter(s=>s.estado==='No asistió').forEach(s=>{
+    const t=tasks.find(x=>String(x.id)===String(s.taskId));
+    const k=t?t[field]||'Sin definir':'Sin definir';
+    if(!map[k])map[k]=0;
+    map[k]++;
+  });
+  const keys=Object.keys(map).sort((a,b)=>map[b]-map[a]);
+  if(!keys.length)return'<p class="empty-msg" style="color:var(--success)">✓ Sin incumplimientos registrados.</p>';
+  const maxVal=Math.max(...keys.map(k=>map[k]));
+  return keys.map(k=>{const pct=maxVal>0?Math.round(map[k]/maxVal*100):0;
+    return`<div class="reunion-bar"><span class="rbar-label" title="${esc(k)}">${esc(k)}</span><div class="rbar-track"><div class="rbar-fill" style="width:${pct}%;background:var(--danger)"></div></div><span class="rbar-nums" style="color:var(--danger)">${map[k]} veces</span></div>`;
+  }).join('');
+}
+
+function renderAlertVenc(arr){
+  const vencidas=arr.filter(t=>getEstado(t)==='vencida');
+  if(!vencidas.length)return'';
+  return`<div class="alert-section"><h4>⚠ Tareas vencidas (${vencidas.length})</h4><div class="tbl-wrap"><table><thead><tr><th>Tarea</th><th>Proceso</th><th>Etapa</th><th>Responsables</th><th>F. Límite</th></tr></thead><tbody>${vencidas.map(t=>`<tr><td style="font-weight:500">${esc(t.tarea)}</td><td><span class="chip">${esc(t.proceso)}</span></td><td><span class="etapa-badge etapa-${t.etapa?t.etapa.slice(-1):'1'}">${esc(t.etapa||'—')}</span></td><td style="color:var(--text-soft);font-size:11px">${esc(t.responsable)}</td><td style="color:var(--danger);font-family:'DM Mono',monospace;font-size:11px">${fmt(t.fechaLimite)}</td></tr>`).join('')}</tbody></table></div></div>`;
+}
+
+function renderAlertProx(arr){
+  const proximas=arr.filter(t=>isProxVencer(t));
+  if(!proximas.length)return'';
+  return`<div class="alert-prox"><h4>📅 Próximas a vencer en ${DIAS_PROX} días (${proximas.length})</h4><div class="tbl-wrap"><table><thead><tr><th>Tarea</th><th>Proceso</th><th>Responsables</th><th>F. Límite</th><th>Días rest.</th></tr></thead><tbody>${proximas.map(t=>`<tr><td style="font-weight:500">${esc(t.tarea)}</td><td><span class="chip">${esc(t.proceso)}</span></td><td style="color:var(--text-soft);font-size:11px">${esc(t.responsable)}</td><td style="font-family:'DM Mono',monospace;font-size:11px">${fmt(t.fechaLimite)}</td><td style="color:var(--accent3);font-family:'DM Mono',monospace;font-size:11px">${calcDiasRest(t)}d</td></tr>`).join('')}</tbody></table></div></div>`;
 }
 
 function renderTablaTareas(arr){
   if(!arr.length)return'<p class="empty-msg">Sin tareas.</p>';
-  const sorted=[...arr].sort((a,b)=>{
-    const order={vencida:0,en_curso:1,completada:2};
-    return (order[getEstado(a)]||0)-(order[getEstado(b)]||0);
-  });
-  return`<div class="tbl-wrap"><table>
-    <thead><tr><th>Tarea</th><th>Etapa</th><th>Subproceso</th><th>Responsables</th><th>F. Asignación</th><th>F. Límite</th><th>Días</th><th>Estado</th></tr></thead>
-    <tbody>${sorted.map(t=>{
-      const est=getEstado(t);
-      const stH=est==='completada'?'<span class="st done">✓ Completada</span>':est==='vencida'?'<span class="st venc">⚠ Vencida</span>':'<span class="st curso">⟳ En curso</span>';
-      const eNum=t.etapa?t.etapa.slice(-1):'1';
-      return`<tr>
-        <td style="font-weight:500;max-width:200px">${esc(t.tarea)}</td>
-        <td><span class="etapa-badge etapa-${eNum}">${esc(t.etapa||'—')}</span></td>
-        <td style="color:var(--text-muted);font-size:11px">${esc(t.subproceso||'—')}</td>
-        <td style="color:var(--text-soft);font-size:11px;max-width:150px">${esc(t.responsable)}</td>
-        <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted)">${fmt(t.fechaAsignacion)}</td>
-        <td style="font-family:'DM Mono',monospace;font-size:11px;color:${est==='vencida'?'var(--danger)':'var(--text-muted)'}">${fmt(t.fechaLimite)}</td>
-        <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent3)">${calcDias(t)}d</td>
-        <td>${stH}</td>
-      </tr>`;
-    }).join('')}</tbody>
-  </table></div>`;
+  const sorted=[...arr].sort((a,b)=>{const order={vencida:0,en_curso:1,completada:2};return(order[getEstado(a)]||0)-(order[getEstado(b)]||0);});
+  const tipoClass={Reunión:'tipo-reunion',Correo:'tipo-correo',Llamada:'tipo-llamada',Visita:'tipo-visita'};
+  return`<div class="tbl-wrap"><table><thead><tr><th>Tarea</th><th>Etapa</th><th>Proceso</th><th>Responsables</th><th>F. Asignación</th><th>F. Límite</th><th>Días</th><th>Estado</th><th>Seguimientos</th></tr></thead><tbody>${sorted.map(t=>{
+    const est=getEstado(t);const stH=est==='completada'?'<span class="st done">✓</span>':est==='vencida'?'<span class="st venc">⚠</span>':'<span class="st curso">⟳</span>';
+    const segs=seguimientos.filter(s=>String(s.taskId)===String(t.id));
+    const tipoCount={};segs.forEach(s=>{if(s.tipo)tipoCount[s.tipo]=(tipoCount[s.tipo]||0)+1;});
+    const tipoIcons={Reunión:'🤝',Correo:'📧',Llamada:'📞',Visita:'🏃'};
+    const segSummary=Object.entries(tipoCount).map(([k,v])=>`<span class="seg-tipo ${tipoClass[k]||''}">${tipoIcons[k]}${v}</span>`).join(' ')||`<span style="color:var(--text-muted);font-size:11px">${segs.length}</span>`;
+    return`<tr><td style="font-weight:500;max-width:180px">${esc(t.tarea)}</td><td><span class="etapa-badge etapa-${t.etapa?t.etapa.slice(-1):'1'}">${esc(t.etapa||'—')}</span></td><td><span class="chip" style="font-size:10px">${esc(t.proceso)}</span></td><td style="color:var(--text-soft);font-size:11px">${esc(t.responsable)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted)">${fmt(t.fechaAsignacion)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:${est==='vencida'?'var(--danger)':'var(--text-muted)'}">${fmt(t.fechaLimite)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent3)">${calcDias(t)}d</td><td>${stH}</td><td>${segSummary}</td></tr>`;
+  }).join('')}</tbody></table></div>`;
+}
+
+function renderTablaSegs(segs){
+  if(!segs.length)return'<p class="empty-msg">Sin seguimientos.</p>';
+  const tipoClass={Reunión:'tipo-reunion',Correo:'tipo-correo',Llamada:'tipo-llamada',Visita:'tipo-visita'};
+  const estadoClass={Realizado:'estado-realizado',Cancelado:'estado-cancelado','No asistió':'estado-noasistio',Pendiente:'estado-pendiente'};
+  const avanceClass={'Sin avance':'avance-sin','Avance mínimo':'avance-min','Avance significativo':'avance-sig'};
+  const sorted=[...segs].sort((a,b)=>String(b.fecha).localeCompare(String(a.fecha)));
+  return`<div class="tbl-wrap"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Estado</th><th>Avance</th><th>Tarea</th><th>Proceso</th><th>Nota</th><th>Por</th><th>Próx. seg.</th></tr></thead><tbody>${sorted.map(s=>{
+    const t=tasks.find(x=>String(x.id)===String(s.taskId));
+    return`<tr><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent)">${fmt(s.fecha)}</td><td>${s.tipo?`<span class="seg-tipo ${tipoClass[s.tipo]||''}">${esc(s.tipo)}</span>`:'-'}</td><td>${s.estado?`<span class="seg-estado-badge ${estadoClass[s.estado]||''}">${esc(s.estado)}</span>`:'-'}</td><td>${s.avance?`<span class="avance-badge ${avanceClass[s.avance]||''}">${esc(s.avance)}</span>`:'-'}</td><td style="font-size:11px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t?esc(t.tarea):'-'}</td><td>${t?`<span class="chip" style="font-size:10px">${esc(t.proceso)}</span>`:'-'}</td><td style="font-size:11px;color:var(--text-soft);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(s.nota)}</td><td style="font-size:11px;color:var(--text-muted)">${esc(s.autor)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:#a78bfa">${fmt(s.proxFecha)}</td></tr>`;
+  }).join('')}</tbody></table></div>`;
+}
+
+// ── PDF ───────────────────────────────────────────────────
+function exportarPDF(vista){
+  const titles={gerencia:'Informe Gerencia',proceso:'Informe por Proceso',etapa:'Informe por Etapa',periodo:'Informe por Período'};
+  document.title=`BPC INVIMA · ${titles[vista]||'Informe'} · ${new Date().toLocaleDateString('es-CO')}`;
+  window.print();
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
