@@ -3,914 +3,882 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Informe Ejecutivo BPC · INVIMA</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Informe Ejecutivo BPC</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-
-:root{--bg:#0b0f1a;--surface:#111827;--surface2:#1a2236;--border:#1e2d47;--accent:#00c3a5;--accent2:#3b82f6;--accent3:#f59e0b;--danger:#ef4444;--success:#10b981;--text:#e2e8f0;--text-muted:#64748b;--text-soft:#94a3b8;--radius:12px}
+:root{--bg:#0b0f1a;--sur:#111827;--sur2:#1a2236;--brd:#1e2d47;--acc:#00c3a5;--bl:#3b82f6;--am:#f59e0b;--rd:#ef4444;--gn:#10b981;--tx:#e2e8f0;--txm:#64748b;--txs:#94a3b8;--rad:12px}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;min-height:100vh}
-header{background:linear-gradient(135deg,#0b1220,#0d1f3c);border-bottom:1px solid var(--border);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:100}
-.hdr-left{display:flex;align-items:center;gap:12px}
-.logo{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:20px;font-weight:700;color:#000}
-.hdr-title h1{font-family:'DM Serif Display',serif;font-size:19px}
-.hdr-title p{font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.5px}
-.sync-ind{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)}
-.sync-dot{width:8px;height:8px;border-radius:50%;background:#22c55e}
-.sync-dot.loading{background:var(--accent3);animation:pulse 1s infinite}
+body{background:var(--bg);color:var(--tx);font-family:'Outfit',sans-serif;font-size:14px;min-height:100vh}
+header{background:linear-gradient(135deg,#0b1220,#0d1f3c);border-bottom:1px solid var(--brd);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:100}
+.hlogo{width:40px;height:40px;background:linear-gradient(135deg,var(--acc),var(--bl));border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:18px;font-weight:700;color:#000}
+.htitle h1{font-family:'DM Serif Display',serif;font-size:18px}
+.htitle p{font-size:10px;color:var(--txm);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.5px}
+.hleft{display:flex;align-items:center;gap:10px}
+.hright{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sdot{width:8px;height:8px;border-radius:50%;background:#22c55e}
+.sdot.load{background:var(--am);animation:pulse 1s infinite}
+.sdot.err{background:var(--rd)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-main{padding:26px 32px;max-width:1400px;margin:0 auto}
-.tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content;flex-wrap:wrap}
-.tab{padding:8px 20px;border-radius:7px;border:none;background:transparent;color:var(--text-muted);font-family:'Outfit',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
-.tab.on{background:var(--accent2);color:#fff;box-shadow:0 2px 8px rgba(59,130,246,.4)}
-.tab:hover:not(.on){background:var(--surface2);color:var(--text)}
+#syncLbl{font-size:11px;color:var(--txm)}
+#curDate{font-family:'DM Mono',monospace;font-size:11px;color:var(--acc);background:rgba(0,195,165,.08);border:1px solid rgba(0,195,165,.2);padding:5px 10px;border-radius:6px}
+.btn-refresh{background:var(--sur2);border:1px solid var(--brd);color:var(--txm);padding:5px 12px;border-radius:7px;font-family:'Outfit',sans-serif;font-size:12px;cursor:pointer}
+.btn-refresh:hover{color:var(--tx);background:var(--brd)}
+main{padding:24px 28px;max-width:1400px;margin:0 auto}
+.tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--sur);border:1px solid var(--brd);border-radius:10px;padding:4px;width:fit-content;flex-wrap:wrap}
+.tab{padding:7px 18px;border-radius:7px;border:none;background:transparent;color:var(--txm);font-family:'Outfit',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+.tab.on{background:var(--bl);color:#fff;box-shadow:0 2px 8px rgba(59,130,246,.4)}
+.tab:hover:not(.on){background:var(--sur2);color:var(--tx)}
 .panel{display:none}.panel.on{display:block}
-.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px}
-.mcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;position:relative;overflow:hidden;text-align:center}
-.mcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.mcard.c1::before{background:var(--accent2)}.mcard.c2::before{background:var(--success)}.mcard.c3::before{background:var(--accent3)}.mcard.c4::before{background:var(--danger)}.mcard.c5::before{background:var(--accent)}.mcard.c6::before{background:#a78bfa}.mcard.c7::before{background:#06b6d4}
-.mcard .ml{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);font-family:'DM Mono',monospace;margin-bottom:6px}
-.mcard .mv{font-size:28px;font-weight:700;font-family:'DM Serif Display',serif;line-height:1}
-.mcard.c1 .mv{color:var(--accent2)}.mcard.c2 .mv{color:var(--success)}.mcard.c3 .mv{color:var(--accent3)}.mcard.c4 .mv{color:var(--danger)}.mcard.c5 .mv{color:var(--accent)}.mcard.c6 .mv{color:#a78bfa}.mcard.c7 .mv{color:#06b6d4}
-.prog-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;gap:16px}
-.prog-label{font-size:12px;color:var(--text-muted);white-space:nowrap;font-family:'DM Mono',monospace}
-.prog-bar{flex:1;height:10px;background:var(--surface2);border-radius:100px;overflow:hidden;border:1px solid var(--border)}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .8s}
-.prog-pct{font-size:22px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--accent);min-width:55px;text-align:right}
-.section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px}
-.section h3{font-family:'DM Serif Display',serif;font-size:16px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
-.section h3 .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:18px}
-.tbl-wrap{overflow:auto;border-radius:8px;border:1px solid var(--border)}
+/* METRICS */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
+.mc{background:var(--sur);border:1px solid var(--brd);border-radius:var(--rad);padding:14px;position:relative;overflow:hidden;text-align:center}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.mc.c1::before{background:var(--bl)}.mc.c2::before{background:var(--gn)}.mc.c3::before{background:var(--am)}.mc.c4::before{background:var(--rd)}.mc.c5::before{background:var(--acc)}.mc.c6::before{background:#a78bfa}.mc.c7::before{background:#06b6d4}
+.mc .ml{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--txm);font-family:'DM Mono',monospace;margin-bottom:6px}
+.mc .mv{font-size:26px;font-weight:700;font-family:'DM Serif Display',serif;line-height:1}
+.mc.c1 .mv{color:var(--bl)}.mc.c2 .mv{color:var(--gn)}.mc.c3 .mv{color:var(--am)}.mc.c4 .mv{color:var(--rd)}.mc.c5 .mv{color:var(--acc)}.mc.c6 .mv{color:#a78bfa}.mc.c7 .mv{color:#06b6d4}
+/* PROGRESS */
+.pwrap{background:var(--sur);border:1px solid var(--brd);border-radius:var(--rad);padding:13px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px}
+.plbl{font-size:11px;color:var(--txm);white-space:nowrap;font-family:'DM Mono',monospace}
+.pbar{flex:1;height:9px;background:var(--sur2);border-radius:100px;overflow:hidden;border:1px solid var(--brd)}
+.pfill{height:100%;background:linear-gradient(90deg,var(--acc),var(--bl));border-radius:100px;transition:width .6s}
+.ppct{font-size:20px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--acc);min-width:50px;text-align:right}
+/* SECTION */
+.sec{background:var(--sur);border:1px solid var(--brd);border-radius:var(--rad);padding:18px;margin-bottom:16px}
+.sec h3{font-family:'DM Serif Display',serif;font-size:15px;margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid var(--brd);display:flex;align-items:center;gap:8px}
+.sec h3 .d{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:14px}
+/* TABLE */
+.tw{overflow:auto;border-radius:8px;border:1px solid var(--brd)}
 table{width:100%;border-collapse:collapse}
-thead tr{background:var(--surface2)}
-th{padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);font-family:'DM Mono',monospace;white-space:nowrap}
-td{padding:9px 12px;border-bottom:1px solid rgba(30,45,71,.4);font-size:12px;vertical-align:middle}
+thead tr{background:var(--sur2)}
+th{padding:8px 11px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--txm);font-family:'DM Mono',monospace;white-space:nowrap}
+td{padding:8px 11px;border-bottom:1px solid rgba(30,45,71,.4);font-size:12px;vertical-align:middle}
 tr:last-child td{border-bottom:none}
-tr:hover td{background:rgba(59,130,246,.03)}
-.chip{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;background:rgba(59,130,246,.1);color:var(--accent2);border:1px solid rgba(59,130,246,.2);white-space:nowrap}
-.st{display:inline-block;padding:2px 9px;border-radius:100px;font-size:10px;font-weight:600;font-family:'DM Mono',monospace}
-.st.done{background:rgba(16,185,129,.12);color:var(--success);border:1px solid rgba(16,185,129,.25)}
-.st.curso{background:rgba(245,158,11,.12);color:var(--accent3);border:1px solid rgba(245,158,11,.25)}
-.st.venc{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.25)}
-.etapa-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
-.etapa-1{background:rgba(59,130,246,.15);color:var(--accent2)}.etapa-2{background:rgba(167,139,250,.15);color:#a78bfa}.etapa-3{background:rgba(0,195,165,.15);color:var(--accent)}
-.seg-tipo{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;font-family:'DM Mono',monospace}
-.tipo-reunion{background:rgba(59,130,246,.2);color:var(--accent2)}.tipo-correo{background:rgba(16,185,129,.2);color:var(--success)}.tipo-llamada{background:rgba(245,158,11,.2);color:var(--accent3)}.tipo-visita{background:rgba(167,139,250,.2);color:#a78bfa}
-.seg-estado-badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:600;font-family:'DM Mono',monospace}
-.estado-realizado{background:rgba(16,185,129,.12);color:var(--success);border:1px solid rgba(16,185,129,.25)}
-.estado-cancelado{background:rgba(100,116,139,.12);color:var(--text-muted);border:1px solid rgba(100,116,139,.25)}
-.estado-noasistio{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.25)}
-.estado-pendiente{background:rgba(245,158,11,.12);color:var(--accent3);border:1px solid rgba(245,158,11,.25)}
-.avance-badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600}
-.avance-sin{background:rgba(239,68,68,.1);color:var(--danger)}.avance-min{background:rgba(245,158,11,.1);color:var(--accent3)}.avance-sig{background:rgba(16,185,129,.1);color:var(--success)}
-
-.semaforo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
-.semaforo-card{border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;border:1px solid}
-.sem-verde{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25)}
-.sem-amarillo{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25)}
-.sem-rojo{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.25)}
-.sem-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
-.sem-verde .sem-dot{background:var(--success)}.sem-amarillo .sem-dot{background:var(--accent3)}.sem-rojo .sem-dot{background:var(--danger)}
-.sem-name{font-size:12px;font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sem-verde .sem-name{color:var(--success)}.sem-amarillo .sem-name{color:var(--accent3)}.sem-rojo .sem-name{color:var(--danger)}
-.sem-pct{font-family:'DM Mono',monospace;font-size:13px;font-weight:700}
-.sem-verde .sem-pct{color:var(--success)}.sem-amarillo .sem-pct{color:var(--accent3)}.sem-rojo .sem-pct{color:var(--danger)}
-
-.prog-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(30,45,71,.4)}
-.prog-row:last-child{border-bottom:none}
-.prog-row-name{font-size:12px;color:var(--text-soft);min-width:150px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.prog-row-bar{flex:1;height:8px;background:var(--surface2);border-radius:100px;overflow:hidden}
-.prog-row-fill{height:100%;border-radius:100px;transition:width .6s}
-.prog-row-stats{display:flex;gap:6px;align-items:center;white-space:nowrap;font-family:'DM Mono',monospace;font-size:11px;min-width:140px;justify-content:flex-end}
-
-.reunion-bar{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(30,45,71,.3)}
-.reunion-bar:last-child{border-bottom:none}
-.rbar-label{font-size:12px;color:var(--text-soft);min-width:140px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rbar-track{flex:1;height:7px;background:var(--surface2);border-radius:100px;overflow:hidden}
-.rbar-fill{height:100%;border-radius:100px}
-.rbar-nums{font-family:'DM Mono',monospace;font-size:11px;min-width:100px;text-align:right}
-
-.tipo-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
-.tipo-stat-card{background:var(--surface2);border-radius:8px;padding:12px;text-align:center;border:1px solid var(--border)}
-.tipo-stat-icon{font-size:22px;margin-bottom:4px}
-.tipo-stat-num{font-size:24px;font-weight:700;font-family:'DM Serif Display',serif}
-.tipo-stat-label{font-size:11px;color:var(--text-muted);margin-top:2px}
-.tipo-stat-sub{font-size:10px;font-family:'DM Mono',monospace;margin-top:4px}
-
-.alert-box{border-radius:var(--radius);padding:16px 20px;margin-bottom:16px}
-.alert-venc{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2)}
-.alert-prox{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2)}
-.alert-prox-seg{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2)}
-.alert-box h4{font-size:13px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.alert-venc h4{color:var(--danger)}.alert-prox h4{color:var(--accent3)}.alert-prox-seg h4{color:#a78bfa}
-.selector-wrap{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
-.selector-wrap label{font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.8px;white-space:nowrap}
-.selector-wrap select,.selector-wrap input[type=date]{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;padding:8px 12px;outline:none;transition:border-color .2s}
-.selector-wrap select{min-width:200px}
-.selector-wrap select:focus,.selector-wrap input[type=date]:focus{border-color:var(--accent2)}
-.selector-wrap select option{background:#111827}
-.btn-apply{background:linear-gradient(135deg,var(--accent2),#6366f1);color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif}
-.btn-pdf{background:linear-gradient(135deg,var(--danger),#dc2626);color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif}
-.empty-msg{padding:20px;text-align:center;color:var(--text-muted);font-size:13px}
-.periodo-header{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 16px;margin-bottom:16px;font-size:12px;color:var(--text-muted);font-family:'DM Mono',monospace}
-.spinner{display:inline-block;width:13px;height:13px;border:2px solid var(--border);border-top-color:var(--accent2);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:5px}
+/* BADGES */
+.chip{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;background:rgba(59,130,246,.1);color:var(--bl);border:1px solid rgba(59,130,246,.2);white-space:nowrap}
+.st{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:600;font-family:'DM Mono',monospace}
+.st.done{background:rgba(16,185,129,.12);color:var(--gn);border:1px solid rgba(16,185,129,.25)}
+.st.curso{background:rgba(245,158,11,.12);color:var(--am);border:1px solid rgba(245,158,11,.25)}
+.st.venc{background:rgba(239,68,68,.12);color:var(--rd);border:1px solid rgba(239,68,68,.25)}
+.eb{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600}
+.e1{background:rgba(59,130,246,.15);color:var(--bl)}.e2{background:rgba(167,139,250,.15);color:#a78bfa}.e3{background:rgba(0,195,165,.15);color:var(--acc)}
+.tb{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;font-family:'DM Mono',monospace}
+.tr2{background:rgba(59,130,246,.15);color:var(--bl)}.tc{background:rgba(16,185,129,.15);color:var(--gn)}.tl{background:rgba(245,158,11,.15);color:var(--am)}.tv{background:rgba(167,139,250,.15);color:#a78bfa}
+.es{display:inline-block;padding:2px 7px;border-radius:100px;font-size:10px;font-weight:600;font-family:'DM Mono',monospace}
+.er{background:rgba(16,185,129,.12);color:var(--gn);border:1px solid rgba(16,185,129,.25)}
+.eca{background:rgba(100,116,139,.12);color:var(--txm);border:1px solid rgba(100,116,139,.25)}
+.ena{background:rgba(239,68,68,.12);color:var(--rd);border:1px solid rgba(239,68,68,.25)}
+.ep{background:rgba(245,158,11,.12);color:var(--am);border:1px solid rgba(245,158,11,.25)}
+.av{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600}
+.as{background:rgba(239,68,68,.1);color:var(--rd)}.am2{background:rgba(245,158,11,.1);color:var(--am)}.ag{background:rgba(16,185,129,.1);color:var(--gn)}
+/* PROG ROWS */
+.pr{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(30,45,71,.35)}
+.pr:last-child{border-bottom:none}
+.prn{font-size:12px;color:var(--txs);min-width:150px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prb{flex:1;height:7px;background:var(--sur2);border-radius:100px;overflow:hidden}
+.prf{height:100%;border-radius:100px;transition:width .5s}
+.prs{display:flex;gap:6px;align-items:center;white-space:nowrap;font-family:'DM Mono',monospace;font-size:11px;min-width:130px;justify-content:flex-end}
+/* SEMAFORO */
+.smg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.smc{border-radius:9px;padding:11px 14px;display:flex;align-items:center;gap:9px;border:1px solid}
+.smv{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25)}.sma{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25)}.smr{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.25)}
+.smd{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.smv .smd{background:var(--gn)}.sma .smd{background:var(--am)}.smr .smd{background:var(--rd)}
+.smn{font-size:12px;font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.smv .smn{color:var(--gn)}.sma .smn{color:var(--am)}.smr .smn{color:var(--rd)}
+.smp{font-family:'DM Mono',monospace;font-size:13px;font-weight:700}
+.smv .smp{color:var(--gn)}.sma .smp{color:var(--am)}.smr .smp{color:var(--rd)}
+/* AVANCE STATS */
+.avg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.avc{border-radius:9px;padding:13px;text-align:center;border:1px solid}
+.avc-g{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25)}.avc-a{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25)}.avc-r{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.25)}.avc-m{background:rgba(100,116,139,.08);border-color:rgba(100,116,139,.2)}
+.avc-g .avn{color:var(--gn)}.avc-a .avn{color:var(--am)}.avc-r .avn{color:var(--rd)}.avc-m .avn{color:var(--txm)}
+.avn{font-size:26px;font-weight:700;font-family:'DM Serif Display',serif;line-height:1}
+.avl{font-size:11px;font-weight:600;margin-top:4px}
+.avc-g .avl{color:var(--gn)}.avc-a .avl{color:var(--am)}.avc-r .avl{color:var(--rd)}.avc-m .avl{color:var(--txm)}
+.avp{font-size:10px;color:var(--txm);margin-top:2px}
+.avbar{height:4px;border-radius:100px;margin-top:8px;overflow:hidden}
+.avc-g .avbar{background:rgba(16,185,129,.15)}.avc-a .avbar{background:rgba(245,158,11,.15)}.avc-r .avbar{background:rgba(239,68,68,.15)}.avc-m .avbar{background:rgba(100,116,139,.15)}
+.avbf{height:100%;border-radius:100px}
+.avc-g .avbf{background:var(--gn)}.avc-a .avbf{background:var(--am)}.avc-r .avbf{background:var(--rd)}.avc-m .avbf{background:var(--txm)}
+/* ALERTS */
+.ab{border-radius:var(--rad);padding:14px 18px;margin-bottom:14px}
+.abv{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2)}.abp{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2)}.abs{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2)}
+.ab h4{font-size:13px;font-weight:600;margin-bottom:10px}
+.abv h4{color:var(--rd)}.abp h4{color:var(--am)}.abs h4{color:#a78bfa}
+/* ETAPA BLOCK */
+.eblk{margin-bottom:14px;border:1px solid;border-radius:9px;overflow:hidden}
+.eblk-hdr{padding:11px 14px;border-bottom:1px solid;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.eblk-proc{padding:10px 14px;border-bottom:1px solid rgba(30,45,71,.3)}
+.eblk-proc:last-child{border-bottom:none}
+.eblk-proc-hdr{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+/* TIPO STATS */
+.tsg{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}
+.tsc{background:var(--sur2);border-radius:8px;padding:12px;text-align:center;border:1px solid var(--brd)}
+.tsi{font-size:20px;margin-bottom:3px}.tsn{font-size:22px;font-weight:700;font-family:'DM Serif Display',serif}.tsl{font-size:11px;color:var(--txm);margin-top:2px}.tss{font-size:10px;font-family:'DM Mono',monospace;margin-top:3px}
+/* RBAR */
+.rb{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(30,45,71,.3)}
+.rb:last-child{border-bottom:none}
+.rbl{font-size:12px;color:var(--txs);min-width:130px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rbt{flex:1;height:6px;background:var(--sur2);border-radius:100px;overflow:hidden}
+.rbf{height:100%;border-radius:100px}.rbn{font-family:'DM Mono',monospace;font-size:11px;min-width:90px;text-align:right}
+/* SELECTOR */
+.swrap{display:flex;align-items:center;gap:10px;margin-bottom:18px;background:var(--sur);border:1px solid var(--brd);border-radius:var(--rad);padding:14px;flex-wrap:wrap}
+.swrap label{font-size:11px;color:var(--txm);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.7px;white-space:nowrap}
+.swrap select,.swrap input[type=date]{background:var(--sur2);border:1px solid var(--brd);border-radius:7px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:13px;padding:7px 11px;outline:none}
+.swrap select{min-width:190px}
+.swrap select:focus,.swrap input[type=date]:focus{border-color:var(--bl)}
+.swrap select option{background:#111827}
+.btn-apply{background:linear-gradient(135deg,var(--bl),#6366f1);color:#fff;border:none;padding:8px 18px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif}
+.btn-pdf{background:linear-gradient(135deg,var(--rd),#dc2626);color:#fff;border:none;padding:8px 16px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif}
+.btn-right{display:flex;justify-content:flex-end;margin-bottom:12px}
+.phdr{background:var(--sur2);border:1px solid var(--brd);border-radius:7px;padding:9px 14px;margin-bottom:14px;font-size:12px;color:var(--txm);font-family:'DM Mono',monospace}
+.empty{padding:20px;text-align:center;color:var(--txm);font-size:13px}
+.spinner{display:inline-block;width:12px;height:12px;border:2px solid var(--brd);border-top-color:var(--bl);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:5px}
 @keyframes spin{to{transform:rotate(360deg)}}
+/* PRINT HEADER */
+.phd{display:none}
 
 @media print {
- @page { margin: 15mm 12mm; size: A4 portrait; }
- * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
- header, .tabs, .selector-wrap, .btn-pdf, .btn-apply { display: none !important; }
- body { background: #fff !important; color: #111 !important; font-size: 11pt; font-family: 'Outfit', sans-serif; }
- main { padding: 0 !important; max-width: 100% !important; }
- .panel { display: block !important; }
-
- .print-header { display: block !important; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 3px solid #1a56db; }
- .print-header h1 { font-family: 'DM Serif Display', serif; font-size: 22pt; color: #111; margin-bottom: 4px; }
- .print-header .sub { font-size: 10pt; color: #555; font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
- .print-header .meta { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 8px; }
- .print-header .meta-item { font-size: 10pt; color: #333; }
- .print-header .meta-item strong { color: #1a56db; }
-
- .metrics { grid-template-columns: repeat(4, 1fr) !important; gap: 8px !important; margin-bottom: 14px !important; }
- .mcard { background: #f8faff !important; border: 1px solid #dde4f0 !important; border-radius: 8px !important; padding: 10px 8px !important; page-break-inside: avoid; }
- .mcard::before { height: 3px !important; }
- .mcard.c1::before { background: #1a56db !important; }
- .mcard.c2::before { background: #059669 !important; }
- .mcard.c3::before { background: #d97706 !important; }
- .mcard.c4::before { background: #dc2626 !important; }
- .mcard.c5::before { background: #0f6e56 !important; }
- .mcard.c6::before { background: #7c3aed !important; }
- .mcard.c7::before { background: #0891b2 !important; }
- .mcard .ml { color: #555 !important; font-size: 7pt !important; }
- .mcard .mv { font-size: 20pt !important; }
- .mcard.c1 .mv { color: #1a56db !important; }
- .mcard.c2 .mv { color: #059669 !important; }
- .mcard.c3 .mv { color: #d97706 !important; }
- .mcard.c4 .mv { color: #dc2626 !important; }
- .mcard.c5 .mv { color: #0f6e56 !important; }
- .mcard.c6 .mv { color: #7c3aed !important; }
- .mcard.c7 .mv { color: #0891b2 !important; }
-
- .prog-wrap { background: #f8faff !important; border: 1px solid #dde4f0 !important; padding: 10px 16px !important; margin-bottom: 14px !important; }
- .prog-label { color: #555 !important; font-size: 9pt !important; }
- .prog-bar { background: #e5e9f5 !important; border: 1px solid #c5cde8 !important; height: 10px !important; }
- .prog-fill { background: linear-gradient(90deg, #0f6e56, #1a56db) !important; }
- .prog-pct { color: #0f6e56 !important; font-size: 16pt !important; }
-
- .section { background: #fff !important; border: 1px solid #dde4f0 !important; border-radius: 8px !important; padding: 14px !important; margin-bottom: 14px !important; page-break-inside: avoid; }
- .section h3 { color: #111 !important; font-size: 13pt !important; border-bottom: 1px solid #dde4f0 !important; padding-bottom: 8px !important; margin-bottom: 12px !important; }
- .section h3 .dot { width: 10px !important; height: 10px !important; }
- .grid2 { grid-template-columns: 1fr 1fr !important; gap: 12px !important; margin-bottom: 14px !important; }
-
- .tbl-wrap { overflow: visible !important; border: 1px solid #dde4f0 !important; border-radius: 6px !important; }
- table { width: 100% !important; border-collapse: collapse !important; font-size: 9pt !important; }
- thead tr { background: #eef2fb !important; }
- th { color: #444 !important; padding: 7px 8px !important; font-size: 8pt !important; border-bottom: 1px solid #c5cde8 !important; white-space: normal !important; }
- td { padding: 7px 8px !important; border-bottom: 1px solid #e5e9f5 !important; color: #222 !important; white-space: normal !important; word-break: break-word !important; }
- tr:hover td { background: transparent !important; }
- .chip { background: #e8f0fe !important; color: #1a56db !important; border-color: #bfdbfe !important; font-size: 8pt !important; }
- .st.done { background: #d1fae5 !important; color: #059669 !important; border-color: #6ee7b7 !important; }
- .st.curso { background: #fef3c7 !important; color: #d97706 !important; border-color: #fcd34d !important; }
- .st.venc { background: #fee2e2 !important; color: #dc2626 !important; border-color: #fca5a5 !important; }
- .etapa-badge { font-size: 8pt !important; padding: 1px 6px !important; }
- .etapa-1 { background: #dbeafe !important; color: #1d4ed8 !important; }
- .etapa-2 { background: #ede9fe !important; color: #7c3aed !important; }
- .etapa-3 { background: #d1fae5 !important; color: #065f46 !important; }
- .seg-tipo { font-size: 8pt !important; padding: 1px 5px !important; }
- .tipo-reunion { background: #dbeafe !important; color: #1d4ed8 !important; }
- .tipo-correo { background: #d1fae5 !important; color: #065f46 !important; }
- .tipo-llamada { background: #fef3c7 !important; color: #92400e !important; }
- .tipo-visita { background: #ede9fe !important; color: #5b21b6 !important; }
- .seg-estado-badge { font-size: 8pt !important; padding: 1px 6px !important; }
- .estado-realizado { background: #d1fae5 !important; color: #065f46 !important; border-color: #6ee7b7 !important; }
- .estado-cancelado { background: #f3f4f6 !important; color: #6b7280 !important; border-color: #d1d5db !important; }
- .estado-noasistio { background: #fee2e2 !important; color: #dc2626 !important; border-color: #fca5a5 !important; }
- .estado-pendiente { background: #fef3c7 !important; color: #d97706 !important; border-color: #fcd34d !important; }
- .avance-badge { font-size: 8pt !important; }
- .avance-sin { background: #fee2e2 !important; color: #dc2626 !important; }
- .avance-min { background: #fef3c7 !important; color: #d97706 !important; }
- .avance-sig { background: #d1fae5 !important; color: #059669 !important; }
-
- .semaforo-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
- .semaforo-card { border-radius: 6px !important; padding: 8px 12px !important; page-break-inside: avoid; }
- .sem-verde { background: #d1fae5 !important; border-color: #6ee7b7 !important; }
- .sem-amarillo { background: #fef3c7 !important; border-color: #fcd34d !important; }
- .sem-rojo { background: #fee2e2 !important; border-color: #fca5a5 !important; }
- .sem-verde .sem-name, .sem-verde .sem-pct { color: #065f46 !important; }
- .sem-amarillo .sem-name, .sem-amarillo .sem-pct { color: #92400e !important; }
- .sem-rojo .sem-name, .sem-rojo .sem-pct { color: #dc2626 !important; }
- .sem-verde .sem-dot { background: #059669 !important; }
- .sem-amarillo .sem-dot { background: #d97706 !important; }
- .sem-rojo .sem-dot { background: #dc2626 !important; }
-
- .prog-row-name { color: #444 !important; }
- .prog-row-bar { background: #e5e9f5 !important; }
- .rbar-label { color: #444 !important; }
- .rbar-track { background: #e5e9f5 !important; }
- .rbar-nums { color: #333 !important; }
-
- .tipo-stats { grid-template-columns: repeat(4, 1fr) !important; gap: 8px !important; }
- .tipo-stat-card { background: #f8faff !important; border: 1px solid #dde4f0 !important; border-radius: 6px !important; }
- .tipo-stat-num { font-size: 18pt !important; color: #111 !important; }
- .tipo-stat-label { color: #555 !important; }
- .tipo-stat-sub { color: #777 !important; }
-
- .alert-box { border-radius: 6px !important; padding: 12px 14px !important; margin-bottom: 12px !important; page-break-inside: avoid; }
- .alert-venc { background: #fff5f5 !important; border-color: #fca5a5 !important; }
- .alert-prox { background: #fffbeb !important; border-color: #fcd34d !important; }
- .alert-prox-seg { background: #f5f3ff !important; border-color: #c4b5fd !important; }
- .alert-venc h4 { color: #dc2626 !important; }
- .alert-prox h4 { color: #d97706 !important; }
- .alert-prox-seg h4 { color: #7c3aed !important; }
-
- .periodo-header { background: #eef2fb !important; border: 1px solid #c5cde8 !important; color: #333 !important; }
-
- .empty-msg { color: #888 !important; }
-
- div[style*="background:rgba(16,185,129,.08)"],
- div[style*="background:rgba(245,158,11,.08)"],
- div[style*="background:rgba(239,68,68,.08)"],
- div[style*="background:rgba(100,116,139,.08)"] {
- page-break-inside: avoid;
- }
-
- div[style*="border:1px solid rgba(59,130,246,.25)"],
- div[style*="border:1px solid rgba(167,139,250,.25)"],
- div[style*="border:1px solid rgba(0,195,165,.25)"] {
- page-break-inside: avoid;
- margin-bottom: 12px !important;
- }
- div[style*="background:rgba(59,130,246,.08)"],
- div[style*="background:rgba(167,139,250,.08)"],
- div[style*="background:rgba(0,195,165,.08)"] {
- background: #f8faff !important;
- border-color: #c5cde8 !important;
- }
+  @page{margin:14mm 11mm;size:A4 portrait}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  header,.tabs,.swrap,.btn-pdf,.btn-apply,.btn-right,.btn-refresh{display:none!important}
+  body{background:#fff!important;color:#111!important;font-size:10pt;font-family:'Outfit',sans-serif}
+  main{padding:0!important;max-width:100%!important}
+  .panel{display:block!important}
+  .phd{display:block!important;margin-bottom:16px;padding-bottom:12px;border-bottom:3px solid #1a56db}
+  .phd h1{font-family:'DM Serif Display',serif;font-size:20pt;color:#111;margin-bottom:3px}
+  .phd .ps{font-size:9pt;color:#555;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .phd .pm{display:flex;gap:20px;flex-wrap:wrap;margin-top:6px}
+  .phd .pm span{font-size:9pt;color:#333}
+  .phd .pm strong{color:#1a56db}
+  .metrics{grid-template-columns:repeat(4,1fr)!important;gap:7px!important;margin-bottom:12px!important}
+  .mc{background:#f8faff!important;border:1px solid #dde4f0!important;border-radius:7px!important;padding:9px 7px!important;page-break-inside:avoid}
+  .mc::before{height:3px!important}
+  .mc.c1::before{background:#1a56db!important}.mc.c2::before{background:#059669!important}.mc.c3::before{background:#d97706!important}.mc.c4::before{background:#dc2626!important}.mc.c5::before{background:#0f6e56!important}.mc.c6::before{background:#7c3aed!important}.mc.c7::before{background:#0891b2!important}
+  .mc .ml{color:#555!important;font-size:7pt!important}
+  .mc .mv{font-size:18pt!important}
+  .mc.c1 .mv{color:#1a56db!important}.mc.c2 .mv{color:#059669!important}.mc.c3 .mv{color:#d97706!important}.mc.c4 .mv{color:#dc2626!important}.mc.c5 .mv{color:#0f6e56!important}.mc.c6 .mv{color:#7c3aed!important}.mc.c7 .mv{color:#0891b2!important}
+  .pwrap{background:#f8faff!important;border:1px solid #dde4f0!important;padding:9px 14px!important;margin-bottom:12px!important}
+  .plbl{color:#555!important;font-size:8pt!important}
+  .pbar{background:#e5e9f5!important;border:1px solid #c5cde8!important;height:9px!important}
+  .pfill{background:linear-gradient(90deg,#0f6e56,#1a56db)!important}
+  .ppct{color:#0f6e56!important;font-size:15pt!important}
+  .sec{background:#fff!important;border:1px solid #dde4f0!important;border-radius:7px!important;padding:12px!important;margin-bottom:12px!important;page-break-inside:avoid}
+  .sec h3{color:#111!important;font-size:12pt!important;border-bottom:1px solid #dde4f0!important;padding-bottom:7px!important;margin-bottom:10px!important}
+  .g2{grid-template-columns:1fr 1fr!important;gap:10px!important;margin-bottom:12px!important}
+  .tw{overflow:visible!important;border:1px solid #dde4f0!important;border-radius:5px!important}
+  table{font-size:8pt!important}
+  thead tr{background:#eef2fb!important}
+  th{color:#444!important;padding:6px 7px!important;font-size:7pt!important;border-bottom:1px solid #c5cde8!important;white-space:normal!important}
+  td{padding:6px 7px!important;border-bottom:1px solid #e5e9f5!important;color:#222!important;white-space:normal!important;word-break:break-word!important}
+  .chip{background:#e8f0fe!important;color:#1a56db!important;border-color:#bfdbfe!important;font-size:7pt!important}
+  .st.done{background:#d1fae5!important;color:#059669!important;border-color:#6ee7b7!important}
+  .st.curso{background:#fef3c7!important;color:#d97706!important;border-color:#fcd34d!important}
+  .st.venc{background:#fee2e2!important;color:#dc2626!important;border-color:#fca5a5!important}
+  .eb{font-size:7pt!important;padding:1px 5px!important}
+  .e1{background:#dbeafe!important;color:#1d4ed8!important}.e2{background:#ede9fe!important;color:#7c3aed!important}.e3{background:#d1fae5!important;color:#065f46!important}
+  .tb{font-size:7pt!important;padding:1px 4px!important}
+  .tr2{background:#dbeafe!important;color:#1d4ed8!important}.tc{background:#d1fae5!important;color:#065f46!important}.tl{background:#fef3c7!important;color:#92400e!important}.tv{background:#ede9fe!important;color:#5b21b6!important}
+  .es{font-size:7pt!important;padding:1px 5px!important}
+  .er{background:#d1fae5!important;color:#065f46!important;border-color:#6ee7b7!important}
+  .eca{background:#f3f4f6!important;color:#6b7280!important;border-color:#d1d5db!important}
+  .ena{background:#fee2e2!important;color:#dc2626!important;border-color:#fca5a5!important}
+  .ep{background:#fef3c7!important;color:#d97706!important;border-color:#fcd34d!important}
+  .av{font-size:7pt!important}
+  .as{background:#fee2e2!important;color:#dc2626!important}.am2{background:#fef3c7!important;color:#d97706!important}.ag{background:#d1fae5!important;color:#059669!important}
+  .smg{grid-template-columns:repeat(3,1fr)!important;gap:7px!important}
+  .smc{border-radius:6px!important;padding:8px 11px!important;page-break-inside:avoid}
+  .smv{background:#d1fae5!important;border-color:#6ee7b7!important}.sma{background:#fef3c7!important;border-color:#fcd34d!important}.smr{background:#fee2e2!important;border-color:#fca5a5!important}
+  .smv .smn,.smv .smp{color:#065f46!important}.sma .smn,.sma .smp{color:#92400e!important}.smr .smn,.smr .smp{color:#dc2626!important}
+  .smv .smd{background:#059669!important}.sma .smd{background:#d97706!important}.smr .smd{background:#dc2626!important}
+  .avg{grid-template-columns:repeat(4,1fr)!important;gap:7px!important;margin-bottom:10px!important}
+  .avc{border-radius:7px!important;padding:10px!important;page-break-inside:avoid}
+  .avc-g{background:#d1fae5!important;border-color:#6ee7b7!important}.avc-a{background:#fef3c7!important;border-color:#fcd34d!important}.avc-r{background:#fee2e2!important;border-color:#fca5a5!important}.avc-m{background:#f3f4f6!important;border-color:#d1d5db!important}
+  .avc-g .avn{color:#065f46!important}.avc-a .avn{color:#92400e!important}.avc-r .avn{color:#dc2626!important}.avc-m .avn{color:#6b7280!important}
+  .avc-g .avl{color:#065f46!important}.avc-a .avl{color:#92400e!important}.avc-r .avl{color:#dc2626!important}.avc-m .avl{color:#6b7280!important}
+  .avc-g .avbar{background:#bbf7d0!important}.avc-a .avbar{background:#fde68a!important}.avc-r .avbar{background:#fecaca!important}.avc-m .avbar{background:#e5e7eb!important}
+  .avc-g .avbf{background:#059669!important}.avc-a .avbf{background:#d97706!important}.avc-r .avbf{background:#dc2626!important}.avc-m .avbf{background:#9ca3af!important}
+  .ab{border-radius:6px!important;padding:11px 13px!important;margin-bottom:11px!important;page-break-inside:avoid}
+  .abv{background:#fff5f5!important;border-color:#fca5a5!important}.abp{background:#fffbeb!important;border-color:#fcd34d!important}.abs{background:#f5f3ff!important;border-color:#c4b5fd!important}
+  .abv h4{color:#dc2626!important}.abp h4{color:#d97706!important}.abs h4{color:#7c3aed!important}
+  .tsg{grid-template-columns:repeat(4,1fr)!important;gap:7px!important}
+  .tsc{background:#f8faff!important;border:1px solid #dde4f0!important;border-radius:6px!important}
+  .tsn{font-size:18pt!important;color:#111!important}.tsl{color:#555!important}.tss{color:#777!important}
+  .pr,.rb{border-bottom-color:#dde4f0!important}
+  .prn,.rbl{color:#444!important}
+  .prb,.rbt{background:#e5e9f5!important}
+  .phdr2{background:#eef2fb!important;border:1px solid #c5cde8!important;color:#333!important}
+  .eblk{page-break-inside:avoid}
 }
 </style>
 </head>
 <body>
 <header>
- <div class="hdr-left">
- <div class="logo">B</div>
- <div class="hdr-title">
- <h1>Informe Ejecutivo BPC · INVIMA</h1>
- <p>Certificación Buenas Prácticas — Solo lectura</p>
- </div>
- </div>
- <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
- <div class="sync-ind">
- <span class="sync-dot loading" id="syncDot"></span>
- <span id="syncLabel">Conectando...</span>
- </div>
- <span id="currentDate" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);background:rgba(0,195,165,.08);border:1px solid rgba(0,195,165,.2);padding:5px 10px;border-radius:6px"></span>
- <button onclick="cargarDatos(true)" style="background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);padding:5px 12px;border-radius:7px;font-family:'Outfit',sans-serif;font-size:12px;cursor:pointer" title="Forzar actualización">↻ Actualizar</button>
- </div>
+  <div class="hleft">
+    <div class="hlogo">B</div>
+    <div class="htitle">
+      <h1>Informe Ejecutivo BPC · INVIMA</h1>
+      <p>Certificación Buenas Prácticas · Solo lectura</p>
+    </div>
+  </div>
+  <div class="hright">
+    <span class="sdot load" id="sdot"></span>
+    <span id="syncLbl">Conectando...</span>
+    <span id="curDate"></span>
+    <button class="btn-refresh" onclick="cargar(true)">↻ Actualizar</button>
+  </div>
 </header>
 
 <main>
- <div id="loadingMsg" style="text-align:center;padding:60px;color:var(--text-muted)">
- <span class="spinner"></span> Cargando datos...
- </div>
- <div id="appContent" style="display:none">
- <div class="tabs">
- <button class="tab on" onclick="switchTab('gerencia',this)">🏢 Gerencia</button>
- <button class="tab" onclick="switchTab('proceso',this)">📁 Por Proceso</button>
- <button class="tab" onclick="switchTab('etapa',this)">📊 Por Etapa</button>
- <button class="tab" onclick="switchTab('periodo',this)">📅 Por Período</button>
- </div>
+  <div id="ldMsg" style="text-align:center;padding:50px;color:var(--txm)">
+    <div style="max-width:300px;margin:0 auto">
+      <div style="font-size:13px;margin-bottom:14px">Cargando datos desde Google Sheets...</div>
+      <div style="height:4px;background:var(--sur2);border-radius:100px;overflow:hidden;margin-bottom:7px">
+        <div id="ldBar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--acc),var(--bl));border-radius:100px;transition:width .4s"></div>
+      </div>
+      <div id="ldStep" style="font-size:11px;color:var(--txm);font-family:'DM Mono',monospace">Iniciando...</div>
+    </div>
+  </div>
 
- <!-- GERENCIA -->
- <div class="panel on" id="pan-gerencia">
- <div style="display:flex;justify-content:flex-end;margin-bottom:14px">
- <button class="btn-pdf" onclick="exportarPDF('gerencia')">🖨 Exportar PDF</button>
- </div>
- <div class="print-header" style="display:none">
- <h1>Informe Ejecutivo BPC · INVIMA</h1>
- <div class="sub">Certificación Buenas Prácticas de Clínica</div>
- <div class="meta" id="g-meta"></div>
- </div>
- <div id="g-content"></div>
- </div>
+  <div id="app" style="display:none">
+    <div class="tabs">
+      <button class="tab on" onclick="swTab('gerencia',this)">🏢 Gerencia</button>
+      <button class="tab" onclick="swTab('proceso',this)">📁 Por Proceso</button>
+      <button class="tab" onclick="swTab('etapa',this)">📊 Por Etapa</button>
+      <button class="tab" onclick="swTab('periodo',this)">📅 Por Período</button>
+    </div>
 
- <!-- POR PROCESO -->
- <div class="panel" id="pan-proceso">
- <div class="selector-wrap">
- <label>Proceso</label>
- <select id="selProceso" onchange="renderProceso()"><option value="">— Selecciona —</option></select>
- <button class="btn-pdf" onclick="exportarPDF('proceso')" style="margin-left:auto">🖨 Exportar PDF</button>
- </div>
- <div class="print-header" style="display:none">
- <h1>Informe por Proceso · BPC INVIMA</h1>
- <div class="sub">Certificación Buenas Prácticas de Clínica</div>
- <div class="meta" id="proc-meta"></div>
- </div>
- <div id="proc-content"><p class="empty-msg">Selecciona un proceso.</p></div>
- </div>
+    <!-- GERENCIA -->
+    <div class="panel on" id="pan-gerencia">
+      <div class="btn-right"><button class="btn-pdf" onclick="expPDF('gerencia')">🖨 Exportar PDF</button></div>
+      <div class="phd" id="phd-g"><h1>Informe Ejecutivo BPC · INVIMA</h1><div class="ps">Certificación Buenas Prácticas de Clínica</div><div class="pm" id="pm-g"></div></div>
+      <div id="cnt-g"></div>
+    </div>
 
- <!-- POR ETAPA -->
- <div class="panel" id="pan-etapa">
- <div class="selector-wrap">
- <label>Etapa</label>
- <select id="selEtapa" onchange="renderEtapa()">
- <option value="">— Selecciona —</option>
- <option value="Etapa 1">Etapa 1</option>
- <option value="Etapa 2">Etapa 2</option>
- <option value="Etapa 3">Etapa 3</option>
- </select>
- <button class="btn-pdf" onclick="exportarPDF('etapa')" style="margin-left:auto">🖨 Exportar PDF</button>
- </div>
- <div class="print-header" style="display:none">
- <h1>Informe por Etapa · BPC INVIMA</h1>
- <div class="sub">Certificación Buenas Prácticas de Clínica</div>
- <div class="meta" id="etapa-meta"></div>
- </div>
- <div id="etapa-content"><p class="empty-msg">Selecciona una etapa.</p></div>
- </div>
+    <!-- POR PROCESO -->
+    <div class="panel" id="pan-proceso">
+      <div class="swrap">
+        <label>Proceso</label>
+        <select id="selProc" onchange="rendProc()"><option value="">— Selecciona —</option></select>
+        <button class="btn-pdf" onclick="expPDF('proceso')" style="margin-left:auto">🖨 Exportar PDF</button>
+      </div>
+      <div class="phd" id="phd-p"><h1>Informe por Proceso · BPC INVIMA</h1><div class="ps">Certificación Buenas Prácticas de Clínica</div><div class="pm" id="pm-p"></div></div>
+      <div id="cnt-p"><p class="empty">Selecciona un proceso.</p></div>
+    </div>
 
- <!-- POR PERÍODO -->
- <div class="panel" id="pan-periodo">
- <div class="selector-wrap">
- <label>Proceso</label>
- <select id="perProceso"><option value="">Todos los procesos</option></select>
- <label>Desde</label>
- <input type="date" id="perDesde">
- <label>Hasta</label>
- <input type="date" id="perHasta">
- <button class="btn-apply" onclick="renderPeriodo()">Aplicar</button>
- <button class="btn-pdf" onclick="exportarPDF('periodo')" style="margin-left:auto">🖨 Exportar PDF</button>
- </div>
- <div class="print-header" style="display:none">
- <h1>Informe por Período · BPC INVIMA</h1>
- <div class="sub">Certificación Buenas Prácticas de Clínica</div>
- <div class="meta" id="per-meta"></div>
- </div>
- <div id="per-content"><p class="empty-msg">Selecciona un período y haz clic en Aplicar.</p></div>
- </div>
- </div>
+    <!-- POR ETAPA -->
+    <div class="panel" id="pan-etapa">
+      <div class="swrap">
+        <label>Etapa</label>
+        <select id="selEtapa" onchange="rendEtapa()">
+          <option value="">— Selecciona —</option>
+          <option value="Etapa 1">Etapa 1</option>
+          <option value="Etapa 2">Etapa 2</option>
+          <option value="Etapa 3">Etapa 3</option>
+        </select>
+        <button class="btn-pdf" onclick="expPDF('etapa')" style="margin-left:auto">🖨 Exportar PDF</button>
+      </div>
+      <div class="phd" id="phd-e"><h1>Informe por Etapa · BPC INVIMA</h1><div class="ps">Certificación Buenas Prácticas de Clínica</div><div class="pm" id="pm-e"></div></div>
+      <div id="cnt-e"><p class="empty">Selecciona una etapa.</p></div>
+    </div>
+
+    <!-- POR PERÍODO -->
+    <div class="panel" id="pan-periodo">
+      <div class="swrap">
+        <label>Proceso</label>
+        <select id="perProc"><option value="">Todos los procesos</option></select>
+        <label>Desde</label><input type="date" id="perD">
+        <label>Hasta</label><input type="date" id="perH">
+        <button class="btn-apply" onclick="rendPer()">Aplicar</button>
+        <button class="btn-pdf" onclick="expPDF('periodo')" style="margin-left:auto">🖨 Exportar PDF</button>
+      </div>
+      <div class="phd" id="phd-per"><h1>Informe por Período · BPC INVIMA</h1><div class="ps">Certificación Buenas Prácticas de Clínica</div><div class="pm" id="pm-per"></div></div>
+      <div id="cnt-per"><p class="empty">Selecciona un período y haz clic en Aplicar.</p></div>
+    </div>
+  </div>
 </main>
 
 <script>
-const SCRIPT_URL='https://script.google.com/macros/s/AKfycbxGHGvmOaRtRUMAj0TWZt4nY8qNwzX99uBM3Bq8SIQFibSNWuC2BWNsr_3vlyHpZ_qn/exec';
-const DIAS_PROX=3, DIAS_PROX_SEG=7;
-let tasks=[], seguimientos=[];
+var SURL = 'https://script.google.com/macros/s/AKfycbxGHGvmOaRtRUMAj0TWZt4nY8qNwzX99uBM3Bq8SIQFibSNWuC2BWNsr_3vlyHpZ_qn/exec';
+var DPROX = 3, DSEG = 7;
+var tasks = [], segs = [];
 
-const today=()=>new Date().toISOString().split('T')[0];
-const fmt=s=>{if(!s||s==='')return'—';const str=String(s).trim();if(/^\d{4}-\d{2}-\d{2}/.test(str)){const p=str.split('T')[0].split('-');return`${p[2]}/${p[1]}/${p[0]}`;}if(/^\d{2}\/\d{2}\/\d{4}/.test(str))return str.substring(0,10);if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)){const p=str.split('/');return`${String(p[1]).padStart(2,'0')}/${String(p[0]).padStart(2,'0')}/${p[2]}`;}return'—';};
-const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-
-function parseDate(s){if(!s||s==='')return null;const str=String(s).trim();if(/^\d{4}-\d{2}-\d{2}/.test(str))return new Date(str.split('T')[0]+'T00:00:00');if(/^\d{2}\/\d{2}\/\d{4}/.test(str)){const p=str.split('/');return new Date(`${p[2]}-${p[1]}-${p[0]}T00:00:00`);}if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)){const p=str.split('/');return new Date(`${p[2]}-${String(p[1]).padStart(2,'0')}-${String(p[0]).padStart(2,'0')}T00:00:00`);}return null;}
-function dateStr(s){if(!s||s==='')return'';const str=String(s).trim();if(/^\d{4}-\d{2}-\d{2}/.test(str))return str.split('T')[0];if(/^\d{2}\/\d{2}\/\d{4}/.test(str)){const p=str.split('/');return`${p[2]}-${p[1]}-${p[0]}`;}if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)){const p=str.split('/');return`${p[2]}-${String(p[1]).padStart(2,'0')}-${String(p[0]).padStart(2,'0')}`;}return'';}
-
-function getEstado(t){if(t.estado==='completada')return'completada';const fl=dateStr(t.fechaLimite);if(fl&&today()>fl)return'vencida';return'en_curso';}
-function calcDias(t){const s=parseDate(t.fechaAsignacion);if(!s)return 0;const e=(t.estado==='completada'&&t.fechaCompletada)?parseDate(t.fechaCompletada)||new Date():new Date();const d=Math.floor((e-s)/86400000);return isNaN(d)||d<0?0:d;}
-function calcDiasRest(t){const l=parseDate(t.fechaLimite);if(!l)return null;const d=Math.floor((l-new Date(today()+'T00:00:00'))/86400000);return isNaN(d)?null:d;}
-function isProxVencer(t){if(getEstado(t)==='completada')return false;const dr=calcDiasRest(t);return dr!==null&&dr>=0&&dr<=DIAS_PROX;}
-function inRange(dateVal,desde,hasta){const d=dateStr(dateVal);if(!d)return false;return(!desde||d>=desde)&&(!hasta||d<=hasta);}
-function proxSemana(){const d=new Date();d.setDate(d.getDate()+7);return d.toISOString().split('T')[0];}
-
-function setSyncState(s){const dot=document.getElementById('syncDot'),lbl=document.getElementById('syncLabel');if(s==='loading'){dot.className='sync-dot loading';lbl.textContent='Sincronizando...';}else if(s==='ok'){dot.className='sync-dot';lbl.textContent='Conectado · Google Sheets';}else{dot.className='sync-dot error';lbl.textContent='Error';}}
-
-const CACHE_KEY='bpc_informe_cache';
-const CACHE_TTL=180000; // 3 minutos
-
-function getCache(){
- try{
- const c=sessionStorage.getItem(CACHE_KEY);
- if(!c)return null;
- const parsed=JSON.parse(c);
- if(Date.now()-parsed.ts>CACHE_TTL)return null;
- return parsed;
- }catch(e){return null;}
+function today() { return new Date().toISOString().split('T')[0]; }
+function fmt(s) {
+  if (!s || s === '') return '—';
+  var str = String(s).trim();
+  if (/^\d{4}-\d{2}-\d{2}/.test(str)) { var p = str.split('T')[0].split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
+  if (/^\d{2}\/\d{2}\/\d{4}/.test(str)) return str.substring(0,10);
+  if (/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)) { var p2 = str.split('/'); return pad(p2[1])+'/'+pad(p2[0])+'/'+p2[2]; }
+  return '—';
 }
-function setCache(t,s){
- try{sessionStorage.setItem(CACHE_KEY,JSON.stringify({tasks:t,seguimientos:s,ts:Date.now()}));}catch(e){}
+function pad(n) { return String(n).padStart(2,'0'); }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function dstr(s) {
+  if (!s || s === '') return '';
+  var str = String(s).trim();
+  if (/^\d{4}-\d{2}-\d{2}/.test(str)) return str.split('T')[0];
+  if (/^\d{2}\/\d{2}\/\d{4}/.test(str)) { var p = str.split('/'); return p[2]+'-'+p[1]+'-'+p[0]; }
+  if (/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)) { var p2 = str.split('/'); return p2[2]+'-'+pad(p2[1])+'-'+pad(p2[0]); }
+  return '';
 }
-
-async function cargarDatos(forzar=false){
- // Intentar desde caché primero
- if(!forzar){
- const cache=getCache();
- if(cache){
- tasks=cache.tasks||[];
- seguimientos=cache.seguimientos||[];
- setSyncState('ok');
- document.getElementById('loadingMsg').style.display='none';
- document.getElementById('appContent').style.display='block';
- populateSelectors();
- renderGerencia();
- // Actualizar en segundo plano sin bloquear UI
- setTimeout(()=>cargarDatos(true),500);
- return;
- }
- }
-
- setSyncState('loading');
-
- // Mostrar UI con datos anteriores si existen mientras carga
- if(tasks.length>0){
- document.getElementById('loadingMsg').style.display='none';
- document.getElementById('appContent').style.display='block';
- } else {
- // Primera carga: mostrar progreso
- document.getElementById('loadingMsg').innerHTML=`
- <div style="max-width:320px;margin:0 auto">
- <div style="font-size:13px;color:var(--text-muted);margin-bottom:16px">Cargando datos desde Google Sheets...</div>
- <div style="height:4px;background:var(--surface2);border-radius:100px;overflow:hidden;margin-bottom:8px">
- <div id="loadBar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .4s"></div>
- </div>
- <div id="loadStep" style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace">Conectando...</div>
- </div>`;
- }
-
- try{
- const setBar=(pct,msg)=>{
- const bar=document.getElementById('loadBar');
- const step=document.getElementById('loadStep');
- if(bar)bar.style.width=pct+'%';
- if(step)step.textContent=msg;
- };
-
- setBar(20,'Cargando tareas...');
- const rT=await fetch(SCRIPT_URL+'?'+new URLSearchParams({action:'getTasks'})).then(r=>r.json());
- if(rT.success)tasks=rT.tasks||[];
-
- setBar(60,'Cargando seguimientos...');
- const rS=await fetch(SCRIPT_URL+'?'+new URLSearchParams({action:'getSeguimientos'})).then(r=>r.json());
- if(rS.success)seguimientos=rS.seguimientos||[];
-
- setBar(90,'Generando informe...');
- setCache(tasks,seguimientos);
-
- setTimeout(()=>{
- setSyncState('ok');
- document.getElementById('loadingMsg').style.display='none';
- document.getElementById('appContent').style.display='block';
- populateSelectors();
- renderGerencia();
- },200);
-
- }catch(e){
- setSyncState('error');
- if(!tasks.length){
- document.getElementById('loadingMsg').innerHTML='<span style="color:var(--danger)">Error al conectar. <button onclick="cargarDatos(true)" style="color:var(--accent2);background:none;border:none;cursor:pointer;text-decoration:underline">Reintentar</button></span>';
- }
- }
+function pdate(s) {
+  var d = dstr(s);
+  return d ? new Date(d+'T00:00:00') : null;
+}
+function estado(t) {
+  if (t.estado === 'completada') return 'completada';
+  var fl = dstr(t.fechaLimite);
+  if (fl && today() > fl) return 'vencida';
+  return 'en_curso';
+}
+function dias(t) {
+  var s = pdate(t.fechaAsignacion);
+  if (!s) return 0;
+  var e = (t.estado === 'completada' && t.fechaCompletada) ? pdate(t.fechaCompletada)||new Date() : new Date();
+  var d = Math.floor((e - s) / 86400000);
+  return isNaN(d) || d < 0 ? 0 : d;
+}
+function diasRest(t) {
+  var l = pdate(t.fechaLimite);
+  if (!l) return null;
+  var d = Math.floor((l - new Date(today()+'T00:00:00')) / 86400000);
+  return isNaN(d) ? null : d;
+}
+function proxVencer(t) {
+  if (estado(t) === 'completada') return false;
+  var dr = diasRest(t);
+  return dr !== null && dr >= 0 && dr <= DPROX;
+}
+function inRange(dv, desde, hasta) {
+  var d = dstr(dv);
+  if (!d) return false;
+  return (!desde || d >= desde) && (!hasta || d <= hasta);
+}
+function proxSem() {
+  var d = new Date();
+  d.setDate(d.getDate() + DSEG);
+  return d.toISOString().split('T')[0];
 }
 
-function populateSelectors(){
- const procs=[...new Set(tasks.map(t=>t.proceso).filter(Boolean))].sort();
- ['selProceso','perProceso'].forEach(id=>{
- const sel=document.getElementById(id);
- const first=id==='perProceso'?'<option value="">Todos los procesos</option>':'<option value="">— Selecciona —</option>';
- sel.innerHTML=first+procs.map(p=>`<option value="${esc(p)}">${esc(p)}</option>`).join('');
- });
+// CACHE
+var CKEY = 'bpc_inf_v2';
+var CTTL = 180000;
+function getCache() {
+  try {
+    var c = sessionStorage.getItem(CKEY);
+    if (!c) return null;
+    var p = JSON.parse(c);
+    if (Date.now() - p.ts > CTTL) return null;
+    return p;
+  } catch(e) { return null; }
+}
+function setCache(t, s) {
+  try { sessionStorage.setItem(CKEY, JSON.stringify({tasks:t, segs:s, ts:Date.now()})); } catch(e) {}
 }
 
-function switchTab(name,btn){
- document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
- document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
- document.getElementById('pan-'+name).classList.add('on');
- btn.classList.add('on');
+function setBar(pct, msg) {
+  var b = document.getElementById('ldBar');
+  var s = document.getElementById('ldStep');
+  if (b) b.style.width = pct + '%';
+  if (s) s.textContent = msg;
+}
+function sync(load) {
+  var dot = document.getElementById('sdot');
+  var lbl = document.getElementById('syncLbl');
+  if (load) { dot.className = 'sdot load'; lbl.textContent = 'Sincronizando...'; }
+  else if (load === false) { dot.className = 'sdot'; lbl.textContent = 'Conectado · Google Sheets'; }
+  else { dot.className = 'sdot err'; lbl.textContent = 'Error de conexión'; }
 }
 
-// ── GERENCIA ──────────────────────────────────────────────
-function renderGerencia(){
- const tot=tasks.length,don=tasks.filter(t=>getEstado(t)==='completada').length,pen=tasks.filter(t=>getEstado(t)==='en_curso').length,ven=tasks.filter(t=>getEstado(t)==='vencida').length,prox=tasks.filter(t=>isProxVencer(t)).length,pct=tot>0?Math.round(don/tot*100):0;
- const totalReuniones=seguimientos.filter(s=>s.tipo==='Reunión').length,noAsistio=seguimientos.filter(s=>s.estado==='No asistió').length,canceladas=seguimientos.filter(s=>s.estado==='Cancelado').length;
-
- document.getElementById('g-meta').innerHTML=`<span class="meta-item">Fecha: <strong>${fmt(today())}</strong></span><span class="meta-item">Total tareas: <strong>${tot}</strong></span><span class="meta-item">Cumplimiento: <strong>${pct}%</strong></span>`;
-
- document.getElementById('g-content').innerHTML=`
- <div class="metrics">
- <div class="mcard c1"><div class="ml">Total tareas</div><div class="mv">${tot}</div></div>
- <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
- <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
- <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
- <div class="mcard c6"><div class="ml">Próx. a vencer</div><div class="mv">${prox}</div></div>
- <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>
- <div class="mcard c7"><div class="ml">Reuniones</div><div class="mv">${totalReuniones}</div></div>
- <div class="mcard c4"><div class="ml">No asistió</div><div class="mv">${noAsistio}</div></div>
- </div>
- <div class="prog-wrap">
- <span class="prog-label">Avance general certificación BPC</span>
- <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
- <span class="prog-pct">${pct}%</span>
- </div>
- <div class="section">
- <h3><span class="dot" style="background:var(--accent2)"></span> Semáforo de cumplimiento por proceso</h3>
- ${renderSemaforo(tasks)}
- </div>
- <div class="grid2">
- <div class="section"><h3><span class="dot" style="background:var(--accent)"></span> Avance por Etapa</h3>${renderProgRows(groupBy(tasks,'etapa'))}</div>
- <div class="section"><h3><span class="dot" style="background:var(--accent2)"></span> Avance por Proceso</h3>${renderProgRows(groupBy(tasks,'proceso'))}</div>
- </div>
- ${renderAlertVenc(tasks)}
- ${renderAlertProx(tasks)}
- ${renderProxSeguimientos()}
- <div class="section"><h3><span class="dot" style="background:var(--accent3)"></span> Tareas en curso por Etapa y Proceso</h3>${renderTareasPorEtapaProceso(tasks)}</div>
- <div class="grid2">
- <div class="section"><h3><span class="dot" style="background:#06b6d4"></span> Reuniones por Proceso</h3>${renderReunionesPorGrupo('proceso')}</div>
- <div class="section"><h3><span class="dot" style="background:var(--danger)"></span> No asistió por Proceso</h3>${renderNoAsistio('proceso')}</div>
- </div>
- <div class="section">
- <h3><span class="dot" style="background:#06b6d4"></span> Seguimientos por tipo</h3>
- ${renderAvanceStats(seguimientos)}
- ${renderTipoStats(seguimientos)}
- </div>
- <div class="section"><h3><span class="dot" style="background:#a78bfa"></span> Responsables</h3>${renderProgRows(groupByResp(tasks))}</div>`;
+function cargar(forzar) {
+  if (!forzar) {
+    var cache = getCache();
+    if (cache) {
+      tasks = cache.tasks || [];
+      segs = cache.segs || [];
+      sync(false);
+      mostrarApp();
+      setTimeout(function() { cargar(true); }, 600);
+      return;
+    }
+  }
+  sync(true);
+  if (!tasks.length) {
+    document.getElementById('ldMsg').style.display = 'block';
+    document.getElementById('app').style.display = 'none';
+  }
+  setBar(15, 'Cargando tareas...');
+  fetch(SURL + '?' + new URLSearchParams({action:'getTasks'}))
+    .then(function(r) { return r.json(); })
+    .then(function(rT) {
+      if (rT.success) tasks = rT.tasks || [];
+      setBar(55, 'Cargando seguimientos...');
+      return fetch(SURL + '?' + new URLSearchParams({action:'getSeguimientos'}));
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(rS) {
+      if (rS.success) segs = rS.seguimientos || [];
+      setBar(90, 'Generando informe...');
+      setCache(tasks, segs);
+      setTimeout(function() {
+        sync(false);
+        mostrarApp();
+      }, 200);
+    })
+    .catch(function() {
+      sync(null);
+      if (!tasks.length) {
+        document.getElementById('ldMsg').innerHTML = '<span style="color:var(--rd)">Error al conectar. <button onclick="cargar(true)" style="color:var(--bl);background:none;border:none;cursor:pointer;text-decoration:underline">Reintentar</button></span>';
+      }
+    });
 }
 
-// ── POR PROCESO ───────────────────────────────────────────
-function renderProceso(){
- const proc=document.getElementById('selProceso').value;
- if(!proc){document.getElementById('proc-content').innerHTML='<p class="empty-msg">Selecciona un proceso.</p>';return;}
- const filtered=tasks.filter(t=>t.proceso===proc);
- const segsProc=seguimientos.filter(s=>{const t=tasks.find(x=>String(x.id)===String(s.taskId));return t&&t.proceso===proc;});
- const tot=filtered.length,don=filtered.filter(t=>getEstado(t)==='completada').length,pen=filtered.filter(t=>getEstado(t)==='en_curso').length,ven=filtered.filter(t=>getEstado(t)==='vencida').length,pct=tot>0?Math.round(don/tot*100):0;
- const reuniones=segsProc.filter(s=>s.tipo==='Reunión').length,noAsis=segsProc.filter(s=>s.estado==='No asistió').length;
-
- document.getElementById('proc-meta').innerHTML=`<span class="meta-item">Proceso: <strong>${esc(proc)}</strong></span><span class="meta-item">Fecha: <strong>${fmt(today())}</strong></span><span class="meta-item">Cumplimiento: <strong>${pct}%</strong></span>`;
-
- document.getElementById('proc-content').innerHTML=`
- <div class="metrics">
- <div class="mcard c1"><div class="ml">Total tareas</div><div class="mv">${tot}</div></div>
- <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
- <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
- <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
- <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>
- <div class="mcard c7"><div class="ml">Reuniones</div><div class="mv">${reuniones}</div></div>
- <div class="mcard c4"><div class="ml">No asistió</div><div class="mv">${noAsis}</div></div>
- </div>
- <div class="prog-wrap">
- <span class="prog-label">Avance del proceso — ${esc(proc)}</span>
- <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
- <span class="prog-pct">${pct}%</span>
- </div>
- <div class="grid2">
- <div class="section"><h3><span class="dot" style="background:var(--accent)"></span> Avance por Subproceso</h3>${renderProgRows(groupBy(filtered,'subproceso'))}</div>
- <div class="section"><h3><span class="dot" style="background:var(--accent2)"></span> Avance por Etapa</h3>${renderProgRows(groupBy(filtered,'etapa'))}</div>
- </div>
- ${renderAlertVenc(filtered)}
- ${renderAlertProx(filtered)}
- ${renderProxSeguimientos(proc)}
- <div class="section"><h3><span class="dot" style="background:var(--accent3)"></span> Tareas en curso por Etapa</h3>${renderTareasPorEtapaProceso(filtered)}</div>
- <div class="section"><h3><span class="dot" style="background:var(--accent2)"></span> Tareas del proceso</h3>${renderTablaTareas(filtered)}</div>
- <div class="section"><h3><span class="dot" style="background:#06b6d4"></span> Seguimientos por tipo</h3>${renderAvanceStats(segsProc)}${renderTipoStats(segsProc)}</div>
- <div class="section"><h3><span class="dot" style="background:#06b6d4"></span> Historial de seguimientos</h3>${renderTablaSegs(segsProc)}</div>`;
+function mostrarApp() {
+  document.getElementById('ldMsg').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  poblarSels();
+  rendGerencia();
 }
 
-// ── POR ETAPA ─────────────────────────────────────────────
-function renderEtapa(){
- const etapa=document.getElementById('selEtapa').value;
- if(!etapa){document.getElementById('etapa-content').innerHTML='<p class="empty-msg">Selecciona una etapa.</p>';return;}
- const filtered=tasks.filter(t=>t.etapa===etapa);
- const segsEtapa=seguimientos.filter(s=>{const t=tasks.find(x=>String(x.id)===String(s.taskId));return t&&t.etapa===etapa;});
- const tot=filtered.length,don=filtered.filter(t=>getEstado(t)==='completada').length,pen=filtered.filter(t=>getEstado(t)==='en_curso').length,ven=filtered.filter(t=>getEstado(t)==='vencida').length,pct=tot>0?Math.round(don/tot*100):0;
- const reuniones=segsEtapa.filter(s=>s.tipo==='Reunión').length,noAsis=segsEtapa.filter(s=>s.estado==='No asistió').length;
-
- document.getElementById('etapa-meta').innerHTML=`<span class="meta-item">Etapa: <strong>${esc(etapa)}</strong></span><span class="meta-item">Fecha: <strong>${fmt(today())}</strong></span><span class="meta-item">Cumplimiento: <strong>${pct}%</strong></span>`;
-
- document.getElementById('etapa-content').innerHTML=`
- <div class="metrics">
- <div class="mcard c1"><div class="ml">Total tareas</div><div class="mv">${tot}</div></div>
- <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
- <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
- <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
- <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>
- <div class="mcard c7"><div class="ml">Reuniones</div><div class="mv">${reuniones}</div></div>
- <div class="mcard c4"><div class="ml">No asistió</div><div class="mv">${noAsis}</div></div>
- </div>
- <div class="prog-wrap">
- <span class="prog-label">Avance ${etapa}</span>
- <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
- <span class="prog-pct">${pct}%</span>
- </div>
- <div class="section"><h3><span class="dot" style="background:var(--accent2)"></span> Semáforo por Proceso en ${etapa}</h3>${renderSemaforo(filtered)}</div>
- <div class="grid2">
- <div class="section"><h3><span class="dot" style="background:var(--accent2)"></span> Avance por Proceso</h3>${renderProgRows(groupBy(filtered,'proceso'))}</div>
- <div class="section"><h3><span class="dot" style="background:#a78bfa"></span> Responsables</h3>${renderProgRows(groupByResp(filtered))}</div>
- </div>
- ${renderAlertVenc(filtered)}
- ${renderAlertProx(filtered)}
- ${renderProxSeguimientos(null,etapa)}
- <div class="section"><h3><span class="dot" style="background:var(--accent3)"></span> Tareas en curso por Proceso</h3>${renderTareasPorEtapaProceso(filtered)}</div>
- <div class="section"><h3><span class="dot" style="background:var(--accent2)"></span> Tareas de ${etapa}</h3>${renderTablaTareas(filtered)}</div>
- <div class="section"><h3><span class="dot" style="background:#06b6d4"></span> Seguimientos por tipo</h3>${renderAvanceStats(segsEtapa)}${renderTipoStats(segsEtapa)}</div>
- <div class="section"><h3><span class="dot" style="background:#06b6d4"></span> Historial de seguimientos</h3>${renderTablaSegs(segsEtapa)}</div>`;
+function poblarSels() {
+  var procs = uniq(tasks.map(function(t) { return t.proceso; })).sort();
+  ['selProc','perProc'].forEach(function(id) {
+    var sel = document.getElementById(id);
+    var first = id === 'perProc' ? '<option value="">Todos los procesos</option>' : '<option value="">— Selecciona —</option>';
+    sel.innerHTML = first + procs.map(function(p) { return '<option value="'+esc(p)+'">'+esc(p)+'</option>'; }).join('');
+  });
 }
 
-// ── POR PERÍODO ───────────────────────────────────────────
-function renderPeriodo(){
- const proc=document.getElementById('perProceso').value;
- const desde=document.getElementById('perDesde').value;
- const hasta=document.getElementById('perHasta').value;
- if(!desde&&!hasta){document.getElementById('per-content').innerHTML='<p class="empty-msg">Selecciona al menos una fecha.</p>';return;}
-
- // Tareas NUEVAS en el período
- const tareasNuevas=tasks.filter(t=>{
- const matchProc=!proc||t.proceso===proc;
- return matchProc&&inRange(t.fechaAsignacion,desde,hasta);
- });
-
- // TODAS las tareas (filtradas por proceso si aplica)
- const todasTareas=!proc?tasks:tasks.filter(t=>t.proceso===proc);
-
- // Seguimientos en el período
- const segsFiltered=seguimientos.filter(s=>{
- const t=tasks.find(x=>String(x.id)===String(s.taskId));
- const matchProc=!proc||(t&&t.proceso===proc);
- return matchProc&&inRange(s.fecha,desde,hasta);
- });
-
- const tot=todasTareas.length,don=todasTareas.filter(t=>getEstado(t)==='completada').length,pen=todasTareas.filter(t=>getEstado(t)==='en_curso').length,ven=todasTareas.filter(t=>getEstado(t)==='vencida').length,pct=tot>0?Math.round(don/tot*100):0;
- const reuniones=segsFiltered.filter(s=>s.tipo==='Reunión').length,noAsis=segsFiltered.filter(s=>s.estado==='No asistió').length;
- const periodo=`${desde?fmt(desde):'inicio'} — ${hasta?fmt(hasta):'hoy'}`;
-
- document.getElementById('per-meta').innerHTML=`<span class="meta-item">Período: <strong>${periodo}</strong></span>${proc?`<span class="meta-item">Proceso: <strong>${esc(proc)}</strong></span>`:''}<span class="meta-item">Fecha generación: <strong>${fmt(today())}</strong></span>`;
-
- document.getElementById('per-content').innerHTML=`
- <div class="periodo-header">
- 📅 Período analizado: <strong style="color:var(--accent)">${periodo}</strong>
- ${proc?` · Proceso: <strong style="color:var(--accent2)">${esc(proc)}</strong>`:''}
- </div>
- <div class="metrics">
- <div class="mcard c1"><div class="ml">Total tareas (sistema)</div><div class="mv">${tot}</div></div>
- <div class="mcard c3"><div class="ml">Nuevas en período</div><div class="mv">${tareasNuevas.length}</div></div>
- <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
- <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
- <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
- <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>
- <div class="mcard c7"><div class="ml">Seguimientos período</div><div class="mv">${segsFiltered.length}</div></div>
- <div class="mcard c7"><div class="ml">Reuniones período</div><div class="mv">${reuniones}</div></div>
- </div>
- <div class="prog-wrap">
- <span class="prog-label">Avance general${proc?' — '+esc(proc):''}</span>
- <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
- <span class="prog-pct">${pct}%</span>
- </div>
- <div class="section">
- <h3><span class="dot" style="background:var(--accent2)"></span> Semáforo de cumplimiento por proceso</h3>
- ${renderSemaforo(todasTareas)}
- </div>
- <div class="grid2">
- <div class="section"><h3><span class="dot" style="background:var(--accent2)"></span> Avance por proceso (total sistema)</h3>${renderProgRows(groupBy(todasTareas,'proceso'))}</div>
- <div class="section"><h3><span class="dot" style="background:var(--accent)"></span> Avance por etapa (total sistema)</h3>${renderProgRows(groupBy(todasTareas,'etapa'))}</div>
- </div>
- ${renderAlertVenc(todasTareas)}
- ${renderAlertProx(todasTareas)}
- ${renderProxSeguimientos(proc||null)}
- <div class="section">
- <h3><span class="dot" style="background:var(--accent3)"></span> Tareas nuevas asignadas en el período (${tareasNuevas.length})</h3>
- ${tareasNuevas.length?renderTablaTareas(tareasNuevas):'<p class="empty-msg">Sin tareas nuevas en este período.</p>'}
- </div>
- <div class="section">
- <h3><span class="dot" style="background:var(--accent3)"></span> Todas las tareas en curso por Etapa y Proceso (${todasTareas.filter(t=>getEstado(t)==='en_curso').length})</h3>
- ${renderTareasPorEtapaProceso(todasTareas)}
- </div>
- <div class="section">
- <h3><span class="dot" style="background:#06b6d4"></span> Seguimientos por tipo en el período</h3>
- ${renderAvanceStats(segsFiltered)}
- ${renderTipoStats(segsFiltered)}
- </div>
- <div class="section">
- <h3><span class="dot" style="background:#06b6d4"></span> Seguimientos realizados en el período (${segsFiltered.length})</h3>
- ${segsFiltered.length?renderTablaSegs(segsFiltered):'<p class="empty-msg">Sin seguimientos en este período.</p>'}
- </div>`;
+function swTab(name, btn) {
+  document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('on'); });
+  document.querySelectorAll('.tab').forEach(function(b) { b.classList.remove('on'); });
+  document.getElementById('pan-'+name).classList.add('on');
+  btn.classList.add('on');
 }
 
-// ── HELPERS ───────────────────────────────────────────────
-function groupBy(arr,field){const map={};arr.forEach(t=>{const k=t[field]||'Sin definir';if(!map[k])map[k]={total:0,done:0,venc:0};map[k].total++;const est=getEstado(t);if(est==='completada')map[k].done++;if(est==='vencida')map[k].venc++;});return map;}
-function groupByResp(arr){const map={};arr.forEach(t=>{const resps=(t.responsable||'Sin responsable').split(',').map(r=>r.trim()).filter(Boolean);const est=getEstado(t);resps.forEach(r=>{if(!map[r])map[r]={total:0,done:0,venc:0};map[r].total++;if(est==='completada')map[r].done++;if(est==='vencida')map[r].venc++;});});return map;}
+function uniq(arr) { return arr.filter(function(v,i,a) { return v && a.indexOf(v) === i; }); }
 
-function renderProgRows(data){
- const keys=Object.keys(data).sort();
- if(!keys.length)return'<p class="empty-msg">Sin datos.</p>';
- return keys.map(k=>{const{total,done,venc}=data[k];const pend=total-done;const pct=total>0?Math.round(done/total*100):0;const barColor=pct===100?'var(--success)':pct>=70?'var(--accent2)':pct>=40?'var(--accent3)':'var(--danger)';
- return`<div class="prog-row"><span class="prog-row-name" title="${esc(k)}">${esc(k)}</span><div class="prog-row-bar"><div class="prog-row-fill" style="width:${pct}%;background:${barColor}"></div></div><div class="prog-row-stats"><span style="color:var(--accent2)">${total}</span><span style="color:var(--success)">✓${done}</span><span style="color:var(--accent3)">⟳${pend}</span>${venc>0?`<span style="color:var(--danger)">⚠${venc}</span>`:''}<span style="color:var(--accent);font-weight:600;min-width:34px;text-align:right">${pct}%</span></div></div>`;
- }).join('');
+// RENDER GERENCIA
+function rendGerencia() {
+  var tot = tasks.length;
+  var don = tasks.filter(function(t) { return estado(t) === 'completada'; }).length;
+  var pen = tasks.filter(function(t) { return estado(t) === 'en_curso'; }).length;
+  var ven = tasks.filter(function(t) { return estado(t) === 'vencida'; }).length;
+  var prx = tasks.filter(function(t) { return proxVencer(t); }).length;
+  var pct = tot > 0 ? Math.round(don/tot*100) : 0;
+  var treun = segs.filter(function(s) { return s.tipo === 'Reunión'; }).length;
+  var tnas = segs.filter(function(s) { return s.estado === 'No asistió'; }).length;
+
+  document.getElementById('pm-g').innerHTML = '<span>Fecha: <strong>'+fmt(today())+'</strong></span><span>Total tareas: <strong>'+tot+'</strong></span><span>Cumplimiento: <strong>'+pct+'%</strong></span>';
+
+  document.getElementById('cnt-g').innerHTML =
+    mxMetrics([
+      {c:'c1',l:'Total tareas',v:tot},{c:'c2',l:'Completadas',v:don},{c:'c3',l:'En curso',v:pen},
+      {c:'c4',l:'Vencidas',v:ven},{c:'c6',l:'Próx. a vencer',v:prx},{c:'c5',l:'Cumplimiento',v:pct+'%'},
+      {c:'c7',l:'Reuniones',v:treun},{c:'c4',l:'No asistió',v:tnas}
+    ]) +
+    mxProg('Avance general certificación BPC', pct) +
+    '<div class="sec"><h3><span class="d" style="background:var(--bl)"></span> Semáforo de cumplimiento por proceso</h3>' + rSemaforo(tasks) + '</div>' +
+    '<div class="g2">' +
+      '<div class="sec"><h3><span class="d" style="background:var(--acc)"></span> Avance por Etapa</h3>' + rProgRows(grpBy(tasks,'etapa')) + '</div>' +
+      '<div class="sec"><h3><span class="d" style="background:var(--bl)"></span> Avance por Proceso</h3>' + rProgRows(grpBy(tasks,'proceso')) + '</div>' +
+    '</div>' +
+    rAlertVenc(tasks) + rAlertProx(tasks) + rProxSegs(null,null) +
+    '<div class="sec"><h3><span class="d" style="background:var(--am)"></span> Tareas en curso por Etapa y Proceso</h3>' + rEtapaProc(tasks) + '</div>' +
+    '<div class="g2">' +
+      '<div class="sec"><h3><span class="d" style="background:#06b6d4"></span> Reuniones por Proceso</h3>' + rReuniones('proceso') + '</div>' +
+      '<div class="sec"><h3><span class="d" style="background:var(--rd)"></span> No asistió por Proceso</h3>' + rNoAsistio('proceso') + '</div>' +
+    '</div>' +
+    '<div class="sec"><h3><span class="d" style="background:#06b6d4"></span> Seguimientos por tipo y avance</h3>' + rAvanceStats(segs) + rTipoStats(segs) + '</div>' +
+    '<div class="sec"><h3><span class="d" style="background:#a78bfa"></span> Responsables</h3>' + rProgRows(grpByResp(tasks)) + '</div>';
 }
 
-function renderSemaforo(arr){
- const data=groupBy(arr,'proceso');
- const keys=Object.keys(data).sort();
- if(!keys.length)return'<p class="empty-msg">Sin datos.</p>';
- return`<div class="semaforo-grid">${keys.map(k=>{const{total,done}=data[k];const pct=total>0?Math.round(done/total*100):0;const cls=pct>=70?'sem-verde':pct>=40?'sem-amarillo':'sem-rojo';const label=pct>=70?'En meta':pct>=40?'En riesgo':'Crítico';
- return`<div class="semaforo-card ${cls}"><div class="sem-dot"></div><div style="flex:1;min-width:0"><div class="sem-name" title="${esc(k)}">${esc(k)}</div><div style="font-size:10px;opacity:.8">${label} · ${done}/${total} tareas</div></div><div class="sem-pct">${pct}%</div></div>`;
- }).join('')}</div>`;
+// RENDER PROCESO
+function rendProc() {
+  var proc = document.getElementById('selProc').value;
+  if (!proc) { document.getElementById('cnt-p').innerHTML = '<p class="empty">Selecciona un proceso.</p>'; return; }
+  var ft = tasks.filter(function(t) { return t.proceso === proc; });
+  var fs = segs.filter(function(s) { var t = findTask(s.taskId); return t && t.proceso === proc; });
+  var tot=ft.length, don=ft.filter(function(t){return estado(t)==='completada';}).length;
+  var pen=ft.filter(function(t){return estado(t)==='en_curso';}).length;
+  var ven=ft.filter(function(t){return estado(t)==='vencida';}).length;
+  var pct=tot>0?Math.round(don/tot*100):0;
+  var treun=fs.filter(function(s){return s.tipo==='Reunión';}).length;
+  var tnas=fs.filter(function(s){return s.estado==='No asistió';}).length;
+
+  document.getElementById('pm-p').innerHTML = '<span>Proceso: <strong>'+esc(proc)+'</strong></span><span>Fecha: <strong>'+fmt(today())+'</strong></span><span>Cumplimiento: <strong>'+pct+'%</strong></span>';
+
+  document.getElementById('cnt-p').innerHTML =
+    mxMetrics([{c:'c1',l:'Total tareas',v:tot},{c:'c2',l:'Completadas',v:don},{c:'c3',l:'En curso',v:pen},{c:'c4',l:'Vencidas',v:ven},{c:'c5',l:'Cumplimiento',v:pct+'%'},{c:'c7',l:'Reuniones',v:treun},{c:'c4',l:'No asistió',v:tnas}]) +
+    mxProg('Avance — '+esc(proc), pct) +
+    '<div class="g2"><div class="sec"><h3><span class="d" style="background:var(--acc)"></span> Avance por Subproceso</h3>'+rProgRows(grpBy(ft,'subproceso'))+'</div><div class="sec"><h3><span class="d" style="background:var(--bl)"></span> Avance por Etapa</h3>'+rProgRows(grpBy(ft,'etapa'))+'</div></div>' +
+    rAlertVenc(ft) + rAlertProx(ft) + rProxSegs(proc, null) +
+    '<div class="sec"><h3><span class="d" style="background:var(--am)"></span> Tareas en curso por Etapa</h3>'+rEtapaProc(ft)+'</div>' +
+    '<div class="sec"><h3><span class="d" style="background:var(--bl)"></span> Todas las tareas</h3>'+rTblTareas(ft)+'</div>' +
+    '<div class="sec"><h3><span class="d" style="background:#06b6d4"></span> Seguimientos por tipo y avance</h3>'+rAvanceStats(fs)+rTipoStats(fs)+'</div>' +
+    '<div class="sec"><h3><span class="d" style="background:#06b6d4"></span> Historial de seguimientos</h3>'+rTblSegs(fs)+'</div>';
 }
 
-function renderAvanceStats(segs){
- if(!segs.length) return '';
- const sinAvance=segs.filter(s=>s.avance==='Sin avance').length;
- const avanceMin=segs.filter(s=>s.avance==='Avance mínimo').length;
- const avanceSig=segs.filter(s=>s.avance==='Avance significativo').length;
- const sinRegistro=segs.filter(s=>!s.avance||s.avance==='').length;
- const total=segs.length;
- const pctSig=total>0?Math.round(avanceSig/total*100):0;
- const pctMin=total>0?Math.round(avanceMin/total*100):0;
- const pctSin=total>0?Math.round(sinAvance/total*100):0;
- return`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:12px">
- <div style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);border-radius:10px;padding:14px;text-align:center">
- <div style="font-size:28px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--success)">${avanceSig}</div>
- <div style="font-size:11px;color:var(--success);font-weight:600;margin-top:4px">Avance significativo</div>
- <div style="font-size:10px;color:var(--text-muted);margin-top:2px">${pctSig}% del total</div>
- <div style="height:4px;background:rgba(16,185,129,.15);border-radius:100px;margin-top:8px;overflow:hidden"><div style="height:100%;width:${pctSig}%;background:var(--success);border-radius:100px"></div></div>
- </div>
- <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:10px;padding:14px;text-align:center">
- <div style="font-size:28px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--accent3)">${avanceMin}</div>
- <div style="font-size:11px;color:var(--accent3);font-weight:600;margin-top:4px">Avance mínimo</div>
- <div style="font-size:10px;color:var(--text-muted);margin-top:2px">${pctMin}% del total</div>
- <div style="height:4px;background:rgba(245,158,11,.15);border-radius:100px;margin-top:8px;overflow:hidden"><div style="height:100%;width:${pctMin}%;background:var(--accent3);border-radius:100px"></div></div>
- </div>
- <div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:10px;padding:14px;text-align:center">
- <div style="font-size:28px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--danger)">${sinAvance}</div>
- <div style="font-size:11px;color:var(--danger);font-weight:600;margin-top:4px">Sin avance</div>
- <div style="font-size:10px;color:var(--text-muted);margin-top:2px">${pctSin}% del total</div>
- <div style="height:4px;background:rgba(239,68,68,.15);border-radius:100px;margin-top:8px;overflow:hidden"><div style="height:100%;width:${pctSin}%;background:var(--danger);border-radius:100px"></div></div>
- </div>
- ${sinRegistro>0?`<div style="background:rgba(100,116,139,.08);border:1px solid rgba(100,116,139,.2);border-radius:10px;padding:14px;text-align:center"><div style="font-size:28px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--text-muted)">${sinRegistro}</div><div style="font-size:11px;color:var(--text-muted);font-weight:600;margin-top:4px">Sin registro</div><div style="font-size:10px;color:var(--text-muted);margin-top:2px">${total>0?Math.round(sinRegistro/total*100):0}% del total</div></div>`:''}
- </div>
- <div class="tbl-wrap" style="margin-top:12px">
- <table>
- <thead><tr><th>Fecha</th><th>Proceso</th><th>Tarea</th><th>Tipo</th><th>Estado</th><th>Avance</th><th>Nota</th><th>Por</th></tr></thead>
- <tbody>${[...segs].sort((a,b)=>{
- const order={'Sin avance':0,'Avance mínimo':1,'Avance significativo':2,'':3};
- return (order[a.avance??'']??3)-(order[b.avance??'']??3);
- }).map(s=>{
- const t=tasks.find(x=>String(x.id)===String(s.taskId));
- const tipoClass={Reunión:'tipo-reunion',Correo:'tipo-correo',Llamada:'tipo-llamada',Visita:'tipo-visita'};
- const estadoClass={Realizado:'estado-realizado',Cancelado:'estado-cancelado','No asistió':'estado-noasistio',Pendiente:'estado-pendiente'};
- const avanceClass={'Sin avance':'avance-sin','Avance mínimo':'avance-min','Avance significativo':'avance-sig'};
- return`<tr>
- <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);white-space:nowrap">${fmt(s.fecha)}</td>
- <td>${t?`<span class="chip">${esc(t.proceso)}</span>`:'-'}</td>
- <td style="font-size:11px;font-weight:500;min-width:130px">${t?esc(t.tarea):'-'}</td>
- <td>${s.tipo?`<span class="seg-tipo ${tipoClass[s.tipo]||''}">${esc(s.tipo)}</span>`:'-'}</td>
- <td>${s.estado?`<span class="seg-estado-badge ${estadoClass[s.estado]||''}">${esc(s.estado)}</span>`:'-'}</td>
- <td>${s.avance?`<span class="avance-badge ${avanceClass[s.avance]||''}">${esc(s.avance)}</span>`:'<span style="color:var(--text-muted);font-size:11px">—</span>'}</td>
- <td style="font-size:11px;color:var(--text-soft);min-width:160px">${esc(s.nota)}</td>
- <td style="font-size:11px;color:var(--text-muted);white-space:nowrap">${esc(s.autor)}</td>
- </tr>`;
- }).join('')}</tbody>
- </table>
- </div>\`;
+// RENDER ETAPA
+function rendEtapa() {
+  var etapa = document.getElementById('selEtapa').value;
+  if (!etapa) { document.getElementById('cnt-e').innerHTML = '<p class="empty">Selecciona una etapa.</p>'; return; }
+  var ft = tasks.filter(function(t) { return t.etapa === etapa; });
+  var fs = segs.filter(function(s) { var t = findTask(s.taskId); return t && t.etapa === etapa; });
+  var tot=ft.length, don=ft.filter(function(t){return estado(t)==='completada';}).length;
+  var pen=ft.filter(function(t){return estado(t)==='en_curso';}).length;
+  var ven=ft.filter(function(t){return estado(t)==='vencida';}).length;
+  var pct=tot>0?Math.round(don/tot*100):0;
+  var treun=fs.filter(function(s){return s.tipo==='Reunión';}).length;
+  var tnas=fs.filter(function(s){return s.estado==='No asistió';}).length;
+
+  document.getElementById('pm-e').innerHTML = '<span>Etapa: <strong>'+esc(etapa)+'</strong></span><span>Fecha: <strong>'+fmt(today())+'</strong></span><span>Cumplimiento: <strong>'+pct+'%</strong></span>';
+
+  document.getElementById('cnt-e').innerHTML =
+    mxMetrics([{c:'c1',l:'Total tareas',v:tot},{c:'c2',l:'Completadas',v:don},{c:'c3',l:'En curso',v:pen},{c:'c4',l:'Vencidas',v:ven},{c:'c5',l:'Cumplimiento',v:pct+'%'},{c:'c7',l:'Reuniones',v:treun},{c:'c4',l:'No asistió',v:tnas}]) +
+    mxProg('Avance '+etapa, pct) +
+    '<div class="sec"><h3><span class="d" style="background:var(--bl)"></span> Semáforo por Proceso</h3>'+rSemaforo(ft)+'</div>' +
+    '<div class="g2"><div class="sec"><h3><span class="d" style="background:var(--bl)"></span> Avance por Proceso</h3>'+rProgRows(grpBy(ft,'proceso'))+'</div><div class="sec"><h3><span class="d" style="background:#a78bfa"></span> Responsables</h3>'+rProgRows(grpByResp(ft))+'</div></div>' +
+    rAlertVenc(ft) + rAlertProx(ft) + rProxSegs(null, etapa) +
+    '<div class="sec"><h3><span class="d" style="background:var(--am)"></span> Tareas en curso por Proceso</h3>'+rEtapaProc(ft)+'</div>' +
+    '<div class="sec"><h3><span class="d" style="background:var(--bl)"></span> Todas las tareas</h3>'+rTblTareas(ft)+'</div>' +
+    '<div class="sec"><h3><span class="d" style="background:#06b6d4"></span> Seguimientos por tipo y avance</h3>'+rAvanceStats(fs)+rTipoStats(fs)+'</div>' +
+    '<div class="sec"><h3><span class="d" style="background:#06b6d4"></span> Historial de seguimientos</h3>'+rTblSegs(fs)+'</div>';
 }
 
-function renderTipoStats(segs){
- const tipos={Reunión:{icon:'🤝',total:0,realizado:0,cancelado:0,noAsistio:0,pendiente:0},Correo:{icon:'📧',total:0,realizado:0,cancelado:0,noAsistio:0,pendiente:0},Llamada:{icon:'📞',total:0,realizado:0,cancelado:0,noAsistio:0,pendiente:0},Visita:{icon:'🏃',total:0,realizado:0,cancelado:0,noAsistio:0,pendiente:0}};
- segs.forEach(s=>{if(s.tipo&&tipos[s.tipo]){tipos[s.tipo].total++;if(s.estado==='Realizado')tipos[s.tipo].realizado++;else if(s.estado==='Cancelado')tipos[s.tipo].cancelado++;else if(s.estado==='No asistió')tipos[s.tipo].noAsistio++;else if(s.estado==='Pendiente')tipos[s.tipo].pendiente++;}});
- return`<div class="tipo-stats">${Object.entries(tipos).map(([k,v])=>`<div class="tipo-stat-card"><div class="tipo-stat-icon">${v.icon}</div><div class="tipo-stat-num">${v.total}</div><div class="tipo-stat-label">${k}s</div><div class="tipo-stat-sub" style="color:var(--success)">✓ ${v.realizado} realizados</div>${v.noAsistio>0?`<div class="tipo-stat-sub" style="color:var(--danger)">🚫 ${v.noAsistio} no asistió</div>`:''}</div>`).join('')}</div>`;
+// RENDER PERÍODO
+function rendPer() {
+  var proc = document.getElementById('perProc').value;
+  var desde = document.getElementById('perD').value;
+  var hasta = document.getElementById('perH').value;
+  if (!desde && !hasta) { document.getElementById('cnt-per').innerHTML = '<p class="empty">Selecciona al menos una fecha.</p>'; return; }
+
+  var todas = proc ? tasks.filter(function(t){return t.proceso===proc;}) : tasks;
+  var nuevas = todas.filter(function(t){return inRange(t.fechaAsignacion,desde,hasta);});
+  var enCurso = todas.filter(function(t){return estado(t)==='en_curso';});
+  var fs = segs.filter(function(s){
+    var t = findTask(s.taskId);
+    var mp = !proc || (t && t.proceso === proc);
+    return mp && inRange(s.fecha, desde, hasta);
+  });
+
+  var tot=todas.length, don=todas.filter(function(t){return estado(t)==='completada';}).length;
+  var pen=enCurso.length, ven=todas.filter(function(t){return estado(t)==='vencida';}).length;
+  var pct=tot>0?Math.round(don/tot*100):0;
+  var treun=fs.filter(function(s){return s.tipo==='Reunión';}).length;
+  var tnas=fs.filter(function(s){return s.estado==='No asistió';}).length;
+  var periodo = (desde?fmt(desde):'inicio') + ' — ' + (hasta?fmt(hasta):'hoy');
+
+  document.getElementById('pm-per').innerHTML = '<span>Período: <strong>'+periodo+'</strong></span>'+(proc?'<span>Proceso: <strong>'+esc(proc)+'</strong></span>':'')+'<span>Generado: <strong>'+fmt(today())+'</strong></span>';
+
+  document.getElementById('cnt-per').innerHTML =
+    '<div class="phdr2" style="background:var(--sur2);border:1px solid var(--brd);border-radius:7px;padding:9px 14px;margin-bottom:14px;font-size:12px;color:var(--txm);font-family:\'DM Mono\',monospace">📅 Período: <strong style="color:var(--acc)">'+periodo+'</strong>'+(proc?' · Proceso: <strong style="color:var(--bl)">'+esc(proc)+'</strong>':'')+'</div>' +
+    mxMetrics([{c:'c1',l:'Total tareas (sistema)',v:tot},{c:'c3',l:'Nuevas en período',v:nuevas.length},{c:'c2',l:'Completadas',v:don},{c:'c3',l:'En curso',v:pen},{c:'c4',l:'Vencidas',v:ven},{c:'c5',l:'Cumplimiento',v:pct+'%'},{c:'c7',l:'Seguimientos período',v:fs.length},{c:'c7',l:'Reuniones período',v:treun}]) +
+    mxProg('Avance general'+(proc?' — '+esc(proc):''), pct) +
+    '<div class="sec"><h3><span class="d" style="background:var(--bl)"></span> Semáforo de cumplimiento por proceso</h3>'+rSemaforo(todas)+'</div>' +
+    '<div class="g2"><div class="sec"><h3><span class="d" style="background:var(--bl)"></span> Avance por proceso (total sistema)</h3>'+rProgRows(grpBy(todas,'proceso'))+'</div><div class="sec"><h3><span class="d" style="background:var(--acc)"></span> Avance por etapa (total sistema)</h3>'+rProgRows(grpBy(todas,'etapa'))+'</div></div>' +
+    rAlertVenc(todas) + rAlertProx(todas) + rProxSegs(proc||null, null) +
+    '<div class="sec"><h3><span class="d" style="background:var(--am)"></span> Tareas en curso por Etapa y Proceso ('+enCurso.length+')</h3>'+rEtapaProc(todas)+'</div>' +
+    '<div class="sec"><h3><span class="d" style="background:var(--am)"></span> Tareas nuevas asignadas en el período ('+nuevas.length+')</h3>'+(nuevas.length?rTblTareas(nuevas):'<p class="empty">Sin tareas nuevas en este período.</p>')+'</div>' +
+    '<div class="sec"><h3><span class="d" style="background:#06b6d4"></span> Seguimientos por tipo y avance en el período</h3>'+rAvanceStats(fs)+rTipoStats(fs)+'</div>' +
+    '<div class="sec"><h3><span class="d" style="background:#06b6d4"></span> Seguimientos realizados en el período ('+fs.length+')</h3>'+(fs.length?rTblSegs(fs):'<p class="empty">Sin seguimientos en este período.</p>')+'</div>';
 }
 
-function renderReunionesPorGrupo(field){
- const map={};
- seguimientos.filter(s=>s.tipo==='Reunión').forEach(s=>{const t=tasks.find(x=>String(x.id)===String(s.taskId));const k=t?t[field]||'Sin definir':'Sin definir';if(!map[k])map[k]={total:0,realizado:0,noAsistio:0,cancelado:0};map[k].total++;if(s.estado==='Realizado')map[k].realizado++;else if(s.estado==='No asistió')map[k].noAsistio++;else if(s.estado==='Cancelado')map[k].cancelado++;});
- const keys=Object.keys(map).sort();if(!keys.length)return'<p class="empty-msg">Sin reuniones.</p>';
- const maxTotal=Math.max(...keys.map(k=>map[k].total));
- return keys.map(k=>{const{total,realizado,noAsistio}=map[k];const pct=maxTotal>0?Math.round(total/maxTotal*100):0;
- return`<div class="reunion-bar"><span class="rbar-label" title="${esc(k)}">${esc(k)}</span><div class="rbar-track"><div class="rbar-fill" style="width:${pct}%;background:var(--accent2)"></div></div><span class="rbar-nums"><span style="color:var(--accent2)">${total}</span> <span style="color:var(--success)">✓${realizado}</span> <span style="color:var(--danger)">🚫${noAsistio}</span></span></div>`;
- }).join('');
+// HELPERS
+function findTask(id) { return tasks.find(function(t){return String(t.id)===String(id);}); }
+
+function grpBy(arr, field) {
+  var map = {};
+  arr.forEach(function(t) {
+    var k = t[field] || 'Sin definir';
+    if (!map[k]) map[k] = {total:0,done:0,venc:0};
+    map[k].total++;
+    var e = estado(t);
+    if (e === 'completada') map[k].done++;
+    if (e === 'vencida') map[k].venc++;
+  });
+  return map;
 }
 
-function renderNoAsistio(field){
- const map={};
- seguimientos.filter(s=>s.estado==='No asistió').forEach(s=>{const t=tasks.find(x=>String(x.id)===String(s.taskId));const k=t?t[field]||'Sin definir':'Sin definir';if(!map[k])map[k]=0;map[k]++;});
- const keys=Object.keys(map).sort((a,b)=>map[b]-map[a]);
- if(!keys.length)return'<p class="empty-msg" style="color:var(--success)">✓ Sin incumplimientos registrados.</p>';
- const maxVal=Math.max(...keys.map(k=>map[k]));
- return keys.map(k=>{const pct=maxVal>0?Math.round(map[k]/maxVal*100):0;
- return`<div class="reunion-bar"><span class="rbar-label" title="${esc(k)}">${esc(k)}</span><div class="rbar-track"><div class="rbar-fill" style="width:${pct}%;background:var(--danger)"></div></div><span class="rbar-nums" style="color:var(--danger)">${map[k]} ${map[k]===1?'vez':'veces'}</span></div>`;
- }).join('');
+function grpByResp(arr) {
+  var map = {};
+  arr.forEach(function(t) {
+    var resps = (t.responsable||'Sin responsable').split(',').map(function(r){return r.trim();}).filter(Boolean);
+    var e = estado(t);
+    resps.forEach(function(r) {
+      if (!map[r]) map[r] = {total:0,done:0,venc:0};
+      map[r].total++;
+      if (e === 'completada') map[r].done++;
+      if (e === 'vencida') map[r].venc++;
+    });
+  });
+  return map;
 }
 
-function renderAlertVenc(arr){
- const vencidas=arr.filter(t=>getEstado(t)==='vencida');
- if(!vencidas.length)return'';
- return`<div class="alert-box alert-venc"><h4>⚠ Tareas vencidas — ${vencidas.length}</h4><div class="tbl-wrap"><table><thead><tr><th>Tarea</th><th>Proceso</th><th>Etapa</th><th>Responsables</th><th>F. Límite</th><th>Días vencida</th></tr></thead><tbody>${vencidas.map(t=>`<tr><td style="font-weight:500">${esc(t.tarea)}</td><td><span class="chip">${esc(t.proceso)}</span></td><td><span class="etapa-badge etapa-${t.etapa?t.etapa.slice(-1):'1'}">${esc(t.etapa||'—')}</span></td><td>${esc(t.responsable)}</td><td style="color:var(--danger);font-family:'DM Mono',monospace;font-size:11px">${fmt(t.fechaLimite)}</td><td style="color:var(--danger);font-family:'DM Mono',monospace;font-size:11px">${Math.abs(calcDiasRest(t)||0)}d</td></tr>`).join('')}</tbody></table></div></div>`;
+function mxMetrics(items) {
+  return '<div class="metrics">' + items.map(function(i) {
+    return '<div class="mc '+i.c+'"><div class="ml">'+i.l+'</div><div class="mv">'+i.v+'</div></div>';
+  }).join('') + '</div>';
 }
 
-function renderAlertProx(arr){
- const proximas=arr.filter(t=>isProxVencer(t));
- if(!proximas.length)return'';
- return`<div class="alert-box alert-prox"><h4>📅 Próximas a vencer en ${DIAS_PROX} días — ${proximas.length}</h4><div class="tbl-wrap"><table><thead><tr><th>Tarea</th><th>Proceso</th><th>Etapa</th><th>Responsables</th><th>F. Límite</th><th>Días rest.</th></tr></thead><tbody>${proximas.map(t=>`<tr><td style="font-weight:500">${esc(t.tarea)}</td><td><span class="chip">${esc(t.proceso)}</span></td><td><span class="etapa-badge etapa-${t.etapa?t.etapa.slice(-1):'1'}">${esc(t.etapa||'—')}</span></td><td>${esc(t.responsable)}</td><td style="font-family:'DM Mono',monospace;font-size:11px">${fmt(t.fechaLimite)}</td><td style="color:var(--accent3);font-family:'DM Mono',monospace;font-size:11px">${calcDiasRest(t)}d</td></tr>`).join('')}</tbody></table></div></div>`;
+function mxProg(lbl, pct) {
+  return '<div class="pwrap"><span class="plbl">'+lbl+'</span><div class="pbar"><div class="pfill" style="width:'+pct+'%"></div></div><span class="ppct">'+pct+'%</span></div>';
 }
 
-function renderProxSeguimientos(proc=null, etapa=null){
- const hasta=proxSemana();
- const proxSegs=seguimientos.filter(s=>{
- if(!s.proxFecha||s.proxFecha==='')return false;
- const t=tasks.find(x=>String(x.id)===String(s.taskId));
- const matchProc=!proc||(t&&t.proceso===proc);
- const matchEtapa=!etapa||(t&&t.etapa===etapa);
- const d=dateStr(s.proxFecha);
- return matchProc&&matchEtapa&&d>=today()&&d<=hasta;
- });
- if(!proxSegs.length)return'';
- return`<div class="alert-box alert-prox-seg"><h4>🗓 Seguimientos programados próxima semana — ${proxSegs.length}</h4><div class="tbl-wrap"><table><thead><tr><th>F. Programada</th><th>Tarea</th><th>Proceso</th><th>Último tipo</th><th>Responsables</th></tr></thead><tbody>${proxSegs.sort((a,b)=>dateStr(a.proxFecha).localeCompare(dateStr(b.proxFecha))).map(s=>{const t=tasks.find(x=>String(x.id)===String(s.taskId));const tipoClass={Reunión:'tipo-reunion',Correo:'tipo-correo',Llamada:'tipo-llamada',Visita:'tipo-visita'};return`<tr><td style="color:#a78bfa;font-family:'DM Mono',monospace;font-size:11px;font-weight:600">${fmt(s.proxFecha)}</td><td style="font-weight:500">${t?esc(t.tarea):'-'}</td><td>${t?`<span class="chip">${esc(t.proceso)}</span>`:'-'}</td><td>${s.tipo?`<span class="seg-tipo ${tipoClass[s.tipo]||''}">${esc(s.tipo)}</span>`:'-'}</td><td>${t?esc(t.responsable):'-'}</td></tr>`;}).join('')}</tbody></table></div></div>`;
+function rProgRows(data) {
+  var keys = Object.keys(data).sort();
+  if (!keys.length) return '<p class="empty">Sin datos.</p>';
+  return keys.map(function(k) {
+    var d = data[k];
+    var pend = d.total - d.done;
+    var pct = d.total > 0 ? Math.round(d.done/d.total*100) : 0;
+    var col = pct===100?'var(--gn)':pct>=70?'var(--bl)':pct>=40?'var(--am)':'var(--rd)';
+    return '<div class="pr"><span class="prn" title="'+esc(k)+'">'+esc(k)+'</span><div class="prb"><div class="prf" style="width:'+pct+'%;background:'+col+'"></div></div><div class="prs"><span style="color:var(--bl)">'+d.total+'</span><span style="color:var(--gn)">✓'+d.done+'</span><span style="color:var(--am)">⟳'+pend+'</span>'+(d.venc>0?'<span style="color:var(--rd)">⚠'+d.venc+'</span>':'')+'<span style="color:var(--acc);font-weight:600;min-width:32px;text-align:right">'+pct+'%</span></div></div>';
+  }).join('');
 }
 
-function renderTablaTareas(arr){
- if(!arr.length)return'<p class="empty-msg">Sin tareas.</p>';
- const sorted=[...arr].sort((a,b)=>{const order={vencida:0,en_curso:1,completada:2};return(order[getEstado(a)]||0)-(order[getEstado(b)]||0);});
- const tipoClass={Reunión:'tipo-reunion',Correo:'tipo-correo',Llamada:'tipo-llamada',Visita:'tipo-visita'};
- const tipoIcons={Reunión:'🤝',Correo:'📧',Llamada:'📞',Visita:'🏃'};
- return`<div class="tbl-wrap"><table><thead><tr><th>Tarea</th><th>Descripción</th><th>Etapa</th><th>Proceso</th><th>Responsables</th><th>F. Asignación</th><th>F. Límite</th><th>Días</th><th>Estado</th><th>Seguim.</th></tr></thead><tbody>${sorted.map(t=>{
- const est=getEstado(t);const stH=est==='completada'?'<span class="st done">✓ Completada</span>':est==='vencida'?'<span class="st venc">⚠ Vencida</span>':'<span class="st curso">⟳ En curso</span>';
- const segs=seguimientos.filter(s=>String(s.taskId)===String(t.id));
- const tipoCount={};segs.forEach(s=>{if(s.tipo)tipoCount[s.tipo]=(tipoCount[s.tipo]||0)+1;});
- const segSummary=Object.entries(tipoCount).map(([k,v])=>`<span class="seg-tipo ${tipoClass[k]||''}">${tipoIcons[k]}${v}</span>`).join(' ')||`<span style="color:var(--text-muted);font-size:11px">${segs.length}</span>`;
- return`<tr><td style="font-weight:500;min-width:140px">${esc(t.tarea)}</td><td style="font-size:11px;color:var(--text-soft);min-width:160px">${esc(t.descripcion||'—')}</td><td><span class="etapa-badge etapa-${t.etapa?t.etapa.slice(-1):'1'}">${esc(t.etapa||'—')}</span></td><td><span class="chip">${esc(t.proceso)}</span></td><td style="font-size:11px;min-width:120px">${esc(t.responsable)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);white-space:nowrap">${fmt(t.fechaAsignacion)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:${est==='vencida'?'var(--danger)':'var(--text-muted)'};white-space:nowrap">${fmt(t.fechaLimite)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent3);white-space:nowrap">${calcDias(t)}d</td><td>${stH}</td><td>${segSummary}</td></tr>`;
- }).join('')}</tbody></table></div>`;
+function rSemaforo(arr) {
+  var data = grpBy(arr, 'proceso');
+  var keys = Object.keys(data).sort();
+  if (!keys.length) return '<p class="empty">Sin datos.</p>';
+  return '<div class="smg">' + keys.map(function(k) {
+    var d = data[k];
+    var pct = d.total>0?Math.round(d.done/d.total*100):0;
+    var cls = pct>=70?'smv':pct>=40?'sma':'smr';
+    var lbl = pct>=70?'En meta':pct>=40?'En riesgo':'Crítico';
+    return '<div class="smc '+cls+'"><div class="smd"></div><div style="flex:1;min-width:0"><div class="smn" title="'+esc(k)+'">'+esc(k)+'</div><div style="font-size:10px;opacity:.8">'+lbl+' · '+d.done+'/'+d.total+'</div></div><div class="smp">'+pct+'%</div></div>';
+  }).join('') + '</div>';
 }
 
-function renderTablaSegs(segs){
- if(!segs.length)return'<p class="empty-msg">Sin seguimientos.</p>';
- const tipoClass={Reunión:'tipo-reunion',Correo:'tipo-correo',Llamada:'tipo-llamada',Visita:'tipo-visita'};
- const estadoClass={Realizado:'estado-realizado',Cancelado:'estado-cancelado','No asistió':'estado-noasistio',Pendiente:'estado-pendiente'};
- const avanceClass={'Sin avance':'avance-sin','Avance mínimo':'avance-min','Avance significativo':'avance-sig'};
- const sorted=[...segs].sort((a,b)=>String(b.fecha).localeCompare(String(a.fecha)));
- return`<div class="tbl-wrap"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Estado</th><th>Avance</th><th>Tarea</th><th>Descripción tarea</th><th>Proceso</th><th>Nota</th><th>Por</th><th>Próx. seg.</th></tr></thead><tbody>${sorted.map(s=>{
- const t=tasks.find(x=>String(x.id)===String(s.taskId));
- return`<tr><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);white-space:nowrap">${fmt(s.fecha)}</td><td>${s.tipo?`<span class="seg-tipo ${tipoClass[s.tipo]||''}">${esc(s.tipo)}</span>`:'-'}</td><td>${s.estado?`<span class="seg-estado-badge ${estadoClass[s.estado]||''}">${esc(s.estado)}</span>`:'-'}</td><td>${s.avance?`<span class="avance-badge ${avanceClass[s.avance]||''}">${esc(s.avance)}</span>`:'-'}</td><td style="font-size:11px;font-weight:500;min-width:130px">${t?esc(t.tarea):'-'}</td><td style="font-size:10px;color:var(--text-muted);min-width:150px">${t?esc(t.descripcion||'—'):'-'}</td><td>${t?`<span class="chip">${esc(t.proceso)}</span>`:'-'}</td><td style="font-size:11px;color:var(--text-soft);min-width:180px">${esc(s.nota)}</td><td style="font-size:11px;color:var(--text-muted);white-space:nowrap">${esc(s.autor)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:#a78bfa;white-space:nowrap">${fmt(s.proxFecha)}</td></tr>`;
- }).join('')}</tbody></table></div>`;
+function rAvanceStats(sg) {
+  if (!sg.length) return '';
+  var sig = sg.filter(function(s){return s.avance==='Avance significativo';}).length;
+  var min2 = sg.filter(function(s){return s.avance==='Avance mínimo';}).length;
+  var sin = sg.filter(function(s){return s.avance==='Sin avance';}).length;
+  var nr = sg.filter(function(s){return !s.avance||s.avance==='';}).length;
+  var tot = sg.length;
+  function pct(n) { return tot>0?Math.round(n/tot*100):0; }
+  var cards = '<div class="avg">' +
+    '<div class="avc avc-g"><div class="avn">'+sig+'</div><div class="avl">Avance significativo</div><div class="avp">'+pct(sig)+'% del total</div><div class="avbar"><div class="avbf" style="width:'+pct(sig)+'%"></div></div></div>' +
+    '<div class="avc avc-a"><div class="avn">'+min2+'</div><div class="avl">Avance mínimo</div><div class="avp">'+pct(min2)+'% del total</div><div class="avbar"><div class="avbf" style="width:'+pct(min2)+'%"></div></div></div>' +
+    '<div class="avc avc-r"><div class="avn">'+sin+'</div><div class="avl">Sin avance</div><div class="avp">'+pct(sin)+'% del total</div><div class="avbar"><div class="avbf" style="width:'+pct(sin)+'%"></div></div></div>' +
+    (nr>0?'<div class="avc avc-m"><div class="avn">'+nr+'</div><div class="avl">Sin registro</div><div class="avp">'+pct(nr)+'% del total</div><div class="avbar"><div class="avbf" style="width:'+pct(nr)+'%"></div></div></div>':'') +
+    '</div>';
+  var sorted = sg.slice().sort(function(a,b) {
+    var ord = {'Sin avance':0,'Avance mínimo':1,'Avance significativo':2,'':3};
+    return (ord[a.avance||'']||3) - (ord[b.avance||'']||3);
+  });
+  var tcls = {Reunión:'tr2',Correo:'tc',Llamada:'tl',Visita:'tv'};
+  var ecls = {Realizado:'er',Cancelado:'eca','No asistió':'ena',Pendiente:'ep'};
+  var acls = {'Sin avance':'as','Avance mínimo':'am2','Avance significativo':'ag'};
+  var tbl = '<div class="tw"><table><thead><tr><th>Fecha</th><th>Proceso</th><th>Tarea</th><th>Tipo</th><th>Estado</th><th>Avance</th><th>Nota</th><th>Por</th></tr></thead><tbody>' +
+    sorted.map(function(s) {
+      var t = findTask(s.taskId);
+      return '<tr>' +
+        '<td style="font-family:\'DM Mono\',monospace;font-size:11px;color:var(--acc);white-space:nowrap">'+fmt(s.fecha)+'</td>' +
+        '<td>'+(t?'<span class="chip">'+esc(t.proceso)+'</span>':'-')+'</td>' +
+        '<td style="font-weight:500;min-width:130px">'+(t?esc(t.tarea):'-')+'</td>' +
+        '<td>'+(s.tipo?'<span class="tb '+(tcls[s.tipo]||'')+'">'+esc(s.tipo)+'</span>':'-')+'</td>' +
+        '<td>'+(s.estado?'<span class="es '+(ecls[s.estado]||'')+'">'+esc(s.estado)+'</span>':'-')+'</td>' +
+        '<td>'+(s.avance?'<span class="av '+(acls[s.avance]||'')+'">'+esc(s.avance)+'</span>':'<span style="color:var(--txm)">—</span>')+'</td>' +
+        '<td style="font-size:11px;color:var(--txs);min-width:150px">'+esc(s.nota)+'</td>' +
+        '<td style="font-size:11px;color:var(--txm);white-space:nowrap">'+esc(s.autor)+'</td>' +
+        '</tr>';
+    }).join('') + '</tbody></table></div>';
+  return cards + tbl;
 }
 
-function renderTareasPorEtapaProceso(arr){
- const etapas=['Etapa 1','Etapa 2','Etapa 3'];
- const enCurso=arr.filter(t=>getEstado(t)==='en_curso');
- if(!enCurso.length)return'<p class="empty-msg">Sin tareas en curso.</p>';
- const tipoClass={Reunion:'tipo-reunion',Correo:'tipo-correo',Llamada:'tipo-llamada',Visita:'tipo-visita'};
- const tipoIcons={Reunion:'\u{1F91D}',Correo:'\u{1F4E7}',Llamada:'\u{1F4DE}',Visita:'\u{1F3C3}'};
- const etapaColors={'Etapa 1':'var(--accent2)','Etapa 2':'#a78bfa','Etapa 3':'var(--accent)'};
- const etapaBg={'Etapa 1':'rgba(59,130,246,.08)','Etapa 2':'rgba(167,139,250,.08)','Etapa 3':'rgba(0,195,165,.08)'};
- const etapaBorder={'Etapa 1':'rgba(59,130,246,.25)','Etapa 2':'rgba(167,139,250,.25)','Etapa 3':'rgba(0,195,165,.25)'};
- const etapaDesc={'Etapa 1':'Prioridad inmediata','Etapa 2':'Prioridad media','Etapa 3':'Etapa futura — no urgente'};
-
- return etapas.map(etapa=>{
- const tareasEtapa=enCurso.filter(t=>t.etapa===etapa);
- if(!tareasEtapa.length)return'';
- // Agrupar por proceso
- const procesos=[...new Set(tareasEtapa.map(t=>t.proceso).filter(Boolean))].sort();
- const etapaNum=etapa.slice(-1);
- return`<div style="margin-bottom:16px;border:1px solid ${etapaBorder[etapa]};border-radius:10px;overflow:hidden">
- <div style="background:${etapaBg[etapa]};padding:12px 16px;border-bottom:1px solid ${etapaBorder[etapa]};display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
- <div style="display:flex;align-items:center;gap:10px">
- <span class="etapa-badge etapa-${etapaNum}" style="font-size:12px;padding:3px 12px">${etapa}</span>
- <span style="font-size:13px;font-weight:600;color:${etapaColors[etapa]}">${tareasEtapa.length} tarea${tareasEtapa.length!==1?'s':''} en curso</span>
- <span style="font-size:11px;color:var(--text-muted)">· ${etapaDesc[etapa]}</span>
- </div>
- <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted)">${procesos.length} proceso${procesos.length!==1?'s':''}</span>
- </div>
- ${procesos.map(proc=>{
- const tareasPoc=tareasEtapa.filter(t=>t.proceso===proc);
- return`<div style="border-bottom:1px solid ${etapaBorder[etapa]};padding:10px 16px">
- <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
- <span class="chip" style="font-size:11px">${esc(proc)}</span>
- <span style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace">${tareasPoc.length} tarea${tareasPoc.length!==1?'s':''}</span>
- </div>
- <div class="tbl-wrap">
- <table>
- <thead><tr><th>Tarea</th><th>Descripción</th><th>Responsables</th><th>F. Asignación</th><th>F. Límite</th><th>Días en curso</th><th>Seguim.</th></tr></thead>
- <tbody>${tareasPoc.map(t=>{
- const segs=seguimientos.filter(s=>String(s.taskId)===String(t.id));
- const tipoCount={};segs.forEach(s=>{if(s.tipo)tipoCount[s.tipo]=(tipoCount[s.tipo]||0)+1;});
- const dr=calcDiasRest(t);
- const drStyle=dr!==null&&dr<=3?'color:var(--danger);font-weight:600':dr!==null&&dr<=7?'color:var(--accent3)':'color:var(--text-muted)';
- const segSummary=Object.entries(tipoCount).map(([k,v])=>`<span class="seg-tipo tipo-${k.toLowerCase()}">${v} ${k}</span>`).join(' ')||`<span style="color:var(--text-muted);font-size:11px">${segs.length} seg.</span>`;
- return`<tr>
- <td style="font-weight:500;min-width:130px">${esc(t.tarea)}</td>
- <td style="font-size:11px;color:var(--text-soft);min-width:160px">${esc(t.descripcion||'—')}</td>
- <td style="font-size:11px;min-width:120px">${esc(t.responsable)}</td>
- <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);white-space:nowrap">${fmt(t.fechaAsignacion)}</td>
- <td style="font-family:'DM Mono',monospace;font-size:11px;white-space:nowrap;${drStyle}">${fmt(t.fechaLimite)}</td>
- <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent3);white-space:nowrap">${calcDias(t)}d</td>
- <td style="white-space:nowrap">${segSummary}</td>
- </tr>`;
- }).join('')}</tbody>
- </table>
- </div>
- </div>`;
- }).join('')}
- </div>`;
- }).join('');
+function rTipoStats(sg) {
+  var tipos = {
+    'Reunión':{icon:'🤝',total:0,real:0,nas:0},
+    'Correo':{icon:'📧',total:0,real:0,nas:0},
+    'Llamada':{icon:'📞',total:0,real:0,nas:0},
+    'Visita':{icon:'🏃',total:0,real:0,nas:0}
+  };
+  sg.forEach(function(s) {
+    if (s.tipo && tipos[s.tipo]) {
+      tipos[s.tipo].total++;
+      if (s.estado==='Realizado') tipos[s.tipo].real++;
+      if (s.estado==='No asistió') tipos[s.tipo].nas++;
+    }
+  });
+  return '<div class="tsg">' + Object.keys(tipos).map(function(k) {
+    var v = tipos[k];
+    return '<div class="tsc"><div class="tsi">'+v.icon+'</div><div class="tsn">'+v.total+'</div><div class="tsl">'+k+'s</div><div class="tss" style="color:var(--gn)">✓ '+v.real+' realizados</div>'+(v.nas>0?'<div class="tss" style="color:var(--rd)">🚫 '+v.nas+' no asistió</div>':'')+'</div>';
+  }).join('') + '</div>';
 }
 
-function exportarPDF(vista){
- const titles={gerencia:'Informe Gerencia',proceso:`Informe Proceso — ${document.getElementById('selProceso')?.value||''}`,etapa:`Informe ${document.getElementById('selEtapa')?.value||''}`,periodo:'Informe por Período'};
- document.querySelectorAll('.print-header').forEach(h=>h.style.display='none');
- const header=document.querySelector(`#pan-${vista} .print-header`);
- if(header)header.style.display='block';
- document.title=`BPC INVIMA · ${titles[vista]||'Informe'} · ${fmt(today())}`;
- setTimeout(()=>{window.print();setTimeout(()=>{if(header)header.style.display='none';},500);},200);
+function rReuniones(field) {
+  var map = {};
+  segs.filter(function(s){return s.tipo==='Reunión';}).forEach(function(s) {
+    var t = findTask(s.taskId);
+    var k = t ? (t[field]||'Sin definir') : 'Sin definir';
+    if (!map[k]) map[k] = {total:0,real:0,nas:0};
+    map[k].total++;
+    if (s.estado==='Realizado') map[k].real++;
+    if (s.estado==='No asistió') map[k].nas++;
+  });
+  var keys = Object.keys(map).sort();
+  if (!keys.length) return '<p class="empty">Sin reuniones.</p>';
+  var max = Math.max.apply(null, keys.map(function(k){return map[k].total;}));
+  return keys.map(function(k) {
+    var d = map[k];
+    var pct = max>0?Math.round(d.total/max*100):0;
+    return '<div class="rb"><span class="rbl" title="'+esc(k)+'">'+esc(k)+'</span><div class="rbt"><div class="rbf" style="width:'+pct+'%;background:var(--bl)"></div></div><span class="rbn"><span style="color:var(--bl)">'+d.total+'</span> <span style="color:var(--gn)">✓'+d.real+'</span> <span style="color:var(--rd)">🚫'+d.nas+'</span></span></div>';
+  }).join('');
 }
 
-document.addEventListener('DOMContentLoaded',()=>{
- const d=new Date();
- document.getElementById('currentDate').textContent=d.toLocaleDateString('es-CO',{weekday:'short',year:'numeric',month:'short',day:'numeric'}).toUpperCase();
- cargarDatos();
- setInterval(()=>cargarDatos(true),30000);
+function rNoAsistio(field) {
+  var map = {};
+  segs.filter(function(s){return s.estado==='No asistió';}).forEach(function(s) {
+    var t = findTask(s.taskId);
+    var k = t ? (t[field]||'Sin definir') : 'Sin definir';
+    if (!map[k]) map[k] = 0;
+    map[k]++;
+  });
+  var keys = Object.keys(map).sort(function(a,b){return map[b]-map[a];});
+  if (!keys.length) return '<p class="empty" style="color:var(--gn)">✓ Sin incumplimientos.</p>';
+  var max = Math.max.apply(null, keys.map(function(k){return map[k];}));
+  return keys.map(function(k) {
+    var pct = max>0?Math.round(map[k]/max*100):0;
+    return '<div class="rb"><span class="rbl" title="'+esc(k)+'">'+esc(k)+'</span><div class="rbt"><div class="rbf" style="width:'+pct+'%;background:var(--rd)"></div></div><span class="rbn" style="color:var(--rd)">'+map[k]+' '+(map[k]===1?'vez':'veces')+'</span></div>';
+  }).join('');
+}
+
+function rAlertVenc(arr) {
+  var v = arr.filter(function(t){return estado(t)==='vencida';});
+  if (!v.length) return '';
+  return '<div class="ab abv"><h4>⚠ Tareas vencidas — '+v.length+'</h4><div class="tw"><table><thead><tr><th>Tarea</th><th>Proceso</th><th>Etapa</th><th>Responsables</th><th>F. Límite</th><th>Días vencida</th></tr></thead><tbody>'+
+    v.map(function(t){
+      var en = t.etapa?t.etapa.slice(-1):'1';
+      return '<tr><td style="font-weight:500">'+esc(t.tarea)+'</td><td><span class="chip">'+esc(t.proceso)+'</span></td><td><span class="eb e'+en+'">'+esc(t.etapa||'—')+'</span></td><td>'+esc(t.responsable)+'</td><td style="color:var(--rd);font-family:\'DM Mono\',monospace;font-size:11px">'+fmt(t.fechaLimite)+'</td><td style="color:var(--rd);font-family:\'DM Mono\',monospace;font-size:11px">'+Math.abs(diasRest(t)||0)+'d</td></tr>';
+    }).join('')+'</tbody></table></div></div>';
+}
+
+function rAlertProx(arr) {
+  var p = arr.filter(function(t){return proxVencer(t);});
+  if (!p.length) return '';
+  return '<div class="ab abp"><h4>📅 Próximas a vencer en '+DPROX+' días — '+p.length+'</h4><div class="tw"><table><thead><tr><th>Tarea</th><th>Proceso</th><th>Etapa</th><th>Responsables</th><th>F. Límite</th><th>Días rest.</th></tr></thead><tbody>'+
+    p.map(function(t){
+      var en = t.etapa?t.etapa.slice(-1):'1';
+      return '<tr><td style="font-weight:500">'+esc(t.tarea)+'</td><td><span class="chip">'+esc(t.proceso)+'</span></td><td><span class="eb e'+en+'">'+esc(t.etapa||'—')+'</span></td><td>'+esc(t.responsable)+'</td><td style="font-family:\'DM Mono\',monospace;font-size:11px">'+fmt(t.fechaLimite)+'</td><td style="color:var(--am);font-family:\'DM Mono\',monospace;font-size:11px">'+diasRest(t)+'d</td></tr>';
+    }).join('')+'</tbody></table></div></div>';
+}
+
+function rProxSegs(proc, etapa) {
+  var hasta = proxSem();
+  var ps = segs.filter(function(s) {
+    if (!s.proxFecha || s.proxFecha === '') return false;
+    var t = findTask(s.taskId);
+    var mp = !proc || (t && t.proceso === proc);
+    var me = !etapa || (t && t.etapa === etapa);
+    var d = dstr(s.proxFecha);
+    return mp && me && d >= today() && d <= hasta;
+  });
+  if (!ps.length) return '';
+  var tcls = {Reunión:'tr2',Correo:'tc',Llamada:'tl',Visita:'tv'};
+  return '<div class="ab abs"><h4>🗓 Seguimientos programados próxima semana — '+ps.length+'</h4><div class="tw"><table><thead><tr><th>F. Programada</th><th>Tarea</th><th>Proceso</th><th>Último tipo</th><th>Responsables</th></tr></thead><tbody>'+
+    ps.slice().sort(function(a,b){return dstr(a.proxFecha).localeCompare(dstr(b.proxFecha));}).map(function(s) {
+      var t = findTask(s.taskId);
+      return '<tr><td style="color:#a78bfa;font-family:\'DM Mono\',monospace;font-size:11px;font-weight:600">'+fmt(s.proxFecha)+'</td><td style="font-weight:500">'+(t?esc(t.tarea):'-')+'</td><td>'+(t?'<span class="chip">'+esc(t.proceso)+'</span>':'-')+'</td><td>'+(s.tipo?'<span class="tb '+(tcls[s.tipo]||'')+'">'+esc(s.tipo)+'</span>':'-')+'</td><td>'+(t?esc(t.responsable):'-')+'</td></tr>';
+    }).join('')+'</tbody></table></div></div>';
+}
+
+function rEtapaProc(arr) {
+  var etapas = ['Etapa 1','Etapa 2','Etapa 3'];
+  var enC = arr.filter(function(t){return estado(t)==='en_curso';});
+  if (!enC.length) return '<p class="empty">Sin tareas en curso.</p>';
+  var ecol = {'Etapa 1':'var(--bl)','Etapa 2':'#a78bfa','Etapa 3':'var(--acc)'};
+  var ebg  = {'Etapa 1':'rgba(59,130,246,.08)','Etapa 2':'rgba(167,139,250,.08)','Etapa 3':'rgba(0,195,165,.08)'};
+  var ebrd = {'Etapa 1':'rgba(59,130,246,.25)','Etapa 2':'rgba(167,139,250,.25)','Etapa 3':'rgba(0,195,165,.25)'};
+  var edesc= {'Etapa 1':'Prioridad inmediata','Etapa 2':'Prioridad media','Etapa 3':'Etapa futura — no urgente'};
+  var tcls = {Reunión:'tr2',Correo:'tc',Llamada:'tl',Visita:'tv'};
+  var ticonos = {Reunión:'🤝',Correo:'📧',Llamada:'📞',Visita:'🏃'};
+
+  return etapas.map(function(etapa) {
+    var te = enC.filter(function(t){return t.etapa===etapa;});
+    if (!te.length) return '';
+    var procs = uniq(te.map(function(t){return t.proceso;})).sort();
+    var en = etapa.slice(-1);
+    var html = '<div class="eblk" style="border-color:'+ebrd[etapa]+';">';
+    html += '<div class="eblk-hdr" style="background:'+ebg[etapa]+';border-color:'+ebrd[etapa]+';">';
+    html += '<div style="display:flex;align-items:center;gap:8px"><span class="eb e'+en+'" style="font-size:12px;padding:3px 11px">'+etapa+'</span><span style="font-size:13px;font-weight:600;color:'+ecol[etapa]+'">'+te.length+' tarea'+(te.length!==1?'s':'')+'</span><span style="font-size:11px;color:var(--txm)">· '+edesc[etapa]+'</span></div>';
+    html += '<span style="font-family:\'DM Mono\',monospace;font-size:11px;color:var(--txm)">'+procs.length+' proceso'+(procs.length!==1?'s':'')+'</span></div>';
+    procs.forEach(function(proc) {
+      var tp = te.filter(function(t){return t.proceso===proc;});
+      html += '<div class="eblk-proc">';
+      html += '<div class="eblk-proc-hdr"><span class="chip">'+esc(proc)+'</span><span style="font-size:11px;color:var(--txm);font-family:\'DM Mono\',monospace">'+tp.length+' tarea'+(tp.length!==1?'s':'')+'</span></div>';
+      html += '<div class="tw"><table><thead><tr><th>Tarea</th><th>Descripción</th><th>Responsables</th><th>F. Asignación</th><th>F. Límite</th><th>Días</th><th>Seguim.</th></tr></thead><tbody>';
+      tp.forEach(function(t) {
+        var sg2 = segs.filter(function(s){return String(s.taskId)===String(t.id);});
+        var tc = {};
+        sg2.forEach(function(s){if(s.tipo)tc[s.tipo]=(tc[s.tipo]||0)+1;});
+        var segH = Object.keys(tc).map(function(k){return '<span class="tb '+(tcls[k]||'')+'">'+ticonos[k]+tc[k]+'</span>';}).join(' ') || ('<span style="color:var(--txm);font-size:11px">'+sg2.length+' seg.</span>');
+        var dr = diasRest(t);
+        var drCol = dr!==null&&dr<=3?'color:var(--rd);font-weight:600':dr!==null&&dr<=7?'color:var(--am)':'color:var(--txm)';
+        html += '<tr><td style="font-weight:500;min-width:120px">'+esc(t.tarea)+'</td><td style="font-size:11px;color:var(--txs);min-width:150px">'+esc(t.descripcion||'—')+'</td><td style="font-size:11px;min-width:110px">'+esc(t.responsable)+'</td><td style="font-family:\'DM Mono\',monospace;font-size:11px;color:var(--txm);white-space:nowrap">'+fmt(t.fechaAsignacion)+'</td><td style="font-family:\'DM Mono\',monospace;font-size:11px;white-space:nowrap;'+drCol+'">'+fmt(t.fechaLimite)+'</td><td style="font-family:\'DM Mono\',monospace;font-size:11px;color:var(--am);white-space:nowrap">'+dias(t)+'d</td><td style="white-space:nowrap">'+segH+'</td></tr>';
+      });
+      html += '</tbody></table></div></div>';
+    });
+    html += '</div>';
+    return html;
+  }).join('');
+}
+
+function rTblTareas(arr) {
+  if (!arr.length) return '<p class="empty">Sin tareas.</p>';
+  var sorted = arr.slice().sort(function(a,b){
+    var ord = {vencida:0,en_curso:1,completada:2};
+    return (ord[estado(a)]||0)-(ord[estado(b)]||0);
+  });
+  var tcls = {Reunión:'tr2',Correo:'tc',Llamada:'tl',Visita:'tv'};
+  var ticonos = {Reunión:'🤝',Correo:'📧',Llamada:'📞',Visita:'🏃'};
+  return '<div class="tw"><table><thead><tr><th>Tarea</th><th>Descripción</th><th>Etapa</th><th>Proceso</th><th>Responsables</th><th>F. Asignación</th><th>F. Límite</th><th>Días</th><th>Estado</th><th>Seguim.</th></tr></thead><tbody>'+
+    sorted.map(function(t) {
+      var e = estado(t);
+      var stH = e==='completada'?'<span class="st done">✓</span>':e==='vencida'?'<span class="st venc">⚠</span>':'<span class="st curso">⟳</span>';
+      var sg2 = segs.filter(function(s){return String(s.taskId)===String(t.id);});
+      var tc = {};
+      sg2.forEach(function(s){if(s.tipo)tc[s.tipo]=(tc[s.tipo]||0)+1;});
+      var segH = Object.keys(tc).map(function(k){return '<span class="tb '+(tcls[k]||'')+'">'+ticonos[k]+tc[k]+'</span>';}).join(' ') || ('<span style="color:var(--txm);font-size:11px">'+sg2.length+'</span>');
+      var en = t.etapa?t.etapa.slice(-1):'1';
+      return '<tr><td style="font-weight:500;min-width:130px">'+esc(t.tarea)+'</td><td style="font-size:11px;color:var(--txs);min-width:150px">'+esc(t.descripcion||'—')+'</td><td><span class="eb e'+en+'">'+esc(t.etapa||'—')+'</span></td><td><span class="chip">'+esc(t.proceso)+'</span></td><td style="font-size:11px;min-width:110px">'+esc(t.responsable)+'</td><td style="font-family:\'DM Mono\',monospace;font-size:11px;color:var(--txm);white-space:nowrap">'+fmt(t.fechaAsignacion)+'</td><td style="font-family:\'DM Mono\',monospace;font-size:11px;color:'+(e==='vencida'?'var(--rd)':'var(--txm)')+';white-space:nowrap">'+fmt(t.fechaLimite)+'</td><td style="font-family:\'DM Mono\',monospace;font-size:11px;color:var(--am);white-space:nowrap">'+dias(t)+'d</td><td>'+stH+'</td><td style="white-space:nowrap">'+segH+'</td></tr>';
+    }).join('')+'</tbody></table></div>';
+}
+
+function rTblSegs(sg) {
+  if (!sg.length) return '<p class="empty">Sin seguimientos.</p>';
+  var sorted = sg.slice().sort(function(a,b){return String(b.fecha).localeCompare(String(a.fecha));});
+  var tcls={Reunión:'tr2',Correo:'tc',Llamada:'tl',Visita:'tv'};
+  var ecls={Realizado:'er',Cancelado:'eca','No asistió':'ena',Pendiente:'ep'};
+  var acls={'Sin avance':'as','Avance mínimo':'am2','Avance significativo':'ag'};
+  return '<div class="tw"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Estado</th><th>Avance</th><th>Tarea</th><th>Descripción</th><th>Proceso</th><th>Nota</th><th>Por</th><th>Próx. seg.</th></tr></thead><tbody>'+
+    sorted.map(function(s) {
+      var t = findTask(s.taskId);
+      return '<tr><td style="font-family:\'DM Mono\',monospace;font-size:11px;color:var(--acc);white-space:nowrap">'+fmt(s.fecha)+'</td><td>'+(s.tipo?'<span class="tb '+(tcls[s.tipo]||'')+'">'+esc(s.tipo)+'</span>':'-')+'</td><td>'+(s.estado?'<span class="es '+(ecls[s.estado]||'')+'">'+esc(s.estado)+'</span>':'-')+'</td><td>'+(s.avance?'<span class="av '+(acls[s.avance]||'')+'">'+esc(s.avance)+'</span>':'<span style="color:var(--txm)">—</span>')+'</td><td style="font-weight:500;min-width:120px">'+(t?esc(t.tarea):'-')+'</td><td style="font-size:10px;color:var(--txm);min-width:130px">'+(t?esc(t.descripcion||'—'):'-')+'</td><td>'+(t?'<span class="chip">'+esc(t.proceso)+'</span>':'-')+'</td><td style="font-size:11px;color:var(--txs);min-width:160px">'+esc(s.nota)+'</td><td style="font-size:11px;color:var(--txm);white-space:nowrap">'+esc(s.autor)+'</td><td style="font-family:\'DM Mono\',monospace;font-size:11px;color:#a78bfa;white-space:nowrap">'+fmt(s.proxFecha)+'</td></tr>';
+    }).join('')+'</tbody></table></div>';
+}
+
+function expPDF(vista) {
+  var titles = {gerencia:'Informe Gerencia',proceso:'Informe Proceso — '+(document.getElementById('selProc')?document.getElementById('selProc').value:''),etapa:'Informe '+(document.getElementById('selEtapa')?document.getElementById('selEtapa').value:''),periodo:'Informe por Período'};
+  document.querySelectorAll('.phd').forEach(function(h){h.style.display='none';});
+  var hdr = document.querySelector('#pan-'+vista+' .phd');
+  if (hdr) hdr.style.display = 'block';
+  document.title = 'BPC INVIMA · '+(titles[vista]||'Informe')+' · '+fmt(today());
+  setTimeout(function() {
+    window.print();
+    setTimeout(function(){if(hdr)hdr.style.display='none';},500);
+  },200);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var d = new Date();
+  document.getElementById('curDate').textContent = d.toLocaleDateString('es-CO',{weekday:'short',year:'numeric',month:'short',day:'numeric'}).toUpperCase();
+  cargar(false);
+  setInterval(function(){cargar(true);}, 30000);
 });
 </script>
 </body>
