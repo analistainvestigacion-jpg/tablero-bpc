@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe Ejecutivo BPC · INVIMA</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── PANTALLA ──────────────────────────────────────────── */
+:root{--bg:#0b0f1a;--surface:#111827;--surface2:#1a2236;--border:#1e2d47;--accent:#00c3a5;--accent2:#3b82f6;--accent3:#f59e0b;--danger:#ef4444;--success:#10b981;--text:#e2e8f0;--text-muted:#64748b;--text-soft:#94a3b8;--radius:12px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;min-height:100vh}
+header{background:linear-gradient(135deg,#0b1220,#0d1f3c);border-bottom:1px solid var(--border);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:100}
+.hdr-left{display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:20px;font-weight:700;color:#000}
+.hdr-title h1{font-family:'DM Serif Display',serif;font-size:19px}
+.hdr-title p{font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.5px}
+.sync-ind{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:#22c55e}
+.sync-dot.loading{background:var(--accent3);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+main{padding:26px 32px;max-width:1400px;margin:0 auto}
+.tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content;flex-wrap:wrap}
+.tab{padding:8px 20px;border-radius:7px;border:none;background:transparent;color:var(--text-muted);font-family:'Outfit',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+.tab.on{background:var(--accent2);color:#fff;box-shadow:0 2px 8px rgba(59,130,246,.4)}
+.tab:hover:not(.on){background:var(--surface2);color:var(--text)}
+.panel{display:none}.panel.on{display:block}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px}
+.mcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;position:relative;overflow:hidden;text-align:center}
+.mcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.mcard.c1::before{background:var(--accent2)}.mcard.c2::before{background:var(--success)}.mcard.c3::before{background:var(--accent3)}.mcard.c4::before{background:var(--danger)}.mcard.c5::before{background:var(--accent)}.mcard.c6::before{background:#a78bfa}.mcard.c7::before{background:#06b6d4}
+.mcard .ml{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);font-family:'DM Mono',monospace;margin-bottom:6px}
+.mcard .mv{font-size:28px;font-weight:700;font-family:'DM Serif Display',serif;line-height:1}
+.mcard.c1 .mv{color:var(--accent2)}.mcard.c2 .mv{color:var(--success)}.mcard.c3 .mv{color:var(--accent3)}.mcard.c4 .mv{color:var(--danger)}.mcard.c5 .mv{color:var(--accent)}.mcard.c6 .mv{color:#a78bfa}.mcard.c7 .mv{color:#06b6d4}
+.prog-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;gap:16px}
+.prog-label{font-size:12px;color:var(--text-muted);white-space:nowrap;font-family:'DM Mono',monospace}
+.prog-bar{flex:1;height:10px;background:var(--surface2);border-radius:100px;overflow:hidden;border:1px solid var(--border)}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .8s}
+.prog-pct{font-size:22px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--accent);min-width:55px;text-align:right}
+.section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+.section h3{font-family:'DM Serif Display',serif;font-size:16px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.section h3 .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:18px}
+.tbl-wrap{overflow:auto;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--surface2)}
+th{padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);font-family:'DM Mono',monospace;white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid rgba(30,45,71,.4);font-size:12px;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(59,130,246,.03)}
+.chip{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;background:rgba(59,130,246,.1);color:var(--accent2);border:1px solid rgba(59,130,246,.2);white-space:nowrap}
+.st{display:inline-block;padding:2px 9px;border-radius:100px;font-size:10px;font-weight:600;font-family:'DM Mono',monospace}
+.st.done{background:rgba(16,185,129,.12);color:var(--success);border:1px solid rgba(16,185,129,.25)}
+.st.curso{background:rgba(245,158,11,.12);color:var(--accent3);border:1px solid rgba(245,158,11,.25)}
+.st.venc{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.25)}
+.etapa-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.etapa-1{background:rgba(59,130,246,.15);color:var(--accent2)}.etapa-2{background:rgba(167,139,250,.15);color:#a78bfa}.etapa-3{background:rgba(0,195,165,.15);color:var(--accent)}
+.seg-tipo{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;font-family:'DM Mono',monospace}
+.tipo-reunion{background:rgba(59,130,246,.2);color:var(--accent2)}.tipo-correo{background:rgba(16,185,129,.2);color:var(--success)}.tipo-llamada{background:rgba(245,158,11,.2);color:var(--accent3)}.tipo-visita{background:rgba(167,139,250,.2);color:#a78bfa}
+.seg-estado-badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:600;font-family:'DM Mono',monospace}
+.estado-realizado{background:rgba(16,185,129,.12);color:var(--success);border:1px solid rgba(16,185,129,.25)}
+.estado-cancelado{background:rgba(100,116,139,.12);color:var(--text-muted);border:1px solid rgba(100,116,139,.25)}
+.estado-noasistio{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.25)}
+.estado-pendiente{background:rgba(245,158,11,.12);color:var(--accent3);border:1px solid rgba(245,158,11,.25)}
+.avance-badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600}
+.avance-sin{background:rgba(239,68,68,.1);color:var(--danger)}.avance-min{background:rgba(245,158,11,.1);color:var(--accent3)}.avance-sig{background:rgba(16,185,129,.1);color:var(--success)}
+/* SEMÁFORO */
+.semaforo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.semaforo-card{border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;border:1px solid}
+.sem-verde{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25)}
+.sem-amarillo{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25)}
+.sem-rojo{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.25)}
+.sem-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+.sem-verde .sem-dot{background:var(--success)}.sem-amarillo .sem-dot{background:var(--accent3)}.sem-rojo .sem-dot{background:var(--danger)}
+.sem-name{font-size:12px;font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sem-verde .sem-name{color:var(--success)}.sem-amarillo .sem-name{color:var(--accent3)}.sem-rojo .sem-name{color:var(--danger)}
+.sem-pct{font-family:'DM Mono',monospace;font-size:13px;font-weight:700}
+.sem-verde .sem-pct{color:var(--success)}.sem-amarillo .sem-pct{color:var(--accent3)}.sem-rojo .sem-pct{color:var(--danger)}
+/* BARRAS PROCESO */
+.prog-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(30,45,71,.4)}
+.prog-row:last-child{border-bottom:none}
+.prog-row-name{font-size:12px;color:var(--text-soft);min-width:150px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prog-row-bar{flex:1;height:8px;background:var(--surface2);border-radius:100px;overflow:hidden}
+.prog-row-fill{height:100%;border-radius:100px;transition:width .6s}
+.prog-row-stats{display:flex;gap:6px;align-items:center;white-space:nowrap;font-family:'DM Mono',monospace;font-size:11px;min-width:140px;justify-content:flex-end}
+/* REUNIONES */
+.reunion-bar{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(30,45,71,.3)}
+.reunion-bar:last-child{border-bottom:none}
+.rbar-label{font-size:12px;color:var(--text-soft);min-width:140px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rbar-track{flex:1;height:7px;background:var(--surface2);border-radius:100px;overflow:hidden}
+.rbar-fill{height:100%;border-radius:100px}
+.rbar-nums{font-family:'DM Mono',monospace;font-size:11px;min-width:100px;text-align:right}
+/* TIPO SEG STATS */
+.tipo-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.tipo-stat-card{background:var(--surface2);border-radius:8px;padding:12px;text-align:center;border:1px solid var(--border)}
+.tipo-stat-icon{font-size:22px;margin-bottom:4px}
+.tipo-stat-num{font-size:24px;font-weight:700;font-family:'DM Serif Display',serif}
+.tipo-stat-label{font-size:11px;color:var(--text-muted);margin-top:2px}
+.tipo-stat-sub{font-size:10px;font-family:'DM Mono',monospace;margin-top:4px}
+/* ALERTS */
+.alert-box{border-radius:var(--radius);padding:16px 20px;margin-bottom:16px}
+.alert-venc{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2)}
+.alert-prox{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2)}
+.alert-prox-seg{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2)}
+.alert-box h4{font-size:13px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.alert-venc h4{color:var(--danger)}.alert-prox h4{color:var(--accent3)}.alert-prox-seg h4{color:#a78bfa}
+.selector-wrap{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.selector-wrap label{font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.8px;white-space:nowrap}
+.selector-wrap select,.selector-wrap input[type=date]{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;padding:8px 12px;outline:none;transition:border-color .2s}
+.selector-wrap select{min-width:200px}
+.selector-wrap select:focus,.selector-wrap input[type=date]:focus{border-color:var(--accent2)}
+.selector-wrap select option{background:#111827}
+.btn-apply{background:linear-gradient(135deg,var(--accent2),#6366f1);color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif}
+.btn-pdf{background:linear-gradient(135deg,var(--danger),#dc2626);color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif}
+.empty-msg{padding:20px;text-align:center;color:var(--text-muted);font-size:13px}
+.periodo-header{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 16px;margin-bottom:16px;font-size:12px;color:var(--text-muted);font-family:'DM Mono',monospace}
+.spinner{display:inline-block;width:13px;height:13px;border:2px solid var(--border);border-top-color:var(--accent2);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:5px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── IMPRESIÓN ─────────────────────────────────────────── */
+@media print {
+  @page { margin: 15mm 12mm; size: A4 portrait; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  header, .tabs, .selector-wrap, .btn-pdf, .btn-apply { display: none !important; }
+  body { background: #fff !important; color: #111 !important; font-size: 11pt; font-family: 'Outfit', sans-serif; }
+  main { padding: 0 !important; max-width: 100% !important; }
+  .panel { display: block !important; }
+
+  /* PORTADA INLINE */
+  .print-header { display: block !important; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 3px solid #1a56db; }
+  .print-header h1 { font-family: 'DM Serif Display', serif; font-size: 22pt; color: #111; margin-bottom: 4px; }
+  .print-header .sub { font-size: 10pt; color: #555; font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .print-header .meta { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 8px; }
+  .print-header .meta-item { font-size: 10pt; color: #333; }
+  .print-header .meta-item strong { color: #1a56db; }
+
+  /* MÉTRICAS */
+  .metrics { grid-template-columns: repeat(4, 1fr) !important; gap: 8px !important; margin-bottom: 14px !important; }
+  .mcard { background: #f8faff !important; border: 1px solid #dde4f0 !important; border-radius: 8px !important; padding: 10px 8px !important; page-break-inside: avoid; }
+  .mcard::before { height: 3px !important; }
+  .mcard.c1::before { background: #1a56db !important; }
+  .mcard.c2::before { background: #059669 !important; }
+  .mcard.c3::before { background: #d97706 !important; }
+  .mcard.c4::before { background: #dc2626 !important; }
+  .mcard.c5::before { background: #0f6e56 !important; }
+  .mcard.c6::before { background: #7c3aed !important; }
+  .mcard.c7::before { background: #0891b2 !important; }
+  .mcard .ml { color: #555 !important; font-size: 7pt !important; }
+  .mcard .mv { font-size: 20pt !important; }
+  .mcard.c1 .mv { color: #1a56db !important; }
+  .mcard.c2 .mv { color: #059669 !important; }
+  .mcard.c3 .mv { color: #d97706 !important; }
+  .mcard.c4 .mv { color: #dc2626 !important; }
+  .mcard.c5 .mv { color: #0f6e56 !important; }
+  .mcard.c6 .mv { color: #7c3aed !important; }
+  .mcard.c7 .mv { color: #0891b2 !important; }
+
+  /* BARRA PROGRESO */
+  .prog-wrap { background: #f8faff !important; border: 1px solid #dde4f0 !important; padding: 10px 16px !important; margin-bottom: 14px !important; }
+  .prog-label { color: #555 !important; font-size: 9pt !important; }
+  .prog-bar { background: #e5e9f5 !important; border: 1px solid #c5cde8 !important; height: 10px !important; }
+  .prog-fill { background: linear-gradient(90deg, #0f6e56, #1a56db) !important; }
+  .prog-pct { color: #0f6e56 !important; font-size: 16pt !important; }
+
+  /* SECCIONES */
+  .section { background: #fff !important; border: 1px solid #dde4f0 !important; border-radius: 8px !important; padding: 14px !important; margin-bottom: 14px !important; page-break-inside: avoid; }
+  .section h3 { color: #111 !important; font-size: 13pt !important; border-bottom: 1px solid #dde4f0 !important; padding-bottom: 8px !important; margin-bottom: 12px !important; }
+  .section h3 .dot { width: 10px !important; height: 10px !important; }
+  .grid2 { grid-template-columns: 1fr 1fr !important; gap: 12px !important; margin-bottom: 14px !important; }
+
+  /* TABLAS */
+  .tbl-wrap { overflow: visible !important; border: 1px solid #dde4f0 !important; border-radius: 6px !important; }
+  table { width: 100% !important; border-collapse: collapse !important; font-size: 9pt !important; }
+  thead tr { background: #eef2fb !important; }
+  th { color: #444 !important; padding: 7px 8px !important; font-size: 8pt !important; border-bottom: 1px solid #c5cde8 !important; white-space: normal !important; }
+  td { padding: 7px 8px !important; border-bottom: 1px solid #e5e9f5 !important; color: #222 !important; white-space: normal !important; word-break: break-word !important; }
+  tr:hover td { background: transparent !important; }
+  .chip { background: #e8f0fe !important; color: #1a56db !important; border-color: #bfdbfe !important; font-size: 8pt !important; }
+  .st.done { background: #d1fae5 !important; color: #059669 !important; border-color: #6ee7b7 !important; }
+  .st.curso { background: #fef3c7 !important; color: #d97706 !important; border-color: #fcd34d !important; }
+  .st.venc { background: #fee2e2 !important; color: #dc2626 !important; border-color: #fca5a5 !important; }
+  .etapa-badge { font-size: 8pt !important; padding: 1px 6px !important; }
+  .etapa-1 { background: #dbeafe !important; color: #1d4ed8 !important; }
+  .etapa-2 { background: #ede9fe !important; color: #7c3aed !important; }
+  .etapa-3 { background: #d1fae5 !important; color: #065f46 !important; }
+  .seg-tipo { font-size: 8pt !important; padding: 1px 5px !important; }
+  .tipo-reunion { background: #dbeafe !important; color: #1d4ed8 !important; }
+  .tipo-correo { background: #d1fae5 !important; color: #065f46 !important; }
+  .tipo-llamada { background: #fef3c7 !important; color: #92400e !important; }
+  .tipo-visita { background: #ede9fe !important; color: #5b21b6 !important; }
+  .seg-estado-badge { font-size: 8pt !important; padding: 1px 6px !important; }
+  .estado-realizado { background: #d1fae5 !important; color: #065f46 !important; border-color: #6ee7b7 !important; }
+  .estado-cancelado { background: #f3f4f6 !important; color: #6b7280 !important; border-color: #d1d5db !important; }
+  .estado-noasistio { background: #fee2e2 !important; color: #dc2626 !important; border-color: #fca5a5 !important; }
+  .estado-pendiente { background: #fef3c7 !important; color: #d97706 !important; border-color: #fcd34d !important; }
+  .avance-badge { font-size: 8pt !important; }
+  .avance-sin { background: #fee2e2 !important; color: #dc2626 !important; }
+  .avance-min { background: #fef3c7 !important; color: #d97706 !important; }
+  .avance-sig { background: #d1fae5 !important; color: #059669 !important; }
+
+  /* SEMÁFORO */
+  .semaforo-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
+  .semaforo-card { border-radius: 6px !important; padding: 8px 12px !important; page-break-inside: avoid; }
+  .sem-verde { background: #d1fae5 !important; border-color: #6ee7b7 !important; }
+  .sem-amarillo { background: #fef3c7 !important; border-color: #fcd34d !important; }
+  .sem-rojo { background: #fee2e2 !important; border-color: #fca5a5 !important; }
+  .sem-verde .sem-name, .sem-verde .sem-pct { color: #065f46 !important; }
+  .sem-amarillo .sem-name, .sem-amarillo .sem-pct { color: #92400e !important; }
+  .sem-rojo .sem-name, .sem-rojo .sem-pct { color: #dc2626 !important; }
+  .sem-verde .sem-dot { background: #059669 !important; }
+  .sem-amarillo .sem-dot { background: #d97706 !important; }
+  .sem-rojo .sem-dot { background: #dc2626 !important; }
+
+  /* BARRAS */
+  .prog-row-name { color: #444 !important; }
+  .prog-row-bar { background: #e5e9f5 !important; }
+  .rbar-label { color: #444 !important; }
+  .rbar-track { background: #e5e9f5 !important; }
+  .rbar-nums { color: #333 !important; }
+
+  /* TIPO STATS */
+  .tipo-stats { grid-template-columns: repeat(4, 1fr) !important; gap: 8px !important; }
+  .tipo-stat-card { background: #f8faff !important; border: 1px solid #dde4f0 !important; border-radius: 6px !important; }
+  .tipo-stat-num { font-size: 18pt !important; color: #111 !important; }
+  .tipo-stat-label { color: #555 !important; }
+  .tipo-stat-sub { color: #777 !important; }
+
+  /* ALERTAS */
+  .alert-box { border-radius: 6px !important; padding: 12px 14px !important; margin-bottom: 12px !important; page-break-inside: avoid; }
+  .alert-venc { background: #fff5f5 !important; border-color: #fca5a5 !important; }
+  .alert-prox { background: #fffbeb !important; border-color: #fcd34d !important; }
+  .alert-prox-seg { background: #f5f3ff !important; border-color: #c4b5fd !important; }
+  .alert-venc h4 { color: #dc2626 !important; }
+  .alert-prox h4 { color: #d97706 !important; }
+  .alert-prox-seg h4 { color: #7c3aed !important; }
+
+  /* PERIODO HEADER */
+  .periodo-header { background: #eef2fb !important; border: 1px solid #c5cde8 !important; color: #333 !important; }
+
+  .empty-msg { color: #888 !important; }
+
+  /* AVANCE STATS */
+  div[style*="background:rgba(16,185,129,.08)"],
+  div[style*="background:rgba(245,158,11,.08)"],
+  div[style*="background:rgba(239,68,68,.08)"],
+  div[style*="background:rgba(100,116,139,.08)"] {
+    page-break-inside: avoid;
+  }
+
+  /* TAREAS POR ETAPA Y PROCESO */
+  div[style*="border:1px solid rgba(59,130,246,.25)"],
+  div[style*="border:1px solid rgba(167,139,250,.25)"],
+  div[style*="border:1px solid rgba(0,195,165,.25)"] {
+    page-break-inside: avoid;
+    margin-bottom: 12px !important;
+  }
+  div[style*="background:rgba(59,130,246,.08)"],
+  div[style*="background:rgba(167,139,250,.08)"],
+  div[style*="background:rgba(0,195,165,.08)"] {
+    background: #f8faff !important;
+    border-color: #c5cde8 !important;
+  }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr-left">
+    <div class="logo">B</div>
+    <div class="hdr-title">
+      <h1>Informe Ejecutivo BPC · INVIMA</h1>
+      <p>Certificación Buenas Prácticas — Solo lectura</p>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <div class="sync-ind">
+      <span class="sync-dot loading" id="syncDot"></span>
+      <span id="syncLabel">Conectando...</span>
+    </div>
+    <span id="currentDate" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);background:rgba(0,195,165,.08);border:1px solid rgba(0,195,165,.2);padding:5px 10px;border-radius:6px"></span>
+  </div>
+</header>
+
+<main>
+  <div id="loadingMsg" style="text-align:center;padding:60px;color:var(--text-muted)">
+    <span class="spinner"></span> Cargando datos...
+  </div>
+  <div id="appContent" style="display:none">
+    <div class="tabs">
+      <button class="tab on" onclick="switchTab('gerencia',this)">🏢 Gerencia</button>
+      <button class="tab" onclick="switchTab('proceso',this)">📁 Por Proceso</button>
+      <button class="tab" onclick="switchTab('etapa',this)">📊 Por Etapa</button>
+      <button class="tab" onclick="switchTab('periodo',this)">📅 Por Período</button>
+    </div>
+
+    <!-- GERENCIA -->
+    <div class="panel on" id="pan-gerencia">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:14px">
+        <button class="btn-pdf" onclick="exportarPDF('gerencia')">🖨 Exportar PDF</button>
+      </div>
+      <div class="print-header" style="display:none">
+        <h1>Informe Ejecutivo BPC · INVIMA</h1>
+        <div class="sub">Certificación Buenas Prácticas de Clínica</div>
+        <div class="meta" id="g-meta"></div>
+      </div>
+      <div id="g-content"></div>
+    </div>
+
+    <!-- POR PROCESO -->
+    <div class="panel" id="pan-proceso">
+      <div class="selector-wrap">
+        <label>Proceso</label>
+        <select id="selProceso" onchange="renderProceso()"><option value="">— Selecciona —</option></select>
+        <button class="btn-pdf" onclick="exportarPDF('proceso')" style="margin-left:auto">🖨 Exportar PDF</button>
+      </div>
+      <div class="print-header" style="display:none">
+        <h1>Informe por Proceso · BPC INVIMA</h1>
+        <div class="sub">Certificación Buenas Prácticas de Clínica</div>
+        <div class="meta" id="proc-meta"></div>
+      </div>
+      <div id="proc-content"><p class="empty-msg">Selecciona un proceso.</p></div>
+    </div>
+
+    <!-- POR ETAPA -->
+    <div class="panel" id="pan-etapa">
+      <div class="selector-wrap">
+        <label>Etapa</label>
+        <select id="selEtapa" onchange="renderEtapa()">
+          <option value="">— Selecciona —</option>
+          <option value="Etapa 1">Etapa 1</option>
+          <option value="Etapa 2">Etapa 2</option>
+          <option value="Etapa 3">Etapa 3</option>
+        </select>
+        <button class="btn-pdf" onclick="exportarPDF('etapa')" style="margin-left:auto">🖨 Exportar PDF</button>
+      </div>
+      <div class="print-header" style="display:none">
+        <h1>Informe por Etapa · BPC INVIMA</h1>
+        <div class="sub">Certificación Buenas Prácticas de Clínica</div>
+        <div class="meta" id="etapa-meta"></div>
+      </div>
+      <div id="etapa-content"><p class="empty-msg">Selecciona una etapa.</p></div>
+    </div>
+
+    <!-- POR PERÍODO -->
+    <div class="panel" id="pan-periodo">
+      <div class="selector-wrap">
+        <label>Proceso</label>
+        <select id="perProceso"><option value="">Todos los procesos</option></select>
+        <label>Desde</label>
+        <input type="date" id="perDesde">
+        <label>Hasta</label>
+        <input type="date" id="perHasta">
+        <button class="btn-apply" onclick="renderPeriodo()">Aplicar</button>
+        <button class="btn-pdf" onclick="exportarPDF('periodo')" style="margin-left:auto">🖨 Exportar PDF</button>
+      </div>
+      <div class="print-header" style="display:none">
+        <h1>Informe por Período · BPC INVIMA</h1>
+        <div class="sub">Certificación Buenas Prácticas de Clínica</div>
+        <div class="meta" id="per-meta"></div>
+      </div>
+      <div id="per-content"><p class="empty-msg">Selecciona un período y haz clic en Aplicar.</p></div>
+    </div>
+  </div>
+</main>
+
+<script>
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbxGHGvmOaRtRUMAj0TWZt4nY8qNwzX99uBM3Bq8SIQFibSNWuC2BWNsr_3vlyHpZ_qn/exec';
+const DIAS_PROX=3, DIAS_PROX_SEG=7;
+let tasks=[], seguimientos=[];
+
+const today=()=>new Date().toISOString().split('T')[0];
+const fmt=s=>{if(!s||s==='')return'—';const str=String(s).trim();if(/^\d{4}-\d{2}-\d{2}/.test(str)){const p=str.split('T')[0].split('-');return`${p[2]}/${p[1]}/${p[0]}`;}if(/^\d{2}\/\d{2}\/\d{4}/.test(str))return str.substring(0,10);if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)){const p=str.split('/');return`${String(p[1]).padStart(2,'0')}/${String(p[0]).padStart(2,'0')}/${p[2]}`;}return'—';};
+const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+function parseDate(s){if(!s||s==='')return null;const str=String(s).trim();if(/^\d{4}-\d{2}-\d{2}/.test(str))return new Date(str.split('T')[0]+'T00:00:00');if(/^\d{2}\/\d{2}\/\d{4}/.test(str)){const p=str.split('/');return new Date(`${p[2]}-${p[1]}-${p[0]}T00:00:00`);}if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)){const p=str.split('/');return new Date(`${p[2]}-${String(p[1]).padStart(2,'0')}-${String(p[0]).padStart(2,'0')}T00:00:00`);}return null;}
+function dateStr(s){if(!s||s==='')return'';const str=String(s).trim();if(/^\d{4}-\d{2}-\d{2}/.test(str))return str.split('T')[0];if(/^\d{2}\/\d{2}\/\d{4}/.test(str)){const p=str.split('/');return`${p[2]}-${p[1]}-${p[0]}`;}if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)){const p=str.split('/');return`${p[2]}-${String(p[1]).padStart(2,'0')}-${String(p[0]).padStart(2,'0')}`;}return'';}
+
+function getEstado(t){if(t.estado==='completada')return'completada';const fl=dateStr(t.fechaLimite);if(fl&&today()>fl)return'vencida';return'en_curso';}
+function calcDias(t){const s=parseDate(t.fechaAsignacion);if(!s)return 0;const e=(t.estado==='completada'&&t.fechaCompletada)?parseDate(t.fechaCompletada)||new Date():new Date();const d=Math.floor((e-s)/86400000);return isNaN(d)||d<0?0:d;}
+function calcDiasRest(t){const l=parseDate(t.fechaLimite);if(!l)return null;const d=Math.floor((l-new Date(today()+'T00:00:00'))/86400000);return isNaN(d)?null:d;}
+function isProxVencer(t){if(getEstado(t)==='completada')return false;const dr=calcDiasRest(t);return dr!==null&&dr>=0&&dr<=DIAS_PROX;}
+function inRange(dateVal,desde,hasta){const d=dateStr(dateVal);if(!d)return false;return(!desde||d>=desde)&&(!hasta||d<=hasta);}
+function proxSemana(){const d=new Date();d.setDate(d.getDate()+7);return d.toISOString().split('T')[0];}
+
+function setSyncState(s){const dot=document.getElementById('syncDot'),lbl=document.getElementById('syncLabel');if(s==='loading'){dot.className='sync-dot loading';lbl.textContent='Sincronizando...';}else if(s==='ok'){dot.className='sync-dot';lbl.textContent='Conectado · Google Sheets';}else{dot.className='sync-dot error';lbl.textContent='Error';}}
+
+async function cargarDatos(){
+  setSyncState('loading');
+  try{
+    const[rT,rS]=await Promise.all([
+      fetch(SCRIPT_URL+'?'+new URLSearchParams({action:'getTasks'})).then(r=>r.json()),
+      fetch(SCRIPT_URL+'?'+new URLSearchParams({action:'getSeguimientos'})).then(r=>r.json())
+    ]);
+    if(rT.success)tasks=rT.tasks||[];
+    if(rS.success)seguimientos=rS.seguimientos||[];
+    setSyncState('ok');
+    document.getElementById('loadingMsg').style.display='none';
+    document.getElementById('appContent').style.display='block';
+    populateSelectors();
+    renderGerencia();
+  }catch(e){setSyncState('error');document.getElementById('loadingMsg').innerHTML='<span style="color:var(--danger)">Error al conectar.</span>';}
+}
+
+function populateSelectors(){
+  const procs=[...new Set(tasks.map(t=>t.proceso).filter(Boolean))].sort();
+  ['selProceso','perProceso'].forEach(id=>{
+    const sel=document.getElementById(id);
+    const first=id==='perProceso'?'<option value="">Todos los procesos</option>':'<option value="">— Selecciona —</option>';
+    sel.innerHTML=first+procs.map(p=>`<option value="${esc(p)}">${esc(p)}</option>`).join('');
+  });
+}
+
+function switchTab(name,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('pan-'+name).classList.add('on');
+  btn.classList.add('on');
+}
+
+// ── GERENCIA ──────────────────────────────────────────────
+function renderGerencia(){
+  const tot=tasks.length,don=tasks.filter(t=>getEstado(t)==='completada').length,pen=tasks.filter(t=>getEstado(t)==='en_curso').length,ven=tasks.filter(t=>getEstado(t)==='vencida').length,prox=tasks.filter(t=>isProxVencer(t)).length,pct=tot>0?Math.round(don/tot*100):0;
+  const totalReuniones=seguimientos.filter(s=>s.tipo==='Reunión').length,noAsistio=seguimientos.filter(s=>s.estado==='No asistió').length,canceladas=seguimientos.filter(s=>s.estado==='Cancelado').length;
+
+  document.getElementById('g-meta').innerHTML=`<span class="meta-item">Fecha: <strong>${fmt(today())}</strong></span><span class="meta-item">Total tareas: <strong>${tot}</strong></span><span class="meta-item">Cumplimiento: <strong>${pct}%</strong></span>`;
+
+  document.getElementById('g-content').innerHTML=`
+    <div class="metrics">
+      <div class="mcard c1"><div class="ml">Total tareas</div><div class="mv">${tot}</div></div>
+      <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
+      <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
+      <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
+      <div class="mcard c6"><div class="ml">Próx. a vencer</div><div class="mv">${prox}</div></div>
+      <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>
+      <div class="mcard c7"><div class="ml">Reuniones</div><div class="mv">${totalReuniones}</div></div>
+      <div class="mcard c4"><div class="ml">No asistió</div><div class="mv">${noAsistio}</div></div>
+    </div>
+    <div class="prog-wrap">
+      <span class="prog-label">Avance general certificación BPC</span>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <span class="prog-pct">${pct}%</span>
+    </div>
+    <div class="section">
+      <h3><span class="dot" style="background:var(--accent2)"></span> Semáforo de cumplimiento por proceso</h3>
+      ${renderSemaforo(tasks)}
+    </div>
+    <div class="grid2">
+      <div class="section"><h3><span class="dot" style="background:var(--accent)"></span> Avance por Etapa</h3>${renderProgRows(groupBy(tasks,'etapa'))}</div>
+      <div class="section"><h3><span class="dot" style="background:var(--accent2)"></span> Avance por Proceso</h3>${renderProgRows(groupBy(tasks,'proceso'))}</div>
+    </div>
+    ${renderAlertVenc(tasks)}
+    ${renderAlertProx(tasks)}
+    ${renderProxSeguimientos()}
+    <div class="section"><h3><span class="dot" style="background:var(--accent3)"></span> Tareas en curso por Etapa y Proceso</h3>${renderTareasPorEtapaProceso(tasks)}</div>
+    <div class="grid2">
+      <div class="section"><h3><span class="dot" style="background:#06b6d4"></span> Reuniones por Proceso</h3>${renderReunionesPorGrupo('proceso')}</div>
+      <div class="section"><h3><span class="dot" style="background:var(--danger)"></span> No asistió por Proceso</h3>${renderNoAsistio('proceso')}</div>
+    </div>
+    <div class="section">
+      <h3><span class="dot" style="background:#06b6d4"></span> Seguimientos por tipo</h3>
+      ${renderAvanceStats(seguimientos)}
+      ${renderTipoStats(seguimientos)}
+    </div>
+    <div class="section"><h3><span class="dot" style="background:#a78bfa"></span> Responsables</h3>${renderProgRows(groupByResp(tasks))}</div>`;
+}
+
+// ── POR PROCESO ───────────────────────────────────────────
+function renderProceso(){
+  const proc=document.getElementById('selProceso').value;
+  if(!proc){document.getElementById('proc-content').innerHTML='<p class="empty-msg">Selecciona un proceso.</p>';return;}
+  const filtered=tasks.filter(t=>t.proceso===proc);
+  const segsProc=seguimientos.filter(s=>{const t=tasks.find(x=>String(x.id)===String(s.taskId));return t&&t.proceso===proc;});
+  const tot=filtered.length,don=filtered.filter(t=>getEstado(t)==='completada').length,pen=filtered.filter(t=>getEstado(t)==='en_curso').length,ven=filtered.filter(t=>getEstado(t)==='vencida').length,pct=tot>0?Math.round(don/tot*100):0;
+  const reuniones=segsProc.filter(s=>s.tipo==='Reunión').length,noAsis=segsProc.filter(s=>s.estado==='No asistió').length;
+
+  document.getElementById('proc-meta').innerHTML=`<span class="meta-item">Proceso: <strong>${esc(proc)}</strong></span><span class="meta-item">Fecha: <strong>${fmt(today())}</strong></span><span class="meta-item">Cumplimiento: <strong>${pct}%</strong></span>`;
+
+  document.getElementById('proc-content').innerHTML=`
+    <div class="metrics">
+      <div class="mcard c1"><div class="ml">Total tareas</div><div class="mv">${tot}</div></div>
+      <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
+      <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
+      <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
+      <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>
+      <div class="mcard c7"><div class="ml">Reuniones</div><div class="mv">${reuniones}</div></div>
+      <div class="mcard c4"><div class="ml">No asistió</div><div class="mv">${noAsis}</div></div>
+    </div>
+    <div class="prog-wrap">
+      <span class="prog-label">Avance del proceso — ${esc(proc)}</span>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <span class="prog-pct">${pct}%</span>
+    </div>
+    <div class="grid2">
+      <div class="section"><h3><span class="dot" style="background:var(--accent)"></span> Avance por Subproceso</h3>${renderProgRows(groupBy(filtered,'subproceso'))}</div>
+      <div class="section"><h3><span class="dot" style="background:var(--accent2)"></span> Avance por Etapa</h3>${renderProgRows(groupBy(filtered,'etapa'))}</div>
+    </div>
+    ${renderAlertVenc(filtered)}
+    ${renderAlertProx(filtered)}
+    ${renderProxSeguimientos(proc)}
+    <div class="section"><h3><span class="dot" style="background:var(--accent3)"></span> Tareas en curso por Etapa</h3>${renderTareasPorEtapaProceso(filtered)}</div>
+    <div class="section"><h3><span class="dot" style="background:var(--accent2)"></span> Tareas del proceso</h3>${renderTablaTareas(filtered)}</div>
+    <div class="section"><h3><span class="dot" style="background:#06b6d4"></span> Seguimientos por tipo</h3>${renderAvanceStats(segsProc)}${renderTipoStats(segsProc)}</div>
+    <div class="section"><h3><span class="dot" style="background:#06b6d4"></span> Historial de seguimientos</h3>${renderTablaSegs(segsProc)}</div>`;
+}
+
+// ── POR ETAPA ─────────────────────────────────────────────
+function renderEtapa(){
+  const etapa=document.getElementById('selEtapa').value;
+  if(!etapa){document.getElementById('etapa-content').innerHTML='<p class="empty-msg">Selecciona una etapa.</p>';return;}
+  const filtered=tasks.filter(t=>t.etapa===etapa);
+  const segsEtapa=seguimientos.filter(s=>{const t=tasks.find(x=>String(x.id)===String(s.taskId));return t&&t.etapa===etapa;});
+  const tot=filtered.length,don=filtered.filter(t=>getEstado(t)==='completada').length,pen=filtered.filter(t=>getEstado(t)==='en_curso').length,ven=filtered.filter(t=>getEstado(t)==='vencida').length,pct=tot>0?Math.round(don/tot*100):0;
+  const reuniones=segsEtapa.filter(s=>s.tipo==='Reunión').length,noAsis=segsEtapa.filter(s=>s.estado==='No asistió').length;
+
+  document.getElementById('etapa-meta').innerHTML=`<span class="meta-item">Etapa: <strong>${esc(etapa)}</strong></span><span class="meta-item">Fecha: <strong>${fmt(today())}</strong></span><span class="meta-item">Cumplimiento: <strong>${pct}%</strong></span>`;
+
+  document.getElementById('etapa-content').innerHTML=`
+    <div class="metrics">
+      <div class="mcard c1"><div class="ml">Total tareas</div><div class="mv">${tot}</div></div>
+      <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
+      <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
+      <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
+      <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>
+      <div class="mcard c7"><div class="ml">Reuniones</div><div class="mv">${reuniones}</div></div>
+      <div class="mcard c4"><div class="ml">No asistió</div><div class="mv">${noAsis}</div></div>
+    </div>
+    <div class="prog-wrap">
+      <span class="prog-label">Avance ${etapa}</span>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <span class="prog-pct">${pct}%</span>
+    </div>
+    <div class="section"><h3><span class="dot" style="background:var(--accent2)"></span> Semáforo por Proceso en ${etapa}</h3>${renderSemaforo(filtered)}</div>
+    <div class="grid2">
+      <div class="section"><h3><span class="dot" style="background:var(--accent2)"></span> Avance por Proceso</h3>${renderProgRows(groupBy(filtered,'proceso'))}</div>
+      <div class="section"><h3><span class="dot" style="background:#a78bfa"></span> Responsables</h3>${renderProgRows(groupByResp(filtered))}</div>
+    </div>
+    ${renderAlertVenc(filtered)}
+    ${renderAlertProx(filtered)}
+    ${renderProxSeguimientos(null,etapa)}
+    <div class="section"><h3><span class="dot" style="background:var(--accent3)"></span> Tareas en curso por Proceso</h3>${renderTareasPorEtapaProceso(filtered)}</div>
+    <div class="section"><h3><span class="dot" style="background:var(--accent2)"></span> Tareas de ${etapa}</h3>${renderTablaTareas(filtered)}</div>
+    <div class="section"><h3><span class="dot" style="background:#06b6d4"></span> Seguimientos por tipo</h3>${renderAvanceStats(segsEtapa)}${renderTipoStats(segsEtapa)}</div>
+    <div class="section"><h3><span class="dot" style="background:#06b6d4"></span> Historial de seguimientos</h3>${renderTablaSegs(segsEtapa)}</div>`;
+}
+
+// ── POR PERÍODO ───────────────────────────────────────────
+function renderPeriodo(){
+  const proc=document.getElementById('perProceso').value;
+  const desde=document.getElementById('perDesde').value;
+  const hasta=document.getElementById('perHasta').value;
+  if(!desde&&!hasta){document.getElementById('per-content').innerHTML='<p class="empty-msg">Selecciona al menos una fecha.</p>';return;}
+
+  // Tareas NUEVAS en el período
+  const tareasNuevas=tasks.filter(t=>{
+    const matchProc=!proc||t.proceso===proc;
+    return matchProc&&inRange(t.fechaAsignacion,desde,hasta);
+  });
+
+  // TODAS las tareas (filtradas por proceso si aplica)
+  const todasTareas=!proc?tasks:tasks.filter(t=>t.proceso===proc);
+
+  // Seguimientos en el período
+  const segsFiltered=seguimientos.filter(s=>{
+    const t=tasks.find(x=>String(x.id)===String(s.taskId));
+    const matchProc=!proc||(t&&t.proceso===proc);
+    return matchProc&&inRange(s.fecha,desde,hasta);
+  });
+
+  const tot=todasTareas.length,don=todasTareas.filter(t=>getEstado(t)==='completada').length,pen=todasTareas.filter(t=>getEstado(t)==='en_curso').length,ven=todasTareas.filter(t=>getEstado(t)==='vencida').length,pct=tot>0?Math.round(don/tot*100):0;
+  const reuniones=segsFiltered.filter(s=>s.tipo==='Reunión').length,noAsis=segsFiltered.filter(s=>s.estado==='No asistió').length;
+  const periodo=`${desde?fmt(desde):'inicio'} — ${hasta?fmt(hasta):'hoy'}`;
+
+  document.getElementById('per-meta').innerHTML=`<span class="meta-item">Período: <strong>${periodo}</strong></span>${proc?`<span class="meta-item">Proceso: <strong>${esc(proc)}</strong></span>`:''}<span class="meta-item">Fecha generación: <strong>${fmt(today())}</strong></span>`;
+
+  document.getElementById('per-content').innerHTML=`
+    <div class="periodo-header">
+      📅 Período analizado: <strong style="color:var(--accent)">${periodo}</strong>
+      ${proc?` · Proceso: <strong style="color:var(--accent2)">${esc(proc)}</strong>`:''}
+    </div>
+    <div class="metrics">
+      <div class="mcard c1"><div class="ml">Total tareas (sistema)</div><div class="mv">${tot}</div></div>
+      <div class="mcard c3"><div class="ml">Nuevas en período</div><div class="mv">${tareasNuevas.length}</div></div>
+      <div class="mcard c2"><div class="ml">Completadas</div><div class="mv">${don}</div></div>
+      <div class="mcard c3"><div class="ml">En curso</div><div class="mv">${pen}</div></div>
+      <div class="mcard c4"><div class="ml">Vencidas</div><div class="mv">${ven}</div></div>
+      <div class="mcard c5"><div class="ml">Cumplimiento</div><div class="mv">${pct}%</div></div>
+      <div class="mcard c7"><div class="ml">Seguimientos período</div><div class="mv">${segsFiltered.length}</div></div>
+      <div class="mcard c7"><div class="ml">Reuniones período</div><div class="mv">${reuniones}</div></div>
+    </div>
+    <div class="prog-wrap">
+      <span class="prog-label">Avance general${proc?' — '+esc(proc):''}</span>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <span class="prog-pct">${pct}%</span>
+    </div>
+    <div class="section">
+      <h3><span class="dot" style="background:var(--accent2)"></span> Semáforo de cumplimiento por proceso</h3>
+      ${renderSemaforo(todasTareas)}
+    </div>
+    <div class="grid2">
+      <div class="section"><h3><span class="dot" style="background:var(--accent2)"></span> Avance por proceso (total sistema)</h3>${renderProgRows(groupBy(todasTareas,'proceso'))}</div>
+      <div class="section"><h3><span class="dot" style="background:var(--accent)"></span> Avance por etapa (total sistema)</h3>${renderProgRows(groupBy(todasTareas,'etapa'))}</div>
+    </div>
+    ${renderAlertVenc(todasTareas)}
+    ${renderAlertProx(todasTareas)}
+    ${renderProxSeguimientos(proc||null)}
+    <div class="section">
+      <h3><span class="dot" style="background:var(--accent3)"></span> Tareas nuevas asignadas en el período (${tareasNuevas.length})</h3>
+      ${tareasNuevas.length?renderTablaTareas(tareasNuevas):'<p class="empty-msg">Sin tareas nuevas en este período.</p>'}
+    </div>
+    <div class="section">
+      <h3><span class="dot" style="background:var(--accent3)"></span> Todas las tareas en curso por Etapa y Proceso (${todasTareas.filter(t=>getEstado(t)==='en_curso').length})</h3>
+      ${renderTareasPorEtapaProceso(todasTareas)}
+    </div>
+    <div class="section">
+      <h3><span class="dot" style="background:#06b6d4"></span> Seguimientos por tipo en el período</h3>
+      ${renderAvanceStats(segsFiltered)}
+      ${renderTipoStats(segsFiltered)}
+    </div>
+    <div class="section">
+      <h3><span class="dot" style="background:#06b6d4"></span> Seguimientos realizados en el período (${segsFiltered.length})</h3>
+      ${segsFiltered.length?renderTablaSegs(segsFiltered):'<p class="empty-msg">Sin seguimientos en este período.</p>'}
+    </div>`;
+}
+
+// ── HELPERS ───────────────────────────────────────────────
+function groupBy(arr,field){const map={};arr.forEach(t=>{const k=t[field]||'Sin definir';if(!map[k])map[k]={total:0,done:0,venc:0};map[k].total++;const est=getEstado(t);if(est==='completada')map[k].done++;if(est==='vencida')map[k].venc++;});return map;}
+function groupByResp(arr){const map={};arr.forEach(t=>{const resps=(t.responsable||'Sin responsable').split(',').map(r=>r.trim()).filter(Boolean);const est=getEstado(t);resps.forEach(r=>{if(!map[r])map[r]={total:0,done:0,venc:0};map[r].total++;if(est==='completada')map[r].done++;if(est==='vencida')map[r].venc++;});});return map;}
+
+function renderProgRows(data){
+  const keys=Object.keys(data).sort();
+  if(!keys.length)return'<p class="empty-msg">Sin datos.</p>';
+  return keys.map(k=>{const{total,done,venc}=data[k];const pend=total-done;const pct=total>0?Math.round(done/total*100):0;const barColor=pct===100?'var(--success)':pct>=70?'var(--accent2)':pct>=40?'var(--accent3)':'var(--danger)';
+    return`<div class="prog-row"><span class="prog-row-name" title="${esc(k)}">${esc(k)}</span><div class="prog-row-bar"><div class="prog-row-fill" style="width:${pct}%;background:${barColor}"></div></div><div class="prog-row-stats"><span style="color:var(--accent2)">${total}</span><span style="color:var(--success)">✓${done}</span><span style="color:var(--accent3)">⟳${pend}</span>${venc>0?`<span style="color:var(--danger)">⚠${venc}</span>`:''}<span style="color:var(--accent);font-weight:600;min-width:34px;text-align:right">${pct}%</span></div></div>`;
+  }).join('');
+}
+
+function renderSemaforo(arr){
+  const data=groupBy(arr,'proceso');
+  const keys=Object.keys(data).sort();
+  if(!keys.length)return'<p class="empty-msg">Sin datos.</p>';
+  return`<div class="semaforo-grid">${keys.map(k=>{const{total,done}=data[k];const pct=total>0?Math.round(done/total*100):0;const cls=pct>=70?'sem-verde':pct>=40?'sem-amarillo':'sem-rojo';const label=pct>=70?'En meta':pct>=40?'En riesgo':'Crítico';
+    return`<div class="semaforo-card ${cls}"><div class="sem-dot"></div><div style="flex:1;min-width:0"><div class="sem-name" title="${esc(k)}">${esc(k)}</div><div style="font-size:10px;opacity:.8">${label} · ${done}/${total} tareas</div></div><div class="sem-pct">${pct}%</div></div>`;
+  }).join('')}</div>`;
+}
+
+
+function renderAvanceStats(segs){
+  if(!segs.length) return '';
+  const sinAvance=segs.filter(s=>s.avance==='Sin avance').length;
+  const avanceMin=segs.filter(s=>s.avance==='Avance mínimo').length;
+  const avanceSig=segs.filter(s=>s.avance==='Avance significativo').length;
+  const sinRegistro=segs.filter(s=>!s.avance||s.avance==='').length;
+  const total=segs.length;
+  const pctSig=total>0?Math.round(avanceSig/total*100):0;
+  const pctMin=total>0?Math.round(avanceMin/total*100):0;
+  const pctSin=total>0?Math.round(sinAvance/total*100):0;
+  return`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:12px">
+    <div style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);border-radius:10px;padding:14px;text-align:center">
+      <div style="font-size:28px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--success)">${avanceSig}</div>
+      <div style="font-size:11px;color:var(--success);font-weight:600;margin-top:4px">Avance significativo</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:2px">${pctSig}% del total</div>
+      <div style="height:4px;background:rgba(16,185,129,.15);border-radius:100px;margin-top:8px;overflow:hidden"><div style="height:100%;width:${pctSig}%;background:var(--success);border-radius:100px"></div></div>
+    </div>
+    <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:10px;padding:14px;text-align:center">
+      <div style="font-size:28px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--accent3)">${avanceMin}</div>
+      <div style="font-size:11px;color:var(--accent3);font-weight:600;margin-top:4px">Avance mínimo</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:2px">${pctMin}% del total</div>
+      <div style="height:4px;background:rgba(245,158,11,.15);border-radius:100px;margin-top:8px;overflow:hidden"><div style="height:100%;width:${pctMin}%;background:var(--accent3);border-radius:100px"></div></div>
+    </div>
+    <div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:10px;padding:14px;text-align:center">
+      <div style="font-size:28px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--danger)">${sinAvance}</div>
+      <div style="font-size:11px;color:var(--danger);font-weight:600;margin-top:4px">Sin avance</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:2px">${pctSin}% del total</div>
+      <div style="height:4px;background:rgba(239,68,68,.15);border-radius:100px;margin-top:8px;overflow:hidden"><div style="height:100%;width:${pctSin}%;background:var(--danger);border-radius:100px"></div></div>
+    </div>
+    ${sinRegistro>0?`<div style="background:rgba(100,116,139,.08);border:1px solid rgba(100,116,139,.2);border-radius:10px;padding:14px;text-align:center"><div style="font-size:28px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--text-muted)">${sinRegistro}</div><div style="font-size:11px;color:var(--text-muted);font-weight:600;margin-top:4px">Sin registro</div><div style="font-size:10px;color:var(--text-muted);margin-top:2px">${total>0?Math.round(sinRegistro/total*100):0}% del total</div></div>`:''}
+  </div>
+  <div class="tbl-wrap" style="margin-top:12px">
+    <table>
+      <thead><tr><th>Fecha</th><th>Proceso</th><th>Tarea</th><th>Tipo</th><th>Estado</th><th>Avance</th><th>Nota</th><th>Por</th></tr></thead>
+      <tbody>${[...segs].sort((a,b)=>{
+        const order={'Sin avance':0,'Avance mínimo':1,'Avance significativo':2,'':3};
+        return (order[a.avance??'']??3)-(order[b.avance??'']??3);
+      }).map(s=>{
+        const t=tasks.find(x=>String(x.id)===String(s.taskId));
+        const tipoClass={Reunión:'tipo-reunion',Correo:'tipo-correo',Llamada:'tipo-llamada',Visita:'tipo-visita'};
+        const estadoClass={Realizado:'estado-realizado',Cancelado:'estado-cancelado','No asistió':'estado-noasistio',Pendiente:'estado-pendiente'};
+        const avanceClass={'Sin avance':'avance-sin','Avance mínimo':'avance-min','Avance significativo':'avance-sig'};
+        return`<tr>
+          <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);white-space:nowrap">${fmt(s.fecha)}</td>
+          <td>${t?`<span class="chip">${esc(t.proceso)}</span>`:'-'}</td>
+          <td style="font-size:11px;font-weight:500;min-width:130px">${t?esc(t.tarea):'-'}</td>
+          <td>${s.tipo?`<span class="seg-tipo ${tipoClass[s.tipo]||''}">${esc(s.tipo)}</span>`:'-'}</td>
+          <td>${s.estado?`<span class="seg-estado-badge ${estadoClass[s.estado]||''}">${esc(s.estado)}</span>`:'-'}</td>
+          <td>${s.avance?`<span class="avance-badge ${avanceClass[s.avance]||''}">${esc(s.avance)}</span>`:'<span style="color:var(--text-muted);font-size:11px">—</span>'}</td>
+          <td style="font-size:11px;color:var(--text-soft);min-width:160px">${esc(s.nota)}</td>
+          <td style="font-size:11px;color:var(--text-muted);white-space:nowrap">${esc(s.autor)}</td>
+        </tr>`;
+      }).join('')}</tbody>
+    </table>
+  </div>\`;
+}
+}
+
+function renderTipoStats(segs){
+  const tipos={Reunión:{icon:'🤝',total:0,realizado:0,cancelado:0,noAsistio:0,pendiente:0},Correo:{icon:'📧',total:0,realizado:0,cancelado:0,noAsistio:0,pendiente:0},Llamada:{icon:'📞',total:0,realizado:0,cancelado:0,noAsistio:0,pendiente:0},Visita:{icon:'🏃',total:0,realizado:0,cancelado:0,noAsistio:0,pendiente:0}};
+  segs.forEach(s=>{if(s.tipo&&tipos[s.tipo]){tipos[s.tipo].total++;if(s.estado==='Realizado')tipos[s.tipo].realizado++;else if(s.estado==='Cancelado')tipos[s.tipo].cancelado++;else if(s.estado==='No asistió')tipos[s.tipo].noAsistio++;else if(s.estado==='Pendiente')tipos[s.tipo].pendiente++;}});
+  return`<div class="tipo-stats">${Object.entries(tipos).map(([k,v])=>`<div class="tipo-stat-card"><div class="tipo-stat-icon">${v.icon}</div><div class="tipo-stat-num">${v.total}</div><div class="tipo-stat-label">${k}s</div><div class="tipo-stat-sub" style="color:var(--success)">✓ ${v.realizado} realizados</div>${v.noAsistio>0?`<div class="tipo-stat-sub" style="color:var(--danger)">🚫 ${v.noAsistio} no asistió</div>`:''}</div>`).join('')}</div>`;
+}
+
+function renderReunionesPorGrupo(field){
+  const map={};
+  seguimientos.filter(s=>s.tipo==='Reunión').forEach(s=>{const t=tasks.find(x=>String(x.id)===String(s.taskId));const k=t?t[field]||'Sin definir':'Sin definir';if(!map[k])map[k]={total:0,realizado:0,noAsistio:0,cancelado:0};map[k].total++;if(s.estado==='Realizado')map[k].realizado++;else if(s.estado==='No asistió')map[k].noAsistio++;else if(s.estado==='Cancelado')map[k].cancelado++;});
+  const keys=Object.keys(map).sort();if(!keys.length)return'<p class="empty-msg">Sin reuniones.</p>';
+  const maxTotal=Math.max(...keys.map(k=>map[k].total));
+  return keys.map(k=>{const{total,realizado,noAsistio}=map[k];const pct=maxTotal>0?Math.round(total/maxTotal*100):0;
+    return`<div class="reunion-bar"><span class="rbar-label" title="${esc(k)}">${esc(k)}</span><div class="rbar-track"><div class="rbar-fill" style="width:${pct}%;background:var(--accent2)"></div></div><span class="rbar-nums"><span style="color:var(--accent2)">${total}</span> <span style="color:var(--success)">✓${realizado}</span> <span style="color:var(--danger)">🚫${noAsistio}</span></span></div>`;
+  }).join('');
+}
+
+function renderNoAsistio(field){
+  const map={};
+  seguimientos.filter(s=>s.estado==='No asistió').forEach(s=>{const t=tasks.find(x=>String(x.id)===String(s.taskId));const k=t?t[field]||'Sin definir':'Sin definir';if(!map[k])map[k]=0;map[k]++;});
+  const keys=Object.keys(map).sort((a,b)=>map[b]-map[a]);
+  if(!keys.length)return'<p class="empty-msg" style="color:var(--success)">✓ Sin incumplimientos registrados.</p>';
+  const maxVal=Math.max(...keys.map(k=>map[k]));
+  return keys.map(k=>{const pct=maxVal>0?Math.round(map[k]/maxVal*100):0;
+    return`<div class="reunion-bar"><span class="rbar-label" title="${esc(k)}">${esc(k)}</span><div class="rbar-track"><div class="rbar-fill" style="width:${pct}%;background:var(--danger)"></div></div><span class="rbar-nums" style="color:var(--danger)">${map[k]} ${map[k]===1?'vez':'veces'}</span></div>`;
+  }).join('');
+}
+
+function renderAlertVenc(arr){
+  const vencidas=arr.filter(t=>getEstado(t)==='vencida');
+  if(!vencidas.length)return'';
+  return`<div class="alert-box alert-venc"><h4>⚠ Tareas vencidas — ${vencidas.length}</h4><div class="tbl-wrap"><table><thead><tr><th>Tarea</th><th>Proceso</th><th>Etapa</th><th>Responsables</th><th>F. Límite</th><th>Días vencida</th></tr></thead><tbody>${vencidas.map(t=>`<tr><td style="font-weight:500">${esc(t.tarea)}</td><td><span class="chip">${esc(t.proceso)}</span></td><td><span class="etapa-badge etapa-${t.etapa?t.etapa.slice(-1):'1'}">${esc(t.etapa||'—')}</span></td><td>${esc(t.responsable)}</td><td style="color:var(--danger);font-family:'DM Mono',monospace;font-size:11px">${fmt(t.fechaLimite)}</td><td style="color:var(--danger);font-family:'DM Mono',monospace;font-size:11px">${Math.abs(calcDiasRest(t)||0)}d</td></tr>`).join('')}</tbody></table></div></div>`;
+}
+
+function renderAlertProx(arr){
+  const proximas=arr.filter(t=>isProxVencer(t));
+  if(!proximas.length)return'';
+  return`<div class="alert-box alert-prox"><h4>📅 Próximas a vencer en ${DIAS_PROX} días — ${proximas.length}</h4><div class="tbl-wrap"><table><thead><tr><th>Tarea</th><th>Proceso</th><th>Etapa</th><th>Responsables</th><th>F. Límite</th><th>Días rest.</th></tr></thead><tbody>${proximas.map(t=>`<tr><td style="font-weight:500">${esc(t.tarea)}</td><td><span class="chip">${esc(t.proceso)}</span></td><td><span class="etapa-badge etapa-${t.etapa?t.etapa.slice(-1):'1'}">${esc(t.etapa||'—')}</span></td><td>${esc(t.responsable)}</td><td style="font-family:'DM Mono',monospace;font-size:11px">${fmt(t.fechaLimite)}</td><td style="color:var(--accent3);font-family:'DM Mono',monospace;font-size:11px">${calcDiasRest(t)}d</td></tr>`).join('')}</tbody></table></div></div>`;
+}
+
+function renderProxSeguimientos(proc=null, etapa=null){
+  const hasta=proxSemana();
+  const proxSegs=seguimientos.filter(s=>{
+    if(!s.proxFecha||s.proxFecha==='')return false;
+    const t=tasks.find(x=>String(x.id)===String(s.taskId));
+    const matchProc=!proc||(t&&t.proceso===proc);
+    const matchEtapa=!etapa||(t&&t.etapa===etapa);
+    const d=dateStr(s.proxFecha);
+    return matchProc&&matchEtapa&&d>=today()&&d<=hasta;
+  });
+  if(!proxSegs.length)return'';
+  return`<div class="alert-box alert-prox-seg"><h4>🗓 Seguimientos programados próxima semana — ${proxSegs.length}</h4><div class="tbl-wrap"><table><thead><tr><th>F. Programada</th><th>Tarea</th><th>Proceso</th><th>Último tipo</th><th>Responsables</th></tr></thead><tbody>${proxSegs.sort((a,b)=>dateStr(a.proxFecha).localeCompare(dateStr(b.proxFecha))).map(s=>{const t=tasks.find(x=>String(x.id)===String(s.taskId));const tipoClass={Reunión:'tipo-reunion',Correo:'tipo-correo',Llamada:'tipo-llamada',Visita:'tipo-visita'};return`<tr><td style="color:#a78bfa;font-family:'DM Mono',monospace;font-size:11px;font-weight:600">${fmt(s.proxFecha)}</td><td style="font-weight:500">${t?esc(t.tarea):'-'}</td><td>${t?`<span class="chip">${esc(t.proceso)}</span>`:'-'}</td><td>${s.tipo?`<span class="seg-tipo ${tipoClass[s.tipo]||''}">${esc(s.tipo)}</span>`:'-'}</td><td>${t?esc(t.responsable):'-'}</td></tr>`;}).join('')}</tbody></table></div></div>`;
+}
+
+function renderTablaTareas(arr){
+  if(!arr.length)return'<p class="empty-msg">Sin tareas.</p>';
+  const sorted=[...arr].sort((a,b)=>{const order={vencida:0,en_curso:1,completada:2};return(order[getEstado(a)]||0)-(order[getEstado(b)]||0);});
+  const tipoClass={Reunión:'tipo-reunion',Correo:'tipo-correo',Llamada:'tipo-llamada',Visita:'tipo-visita'};
+  const tipoIcons={Reunión:'🤝',Correo:'📧',Llamada:'📞',Visita:'🏃'};
+  return`<div class="tbl-wrap"><table><thead><tr><th>Tarea</th><th>Descripción</th><th>Etapa</th><th>Proceso</th><th>Responsables</th><th>F. Asignación</th><th>F. Límite</th><th>Días</th><th>Estado</th><th>Seguim.</th></tr></thead><tbody>${sorted.map(t=>{
+    const est=getEstado(t);const stH=est==='completada'?'<span class="st done">✓ Completada</span>':est==='vencida'?'<span class="st venc">⚠ Vencida</span>':'<span class="st curso">⟳ En curso</span>';
+    const segs=seguimientos.filter(s=>String(s.taskId)===String(t.id));
+    const tipoCount={};segs.forEach(s=>{if(s.tipo)tipoCount[s.tipo]=(tipoCount[s.tipo]||0)+1;});
+    const segSummary=Object.entries(tipoCount).map(([k,v])=>`<span class="seg-tipo ${tipoClass[k]||''}">${tipoIcons[k]}${v}</span>`).join(' ')||`<span style="color:var(--text-muted);font-size:11px">${segs.length}</span>`;
+    return`<tr><td style="font-weight:500;min-width:140px">${esc(t.tarea)}</td><td style="font-size:11px;color:var(--text-soft);min-width:160px">${esc(t.descripcion||'—')}</td><td><span class="etapa-badge etapa-${t.etapa?t.etapa.slice(-1):'1'}">${esc(t.etapa||'—')}</span></td><td><span class="chip">${esc(t.proceso)}</span></td><td style="font-size:11px;min-width:120px">${esc(t.responsable)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);white-space:nowrap">${fmt(t.fechaAsignacion)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:${est==='vencida'?'var(--danger)':'var(--text-muted)'};white-space:nowrap">${fmt(t.fechaLimite)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent3);white-space:nowrap">${calcDias(t)}d</td><td>${stH}</td><td>${segSummary}</td></tr>`;
+  }).join('')}</tbody></table></div>`;
+}
+
+function renderTablaSegs(segs){
+  if(!segs.length)return'<p class="empty-msg">Sin seguimientos.</p>';
+  const tipoClass={Reunión:'tipo-reunion',Correo:'tipo-correo',Llamada:'tipo-llamada',Visita:'tipo-visita'};
+  const estadoClass={Realizado:'estado-realizado',Cancelado:'estado-cancelado','No asistió':'estado-noasistio',Pendiente:'estado-pendiente'};
+  const avanceClass={'Sin avance':'avance-sin','Avance mínimo':'avance-min','Avance significativo':'avance-sig'};
+  const sorted=[...segs].sort((a,b)=>String(b.fecha).localeCompare(String(a.fecha)));
+  return`<div class="tbl-wrap"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Estado</th><th>Avance</th><th>Tarea</th><th>Descripción tarea</th><th>Proceso</th><th>Nota</th><th>Por</th><th>Próx. seg.</th></tr></thead><tbody>${sorted.map(s=>{
+    const t=tasks.find(x=>String(x.id)===String(s.taskId));
+    return`<tr><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);white-space:nowrap">${fmt(s.fecha)}</td><td>${s.tipo?`<span class="seg-tipo ${tipoClass[s.tipo]||''}">${esc(s.tipo)}</span>`:'-'}</td><td>${s.estado?`<span class="seg-estado-badge ${estadoClass[s.estado]||''}">${esc(s.estado)}</span>`:'-'}</td><td>${s.avance?`<span class="avance-badge ${avanceClass[s.avance]||''}">${esc(s.avance)}</span>`:'-'}</td><td style="font-size:11px;font-weight:500;min-width:130px">${t?esc(t.tarea):'-'}</td><td style="font-size:10px;color:var(--text-muted);min-width:150px">${t?esc(t.descripcion||'—'):'-'}</td><td>${t?`<span class="chip">${esc(t.proceso)}</span>`:'-'}</td><td style="font-size:11px;color:var(--text-soft);min-width:180px">${esc(s.nota)}</td><td style="font-size:11px;color:var(--text-muted);white-space:nowrap">${esc(s.autor)}</td><td style="font-family:'DM Mono',monospace;font-size:11px;color:#a78bfa;white-space:nowrap">${fmt(s.proxFecha)}</td></tr>`;
+  }).join('')}</tbody></table></div>`;
+}
+
+
+function renderTareasPorEtapaProceso(arr){
+  const etapas=['Etapa 1','Etapa 2','Etapa 3'];
+  const enCurso=arr.filter(t=>getEstado(t)==='en_curso');
+  if(!enCurso.length)return'<p class="empty-msg">Sin tareas en curso.</p>';
+  const tipoClass={Reunion:'tipo-reunion',Correo:'tipo-correo',Llamada:'tipo-llamada',Visita:'tipo-visita'};
+  const tipoIcons={Reunion:'\u{1F91D}',Correo:'\u{1F4E7}',Llamada:'\u{1F4DE}',Visita:'\u{1F3C3}'};
+  const etapaColors={'Etapa 1':'var(--accent2)','Etapa 2':'#a78bfa','Etapa 3':'var(--accent)'};
+  const etapaBg={'Etapa 1':'rgba(59,130,246,.08)','Etapa 2':'rgba(167,139,250,.08)','Etapa 3':'rgba(0,195,165,.08)'};
+  const etapaBorder={'Etapa 1':'rgba(59,130,246,.25)','Etapa 2':'rgba(167,139,250,.25)','Etapa 3':'rgba(0,195,165,.25)'};
+  const etapaDesc={'Etapa 1':'Prioridad inmediata','Etapa 2':'Prioridad media','Etapa 3':'Etapa futura — no urgente'};
+
+  return etapas.map(etapa=>{
+    const tareasEtapa=enCurso.filter(t=>t.etapa===etapa);
+    if(!tareasEtapa.length)return'';
+    // Agrupar por proceso
+    const procesos=[...new Set(tareasEtapa.map(t=>t.proceso).filter(Boolean))].sort();
+    const etapaNum=etapa.slice(-1);
+    return`<div style="margin-bottom:16px;border:1px solid ${etapaBorder[etapa]};border-radius:10px;overflow:hidden">
+      <div style="background:${etapaBg[etapa]};padding:12px 16px;border-bottom:1px solid ${etapaBorder[etapa]};display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="etapa-badge etapa-${etapaNum}" style="font-size:12px;padding:3px 12px">${etapa}</span>
+          <span style="font-size:13px;font-weight:600;color:${etapaColors[etapa]}">${tareasEtapa.length} tarea${tareasEtapa.length!==1?'s':''} en curso</span>
+          <span style="font-size:11px;color:var(--text-muted)">· ${etapaDesc[etapa]}</span>
+        </div>
+        <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted)">${procesos.length} proceso${procesos.length!==1?'s':''}</span>
+      </div>
+      ${procesos.map(proc=>{
+        const tareasPoc=tareasEtapa.filter(t=>t.proceso===proc);
+        return`<div style="border-bottom:1px solid ${etapaBorder[etapa]};padding:10px 16px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <span class="chip" style="font-size:11px">${esc(proc)}</span>
+            <span style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace">${tareasPoc.length} tarea${tareasPoc.length!==1?'s':''}</span>
+          </div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Tarea</th><th>Descripción</th><th>Responsables</th><th>F. Asignación</th><th>F. Límite</th><th>Días en curso</th><th>Seguim.</th></tr></thead>
+              <tbody>${tareasPoc.map(t=>{
+                const segs=seguimientos.filter(s=>String(s.taskId)===String(t.id));
+                const tipoCount={};segs.forEach(s=>{if(s.tipo)tipoCount[s.tipo]=(tipoCount[s.tipo]||0)+1;});
+                const dr=calcDiasRest(t);
+                const drStyle=dr!==null&&dr<=3?'color:var(--danger);font-weight:600':dr!==null&&dr<=7?'color:var(--accent3)':'color:var(--text-muted)';
+                const segSummary=Object.entries(tipoCount).map(([k,v])=>`<span class="seg-tipo tipo-${k.toLowerCase()}">${v} ${k}</span>`).join(' ')||`<span style="color:var(--text-muted);font-size:11px">${segs.length} seg.</span>`;
+                return`<tr>
+                  <td style="font-weight:500;min-width:130px">${esc(t.tarea)}</td>
+                  <td style="font-size:11px;color:var(--text-soft);min-width:160px">${esc(t.descripcion||'—')}</td>
+                  <td style="font-size:11px;min-width:120px">${esc(t.responsable)}</td>
+                  <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);white-space:nowrap">${fmt(t.fechaAsignacion)}</td>
+                  <td style="font-family:'DM Mono',monospace;font-size:11px;white-space:nowrap;${drStyle}">${fmt(t.fechaLimite)}</td>
+                  <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent3);white-space:nowrap">${calcDias(t)}d</td>
+                  <td style="white-space:nowrap">${segSummary}</td>
+                </tr>`;
+              }).join('')}</tbody>
+            </table>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }).join('');
+}
+
+function exportarPDF(vista){
+  const titles={gerencia:'Informe Gerencia',proceso:`Informe Proceso — ${document.getElementById('selProceso')?.value||''}`,etapa:`Informe ${document.getElementById('selEtapa')?.value||''}`,periodo:'Informe por Período'};
+  document.querySelectorAll('.print-header').forEach(h=>h.style.display='none');
+  const header=document.querySelector(`#pan-${vista} .print-header`);
+  if(header)header.style.display='block';
+  document.title=`BPC INVIMA · ${titles[vista]||'Informe'} · ${fmt(today())}`;
+  setTimeout(()=>{window.print();setTimeout(()=>{if(header)header.style.display='none';},500);},200);
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const d=new Date();
+  document.getElementById('currentDate').textContent=d.toLocaleDateString('es-CO',{weekday:'short',year:'numeric',month:'short',day:'numeric'}).toUpperCase();
+  cargarDatos();
+  setInterval(cargarDatos,30000);
+});
+</script>
+</body>
+</html>
